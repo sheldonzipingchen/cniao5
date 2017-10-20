@@ -1,0 +1,151 @@
+{% extends "course/base_course_detail.html" %}
+
+{% block course_bottom_left %}
+
+
+
+    <div class="nav-btn-tab">
+
+        <ul class="nav nav-tabs" role="tablist">
+
+            <li  class="">
+                <a href="{{ url_for('course.course_detail', id=class_item.id) }}"
+
+
+                       title="{{ class_item.name }}课程简介"
+                       >简介</a>
+
+            </li>
+
+            <li  class="">
+                <a href="{{ url_for('course.course_lessons', id=class_item.id) }}"
+                   title="{{ class_item.name }}的目录"
+                        >目录</a>
+            </li>
+
+              <li  class="active">
+                <a href="{{ url_for('course.course_thread', id=class_item.id) }}"
+                   title="{{ class_item.name }}的讨论"
+                        >讨论区</a>
+            </li>
+
+            <li class="">
+                <a href="{{ url_for('course.course_comment', id=class_item.id) }}"
+                   title="{{ class_item.name }}的评价"
+
+                        >评价
+
+                    <small class="text-muted">( {{ class_item.comment_count }} )</small>
+
+                </a>
+            </li>
+
+            <li  class="hidden-xs">
+                <a href="{{ url_for('course.course_courseware', id=class_item.id) }}"
+                   title="{{ class_item.name }}的源码"
+                   >源码
+
+                    </small>
+
+                </a>
+            </li>
+         </ul>
+    </div>
+
+    <ul class="breadcrumb">
+      <li><a href="{{ url_for('course.course_thread',id=class_item.id) }}">讨论区</a></li>
+      <li class="active">问题</li>
+   </ul>
+
+     <div class="course-detail-content">
+
+
+        <div class="thread" id="course-thread-detail" data-read-url="{{ url_for('forum.thread_read',id=thread.id) }}">
+
+            <div class="thread-header">
+                <a class="pull-right js-user-card-xx" href="javascript:void(0)"  data-original-title="" title="">
+                    {% if current_user.logo_url is none or current_user.logo_url=='' %}
+                        <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                    {% else %}
+                        <img class="avatar-sm" src="{{ current_user.logo_url }}">
+                    {% endif %}
+                 </a>
+
+                <h2 class="thread-title">
+                    <span class="label label-info">问</span>
+                    {{ thread.title }}
+                </h2>
+
+                <div class="thread-metas">
+                    By     <a class="link-dark link-muted" href="javascript:void(0)">{{ thread.user.username }}</a>
+
+                    <span class="bullet mhs ">•</span>
+                        <lable class="timeago">{{ thread.created_time }}</lable>
+                    <span class="bullet mhs">•</span>
+                    {{ thread.read_count }} 次浏览
+
+                  </div>
+            </div>
+
+            <div class="thread-body">
+
+                {{ thread.content|safe }}
+            </div>
+        </div>
+
+        <div class="thread-posts">
+
+            <h3 class="thread-posts-heading">
+              <span class="glyphicon glyphicon-share-alt"></span>
+              <span id="thread-post-num">0</span> 个答案
+
+            </h3>
+
+            <ul class="thread-post-list media-list" id="thread-post-list"
+            data-target-id="{{ thread.id }}"></ul>
+        </div>
+
+        <nav class=" text-center">
+            <ul class="pagination" id="pagination-thread-post">
+
+            </ul>
+        </nav>
+
+     <h3 class="thread-posts-heading"><span class="glyphicon glyphicon-plus"></span> 添加答案</h3>
+
+         <form id="thread-post-form"
+               class="form-vertical"
+               method="post"
+               data-post-url="{{ url_for('forum.thread_post_create') }}"
+               data-course-id="{{ class_item.id }}"
+               data-thread-id="{{ thread.id }}"
+               data-auto-submit="false"
+               novalidate="novalidate" >
+          <div class="form-group">
+            <div class="controls">
+              <textarea id="post_content"
+                        name="post[content]"
+                        class="form-control" rows="8" d
+                        ata-display="内容"
+
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="controls clearfix">
+              <button type="submit" class="btn btn-primary pull-right">添加答案</button>
+            </div>
+          </div>
+
+        </form>
+
+
+
+
+     </div>
+
+
+{% endblock %}
+
+

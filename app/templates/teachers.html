@@ -1,0 +1,97 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   合作讲师-菜鸟窝-国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,在线学Android开发,免费学Android开发,android官方培训,怎么学android,android高级培训,零基础学Android　{% endblock %}
+
+{% block description %}菜鸟窝的讲师来着阿里,携程,土豆,美团等一线公司的技术大牛,欢迎您的加入
+{% endblock %}
+
+
+{% block main_block %}
+
+<div class="cniao-banner">
+    <div class="container">
+      <div class="title">
+        合作讲师列表  <a href="http://www.cniao5.com/help/teacher/recruit.html" target="_blank"><img src="/static/images/for_teacher.png" alt=""></a>
+      </div>
+    </div>
+</div>
+
+<section class="cniao-section">
+    <div class="container " id="content-container">
+
+        <div class="teacher-list row">
+
+
+            {% for teacher in teachers %}
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="teacher-item">
+                      <div class="teacher-top">
+                        <a class="teacher-img" href="{{ url_for("user.detail",id=teacher.user.id) }}">
+                          <img class="avatar-lg" src="{{ teacher.logo_url }}" alt="">
+                        </a>
+                        <h3 class="title">
+                          <a class="link-dark" href="{{ url_for("user.detail",id=teacher.user.id) }}">{{ teacher.user.username }}</a>
+                        </h3>
+                        <div class="position">
+                                  {{ teacher.company }}
+                        </div>
+                      </div>
+                        <div class="more">
+                                 {{ teacher.brief }}
+                        </div>
+                      <div class="teacher-bottom">
+
+                        <div class="metas">
+
+                             <a class="btn  btn-primary follow-btn mrl" href="javascript:;"
+                                 data-url="{{ url_for('user.follow',id=teacher.user.id) }}"
+                                       data-status-url="{{ url_for('user.follow_status',id=teacher.user.id) }}"
+                             >关注</a>
+                        <a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="{{ url_for('user.unfollow',id=teacher.user.id) }}" style="display:none;">已关注</a>
+                        <a class="btn  btn-default js-send-message mrl"
+                        data-user-id="{{ teacher.user.id }}"
+                                data-user-head=" {% if teacher.user.logo_url is none or teacher.user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg')}} {% else %}{{ teacher.user.logo_url }} {% endif %} ">私信</a>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+</section>
+
+
+
+{% endblock %}
+
+
+
+     {% block custom_js_block %}
+
+
+            <script type="text/javascript">
+
+                var app={};
+                app.debug = true;
+                app.jsPaths={};
+                app.global_script='path-js/global-config';
+                app.controller='app/teachers';
+                app.mainScript = 'path-js/app';
+                app.currItem = 1;
+
+                seajs.use(app.mainScript);
+
+            </script>
+
+
+    {% endblock %}
+

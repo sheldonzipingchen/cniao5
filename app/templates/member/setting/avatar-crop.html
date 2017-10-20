@@ -1,0 +1,75 @@
+{% extends "member/base.html" %}
+{% set active_page = 'setting_avatar' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+        <div class="section-header"><h3>修改头像</h3></div>
+
+
+          <form id="avatar-crop-form" method="post">
+
+          <div class="form-group clearfix">
+            <div class="col-md-offset-2 col-md-8 controls">
+
+                  <img src="{{ user.logo_url }}" id="avatar-crop"
+                       data-url="{{ url_for('member.setting_avatar_save') }}"
+                       data-natural-width="0"
+                       data-natural-height="0"
+                       width="0"
+                       height="0"
+
+                         >
+                <div class="help-block">提示：请选择图片裁剪区域。</div>
+            </div>
+          </div>
+
+          <div class="form-group clearfix">
+            <div class="col-md-offset-2 col-md-8 controls">
+              <a class="btn btn-fat btn-primary"
+                 id="upload-avatar-btn"
+
+                 data-goto-url="{{ url_for('member.setting_avatar') }}">保存</a>
+              <a href="javascript:;" class="go-back btn btn-link">重新选择图片</a>
+            </div>
+          </div>
+
+    </form>
+
+
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/avatar-crop';
+            app.mainScript = 'path-js/app';
+
+
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

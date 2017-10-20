@@ -1,0 +1,110 @@
+{% extends "base_new.html" %}
+
+{% block title %}用户登录 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+   <div class="cniao-section login-section">
+       <div class="logon-tab clearfix">
+           <a class="active">登录帐号</a>
+           <a href="{{ url_for('auth.reg') }}">注册帐号</a>
+       </div>
+       <div class="login-main">
+           <form id="login-form" class="form-vertical" role="form" method="post" action="{{ url_for('auth.login') }}"
+                    novalidate="novalidate" data-widget-cid="widget-1">
+
+               {{ form.hidden_tag() }}
+               <div class="form-group mbl">
+                   <div class="controls">
+                       <input class="form-control input-lg" id="login_username" type="text" name="email" value=""
+                                required="" placeholder="手机/邮箱" >
+                       <div class="help-block"></div>
+                   </div>
+               </div>
+               <div class="form-group mbl">
+                   <div class="controls">
+                       <input class="form-control input-lg" id="login_password" type="password" name="password"
+                              required="true"
+                              placeholder="密码" >
+                       <div class="help-block" style="display:none;"></div></div>
+               </div>
+{#               <div class="form-group mbl">#}
+{#                   <div class="controls">#}
+{#                       <input type="checkbox" name="_remember_me" checked="checked">记住密码#}
+{#                   </div>#}
+{#               </div>#}
+               <div class="form-group mbl">
+                   <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
+               </div>
+           </form>
+           <div class="mbl">
+               <a href="{{ url_for('auth.find_password') }}">找回密码</a>
+               <span class="text-muted mhs">|</span>
+               <span class="text-muted">还没有注册帐号？</span>
+               <a href="/auth/reg.html">立即注册</a>
+           </div>
+
+        <div class="social-login">
+                    <span>
+                      <a href="{{ url_for('auth.wechat_login') }}" class="social-icon social-weixin hidden-xs" data-title="使用微信登录">
+                          <i class="icon icon-weixin "></i>
+                      </a>
+                        <a href="{{ url_for('auth.qq_login') }}"
+                           class="social-icon social-qq">
+                            <i class="icon icon-qq"></i>
+                        </a>
+
+                        <a href="{{ url_for('auth.github_login') }}"
+                           class="social-icon social-yun">
+                            <i class="icon icon-github"></i>
+                        </a>
+                        <a href="{{ url_for('auth.weibo_login') }}"
+                           class="social-icon social-weibo">
+                            <i class="icon icon-weibo"></i>
+                        </a>
+                    </span>
+                   <div class="line"></div>
+               </div>
+
+
+           <div class="clear">
+                <p>
+                    {% for error in form.errors %}
+                        <span style="color: red;">{{ form.errors[error][0] }}</span><br />
+                    {% endfor %}
+                    {% with errors = get_flashed_messages(category_filter=["error_message"]) %}
+                    {% for error in errors %}
+                        <span style="color: red;">{{ error }}</span><br />
+                    {% endfor %}
+                    {% endwith %}
+                </p>
+
+            </div>
+
+
+       </div>
+   </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/login';
+        app.mainScript = 'path-js/app';
+        app.currItem = 1;
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

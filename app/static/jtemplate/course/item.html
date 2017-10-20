@@ -1,0 +1,40 @@
+
+
+
+    {#foreach $T as c}
+
+    <div class="col-md-3 col-sm-6">
+         <div class="course-item">
+                <div class="course-img">
+                    <a href="/course/{{ $T.c.id }}" target="_blank">
+
+                           {#if $T.c.is_free ==1}
+                                      <span class="tags">
+                                           <span class="tag-free"></span>
+                                       </span>
+                           {#/if}
+
+                        <img src="{{ $T.c.img_url }}" alt=" {{ $T.c.name }}" class="img-responsive">
+                    </a>
+                </div>
+                 <div class="course-info">
+                    <div class="title">
+                        <a class="link-dark" href="/course/{{ $T.c.id }}" target="_blank">
+                           {{ $T.c.name }}
+                        </a>
+                    </div>
+                    <div class="metas clearfix">
+                        <span class="nums"><i class="icon icon-user2"></i>{{$T.c.lessons_played_time}}人</span>
+                                                    <span class="mls">
+                                                        <i class="icon icon-clock3"></i>{{ $T.c.lessons_count }}课时
+                                                    </span>
+
+                    </div>
+                </div>
+            </div>
+</div>
+
+    {#/for}
+
+
+

@@ -1,0 +1,131 @@
+{% extends "admin/base_admin.html" %}
+{%  import "page_macros.html" as macros  %}
+
+{% block script_css %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/datepicker/skin/WdatePicker.css') }}"/>
+    <script src="{{ url_for('static', filename='libs/datepicker/WdatePicker.js') }}"></script>
+
+ <script>
+
+    $(function() {
+
+    });
+
+    /**查询订单数据*/
+    function searchDegree(){
+        $('#frmDegree').submit();
+    }
+
+    //更改订单状态
+    function changeStatus(orderid){
+        bootbox.confirm("<h4>修改提示</h4>确认要把该订单状态修改为完成吗?", function(flag){
+		if(flag){
+            $.ajax({
+              url: "order_change_status",
+              context: document.body,
+              data: {'order_id':orderid },
+              dataType: 'json',
+              success: function(data){
+                  if(data['status']==1){
+                      //message_box.show(data['message'], 'success');
+                      message_box.show('订单状态修改成功！', 'success');
+                      $('#frmOrder').submit();
+                  }else{
+                      message_box.show(data['message'], 'error');
+                  }
+              }
+            });
+		}else{
+			//
+		}
+
+	});
+    }
+ </script>
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+        <div class="well search-well">
+            <form  role="form" class="form-inline" action="degree_manage.html" id="frmDegree" method="post">
+
+                <div class="form-group" >
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="class_id"
+                                placeholder="输入班级id" value={{ class_id }}>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0)" onclick="searchDegree()" >
+                                <i class="icon icon-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="well">
+
+            <table class="table table-hover">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>系统名称</th>
+                    <th>班级</th>
+                    <th>介绍</th>
+                    <th>默认学习天数</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in degree_list %}
+                    <tr>
+                        <td>
+                            <p> <span>{{ item.id }}</span></p>
+                        </td>
+                        <td>
+                            <p> <span>{{ item.level_name }}</span></p>
+                        </td>
+                        <td>
+                            <p><span>{{ item.class_id }}
+                            </span></p>
+                        </td>
+                        <td>
+                            <p> <span>{{ item.intro }}</span></p>
+                        </td>
+                        <td>
+                            <p><span>{{ item.init_day }}</span></p>
+                        </td>
+                        <td>
+                                <a href="javascript:void(0)" onclick="changeStatus({{ item.id }})" >
+                                <i class="icon icon-pencil size20"></i>
+                                修改</a>｜
+                                 <a href="javascript:void(0)" onclick="changeStatus({{ item.id }})" >
+                                <i class="icon icon-pencil size20"></i>
+                                章节配置</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                <tr>
+                <td colspan="8">
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.degree_manage') }}
+                </div>
+                </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+{% endblock %}

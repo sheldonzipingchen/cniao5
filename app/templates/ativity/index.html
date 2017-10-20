@@ -1,0 +1,190 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新书抽奖</title>
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='activity/css/style.css') }}"/>
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/layer/skin/layer.css') }}"/>
+ <link rel="stylesheet" type="text/css" href="http://www.cniao5.com/static/libs/bootstrap/3.3.0/css/bootstrap.min.css"/>
+ <link rel="stylesheet" type="text/css" href="http://www.cniao5.com/static/css/style_new.css"/>
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+</head>
+<body>
+
+<div class="ly-plate" data-user-login="{% if current_user.is_authenticated() %}1{%else  %}0{% endif %}">
+	<div class="rotate-bg"></div>
+	<div class="lottery-star"><img src="{{ url_for('static', filename='activity/images/rotate-static.png') }}" id="lotteryBtn"></div>
+</div>
+<div >
+    <a href="http://www.cniao5.com/forum/thread/3572" target="_blank" style="font-size: 30px; color: #fff;font-weight: 500">我也要抽奖</a> /
+    <a href="javascript:" id="get-lucky-users"
+       data-url="{{ url_for("activity.qyz_luckyers") }}"
+       style="font-size: 20px; color: #fff;font-weight: 500">中奖列表</a>
+</div>
+
+
+
+
+<div style="display: none" id="dialog-result">
+
+
+    <div class="user">
+
+        <img src="" id="user_head" class="avatar-lg">
+        <p id="username" class="mts" style="font-weight: 400"></p>
+
+    </div>
+    <hr/>
+
+    <p>回复内容:</p>
+
+    <div id="post-content"></div>
+
+
+
+
+</div>
+
+
+<script type="text/javascript" src="/static/activity/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/activity/js/jQueryRotate.2.2.js"></script>
+<script type="text/javascript" src="/static/activity/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/static/libs/layer/layer.js"></script>
+
+<script type="text/javascript">
+$(function(){
+
+
+    var data ='';
+
+
+
+
+    $("#get-lucky-users").on("click",function(){
+
+
+        var this_ =$(this)
+
+        var html="<table class='table table-condensed  table-hover table-responsive'> <tr><th>用户名</th><th></th> <th>奖品</th><th></th></tr>"
+
+        $.get(this_.data("url"),function(data){
+
+
+
+            var results = JSON.parse(data)
+
+            var tempHtml=''
+            $.each(results,function(n,r){
+
+
+                var userHtml = '<tr><td> <a target="_blank" href="/user/'+ r.user.id+'">'+ r.user.username+'</a><td/>  <td> <a href="http://item.jd.com/11948837.html"> Android群英传:神兵利器</a>  <td/>   </tr> ';
+                tempHtml+=userHtml
+
+
+            })
+
+            html=html+tempHtml+"</table>"
+
+
+
+            layer.open({
+
+              type: 1,
+            title:'幸运用户',
+            area:['600px','300px'],
+            content:html
+            })
+
+
+
+
+        })
+
+
+
+
+    })
+
+
+    function  getData(){
+
+        $.post("/activity/qyz",function(result){
+
+            console.log(result)
+
+            data = result
+            var defualt_url ="http://www.cniao5.com/static/images/head_defualt.jpg";
+
+            if(data.user_logo =='' || data.user_logo==null)
+                data.user_logo = defualt_url
+
+            $("#user_head").attr("src",data.user_logo)
+            $("#username").html(data.user_name+"(中奖人)")
+            $("#post-content").html(data.post_context)
+        })
+    }
+	
+	$("#lotteryBtn").rotate({ 
+	   bind: 
+		 { 
+			click: function(){
+
+
+                     var is_login = $(".ly-plate").data("user-login")
+
+                    if(!is_login){
+
+                        layer.msg("请先登录再试手气")
+
+                        setTimeout(function(){
+
+                            window.location.href="/auth/login.html?next=/activity/find/lucky/girl.html"
+
+                        },3000)
+                        return;
+                    }
+
+
+                    var angle = [67,112,202,292,337,23,89,230,259];
+                    angle = angle[Math.floor(Math.random()*angle.length)]
+
+                    console.log(angle)
+
+                    getData();
+                	$(this).stopRotate();
+                    $(this).rotate({
+                        angle:angle,
+                        duration: 15000,
+                        animateTo: 36000, //angle是图片上各奖项对应的角度，1440是我要让指针旋转4圈。所以最后的结束的角度就是这样子^^
+                        callback:function(){
+                            show()
+                        }
+                    });
+
+			}
+		 } 
+	   
+	});
+
+
+    function  show(){
+
+
+         var title =data.effective?'中奖结果':"测试我的手气"
+
+
+        layer.open({
+
+            type: 1,
+            title:title,
+            area:['800px','500px'],
+            content:$("#dialog-result")
+
+        })
+
+    }
+	
+})
+</script>	
+	
+</body>
+</html>

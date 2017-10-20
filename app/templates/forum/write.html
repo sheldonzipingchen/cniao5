@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <title> {% if action =='update'%}
+        更新文章
+    {% else %}
+        创作中......
+    {% endif %}
+
+    菜鸟窝-国内领先专业的移动开发IT技能在线教育平台</title>
+ <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_new.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+
+<body style="padding-top: 0px">
+    <div class="cniao-wrap " style="background: #e6e6e6">
+
+    <div   class="container">
+
+{#        <buttton id="upload-img-btn">选择文章</buttton>#}
+
+        <div class="row">
+
+                    <div class="col-md-12">
+
+                       <div class="write-form  cniao-section">
+                        <form  id="thread-form"
+                               data-forum-id="{{ forum_id }}"
+                               data-thread-id="{{ thread.id }}"
+                               data-create-url="{{ url_for('forum.thread_create') }}"
+                               data-update-url="{{ url_for('forum.thread_modify') }}"
+                               data-thread-type="{{ thread_type }}"
+                               data-action="{{ action }}"
+                        >
+
+                            <div class="title form-group">
+
+                                <div class="controls">
+
+                                    <input id="thread_title" type="text" name="thread[title]" placeholder="点击这里输入标题" value="{{thread.title if thread.title != None }}">
+                                </div>
+
+                            </div>
+
+                            <div class="content form-group" id="thread-write-content">
+
+                                <div class="controls">
+                                    <div class="help-block"></div>
+
+                                    <div id="editor-container" data-img-upload-token-url="{{ url_for('common.get_qiniu_upload_token',bucket='cniao5-imgs') }}">
+
+                                            <textarea id="thread_content"
+                                                name="thread[content]"
+                                                class="form-control"
+                                                rows="20"
+                                            >
+
+                                        {% if action=='update' %}
+                                            {{ thread.content }}
+                                        {% endif %}
+                                    </textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="action">
+
+                                <div class="container">
+
+                                    <div class="brief">
+
+                                          <textarea
+                                            id="thread_brief"
+                                            name="thread[brief]"
+                                            rows="2"
+                                            class="form-control"
+                                            placeholder="摘要 如果不填写会默认抓取正文前200个字"
+
+                                            >{{thread.brief if thread.brief != None }}</textarea>
+
+
+
+
+                                    </div>
+
+                                     <span class="ml10 mr25">
+
+                                        <span class="cniao-checkbox icon icon-checkbox-uncheck"></span> 原创
+
+                                     </span>
+
+
+                                    <button id="thread-save-btn" type="submit" class="btn btn-xlg  btn-primary ">
+
+                                        {% if action=='update' %}   更新 {% else %}  发布{% endif %}
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                       </div>
+
+                    </div>
+
+                </div>
+
+    </div>
+
+    </div>
+</body>
+
+
+
+  <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+   <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+  <script type="text/javascript">
+     var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/";
+        var app={};
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/thread-write';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>

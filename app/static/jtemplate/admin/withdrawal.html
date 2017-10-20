@@ -1,0 +1,67 @@
+{#foreach $T as c}
+
+<tr>
+
+
+    <td>
+        {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                        <img src="/static/images/head_defualt.jpg"
+                            class="avatar-md">
+                    {#else}
+
+                        <img src="{{ $T.c.user.logo_url}}" alt="{{ $T.c.user.username }} 的头像" class="avatar-md"/>
+                    {#/if}
+
+            <div>{{ $T.c.user.username}}</div>
+
+    </td>
+    <td> <span class="text-danger "> {{ $T.c.apply_money }}</span></td>
+
+    <td>
+        <span class="text-danger text-large"> {{ $T.c.pay_money }}</span><br>
+        <span class=" text-small">手续费: {{ $T.c.service_charge }}</span>
+    </td>
+     <td>
+        <span class="text-small">申请:{{ $T.c.created_time}} </span><br>
+        <span class="text-small">处理:{{ $T.c.hande_time}} </span>
+    </td>
+    <td>
+
+        <span class="text-danger "> {{ $T.c.beneficiary_account }}</span><br>
+        <span class=" text-small">{{ $T.c.pay_channel }}</span>
+
+    </td>
+
+    <td>
+        {#if $T.c.state==0}
+
+
+        <div class="btn-group" role="group">
+                <button type="button"
+                        class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+
+
+                >
+                  <span class="text-success">待处理</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:"  class="js-state-update" data-url="/admin/withdrawal/state/{{ $T.c.id }}_1" data-message="您确定将该申请设置为已结算吗">设为结算</a></li>
+                  <li><a href="javascript:"  class="js-state-update" data-url="/admin/withdrawal/state/{{ $T.c.id }}_2" data-message="您确定将驳回该申请吗">驳回</a></li>
+                </ul>
+            </div>
+
+         {#elseif $T.c.state==1}
+            <span class="text-info">已结算</span>
+        {#elseif $T.c.state==2}
+        <span class="text-danger">驳回</span>
+         {#/if}
+
+    </td>
+
+</tr>
+
+{#/for}

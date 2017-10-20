@@ -1,0 +1,176 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'goods' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="goods"></div>
+
+    <div class="row ">
+
+        <div class="col-md-12 ">
+
+
+
+            <div class="mts cniao-section">
+
+                <table class="table table-condensed  table-hover table-responsive">
+
+
+                    <thead>
+                    <tr>
+                        <th>商品</th>
+
+                        <th>优惠码</th>
+                        <th>价格(鸟币)</th>
+                        <th>库存</th>
+                        <th>商品类型</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody >
+
+                         {% for g in goods %}
+
+                             <tr>
+                                 <td>
+                                      <div class="">
+
+                                          <img src="{{ g.logo_url }}" alt="" style="max-width: 100px">
+                                      </div>
+
+                                     <a href="javascript:"
+                                           class="js-update "
+                                           data-id="{{ g.id }}"
+                                           data-val="{{ g.title }}"
+                                            data-action="title"
+                                            data-url="{{ url_for(".goods_update") }}">
+                                            {{ g.title }}
+                                     </a>
+                                 </td>
+                             <td>
+                                 <blockquote class="text-md">
+
+                                     面额:
+                                     <a href="javascript:"
+                                           class="js-update  gray-darker"
+                                           data-id="{{ g.id }}"
+                                           data-val="{{ g.val }}"
+                                            data-action="val"
+                                            data-url="{{ url_for(".goods_update") }}">
+                                            {{ g.val }}
+                                     </a>
+
+                                     <br>
+                                     过期时间:
+                                     <a href="javascript:"
+                                           class="js-update  gray-darker"
+                                           data-id="{{ g.id }}"
+                                           data-val="{{ g.expiry_date }}"
+                                            data-action="expiry_date"
+                                            data-url="{{ url_for(".goods_update") }}">
+                                     {{ g.expiry_date }}
+
+
+                                 </blockquote>
+
+
+                             </td>
+                             <td>
+                                 <a href="javascript:"
+                                           class="js-update "
+                                           data-id="{{ g.id }}"
+                                           data-val="{{ g.price }}"
+                                            data-action="price"
+                                            data-url="{{ url_for(".goods_update") }}"
+
+                                        > <span class="text-danger">{{ g.price }}</span></a>
+                             </td>
+
+                             <td>
+                                <a href="javascript:"
+                                           class="js-update "
+                                           data-id="{{ g.id }}"
+                                           data-val="{{ g.stock }}"
+                                            data-action="stock"
+                                            data-url="{{ url_for(".goods_update") }}"
+
+                                        > {{ g.stock }}</a>
+                             </td>
+                             <td>
+                                 {% if g.is_virtual %}
+
+                                    <span class="label label-success">虚拟</span>
+
+                                  {% else %}
+                                     <span class="label label-info">实物</span>
+
+                                 {% endif %}
+
+                             </td>
+
+                             <td>
+                                  <div class="switch  switch-mini" data-on-label="正常" data-off-label="下架" data-on="success" data-off="warning">
+                                    <input class="switch-checkbox" type="checkbox"  {% if g.status %}checked {% endif %}
+                                         data-id="{{ g.id }}"
+                                        data-action="status"
+                                        data-url="{{ url_for(".goods_update") }}"
+                                    />
+                                </div>
+
+                             </td>
+
+                             <td>
+
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default " >
+                                      编辑
+                                    </button>
+
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                      <li><a href="{{ url_for(".goods_content",id=g.id) }}" target="_blank">介绍</a></li>
+                                      <li><a href="">删除</a></li>
+                                    </ul>
+                              </div>
+
+                            </td>
+
+                             </tr>
+
+                         {% endfor %}
+
+
+
+                    </tbody>
+
+
+
+                </table>
+
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+      <div  id="dialog-modify" style="display: none">
+        <div  style="padding: 20px" class="">
+
+            <input id="txt_val" class="form-control">
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

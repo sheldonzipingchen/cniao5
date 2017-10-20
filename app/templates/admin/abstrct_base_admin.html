@@ -1,0 +1,62 @@
+
+
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>菜鸟窝-管理员后台</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/jquery/jcrop/jquery.Jcrop.min.css') }}"/>
+
+    <script src="{{ url_for('static', filename='libs/jquery/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/jquery/jcrop/jquery.Jcrop.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap/3.3.0/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/plupload/plupload.full.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/qiniu/qiniu.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/FileProgress.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/imageCropperUpload.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootbox.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/boxjshow.js') }}"></script>
+    <script src="//g.alicdn.com/kissy/k/1.4.7/seed.js" data-config="{combine:true}"></script>
+
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block script_css %}
+    {% endblock %}
+
+</head>
+<body>
+
+{% block head_navbar_block %}
+
+{% endblock %}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        {% block left_block %}
+        {% endblock %}
+
+        {% block main_block %}
+        {% endblock %}
+
+    </div>
+</div>
+</body>
+</html>

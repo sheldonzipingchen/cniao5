@@ -1,0 +1,30 @@
+
+
+
+    {#foreach $T as c}
+
+
+         <div class="course-item">
+                <div class="course-img">
+                    <a href="/course/{{ $T.c.id }}" target="_blank">
+
+
+
+                        <img src="{{ $T.c.img_url }}" alt=" {{ $T.c.name }}" class="img-responsive">
+                    </a>
+                </div>
+                 <div class="course-info">
+                    <div class="title">
+                        <a class="link-dark" href="/course/{{ $T.c.id }}" target="_blank">
+                           {{ $T.c.name }}
+                        </a>
+                    </div>
+                    <div class="metas clearfix">
+                        <span class="nums"><i class="icon icon-users"></i>{{ $T.c.lessons_played_time }}</span>
+                        <span class="nums ml25"><i class="icon icon-comment"></i>{{ $T.c.comment_count }}</span>
+                    </div>
+                </div>
+            </div>
+
+
+    {#/for}

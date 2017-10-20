@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="course-desc"></div>
+
+
+    <p>{{ course.name }}</p>
+
+
+          <div id="editor-container"
+               class=""
+               data-img-upload-token-url="{{ url_for('common.get_qiniu_upload_token',bucket='cniao5-imgs') }}">
+
+                    <textarea id="goods_content"
+                        name="goods[content]"
+                        class="form-control"
+                        rows="20"
+                    >{{ course.desc if course.desc!=none }}</textarea>
+          </div>
+
+        <button class="btn btn-primary mts" data-id="{{ course.id }}" data-post-url="{{ url_for(".course_update_field") }}" id="btnSave">保存</button>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{#foreach $T as record}
+
+
+<li>
+    <a class=" js-user-card"
+       href="/user/{{ $T.record.user.id }}"
+       data-card-url="/user/{{ $T.record.user.id }}/public/info"
+       data-user-id="{{ $T.record.user.id }}"
+       data-original-title=""
+       title="{{ $T.record.user.username }}">
+
+         {#if $T.record.user.logo_url=='' || $T.record.user.logo_url==null}
+                <img src="/static/images/head_defualt.jpg"
+                    class="avatar-md ">
+            {#else}
+
+                <img src="{{ $T.record.user.logo_url }}"
+                     alt="{{ $T.record.user.username }} 的头像" class="avatar-md"/>
+         {#/if}
+    </a>
+</li>
+
+
+
+
+
+
+{#/for}

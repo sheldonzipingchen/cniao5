@@ -1,0 +1,86 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'page-menu' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="page-menu"></div>
+
+
+    <a id="btnAdd" class="btn btn-default  mbs" href="javascript:"> <i class="icon icon-plug-add-2"></i> 添加菜单 </a>
+    <div class="cniao-section">
+
+         <table class="table table-condensed  table-hover table-responsive">
+
+
+                <thead>
+                  <tr>
+                        <th >标题</th>
+                        <th >跳转</th>
+                        <th >排序</th>
+                        <th >操作</th>
+                    </tr>
+
+
+                </thead>
+
+             {% for m in menus %}
+
+                 <tr>
+                     <td>{{ m.title }}</td>
+                     <td>{{ m.redirect_url }}</td>
+                     <td>{{ m.sort }}</td>
+                     <td>
+
+                         <a data-url="{{ url_for(".page_menu_delete",id=m.id) }}" href="javascript:void(0)"  class="gray-dark js-delete"><i class="icon icon-delete"></i></a>
+                     </td>
+                 </tr>
+
+             {% endfor %}
+
+
+         </table>
+
+
+    </div>
+
+      <div id="addMenu" style="display: none;padding: 20px">
+
+
+            <form id="form-add-menu" class="form-horizontal" role="form" data-post-url="{{ url_for(".page_menu_add") }}">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">标题:</label>
+                <div class="col-sm-6 ">
+                       <input type="text" class="form-control" id="menu-title" placeholder="">
+                </div>
+              </div>
+
+
+                <div class="form-group">
+                <label for="" class="col-sm-4 control-label">跳转地址:</label>
+                <div class="col-sm-6 c">
+                        <input type="text" class="form-control" id="menu-redirectUrl"  placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">排序:</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="menu-sort"  placeholder="">
+                </div>
+              </div>
+
+                <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-4">
+                  <button class="btn btn-primary btn-block" type="submit">保存</button>
+                </div>
+              </div>
+
+            </form>
+
+
+
+    </div>
+
+
+
+
+{% endblock %}

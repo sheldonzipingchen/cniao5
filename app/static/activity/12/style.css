@@ -1,0 +1,128 @@
+
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+body{
+    background: #000000;
+}
+
+.bg{
+    background: url("bg12.jpg") no-repeat;
+     /*background-size: cover;*/
+    /*width: 1920px;*/
+    /*min-height: 1000px;*/
+     position: relative;
+    background-size:100%;
+}
+
+
+.empty-section{
+
+    position: relative;
+    height: 800px;
+    cursor: pointer;
+}
+
+/*.empty-section .js-jump{*/
+    /*display: inline-block;*/
+    /*!*background: #ff2a75;*!*/
+    /*position: absolute;*/
+    /*height:40px;*/
+    /*width: 80px;*/
+    /*top: 540px;*/
+    /*right: 400px;*/
+/*}*/
+
+@media (min-width: 400px) {
+
+    .empty-section{
+        height: 230px;
+         position: relative;
+    }
+}
+
+@media (min-width: 500px) {
+
+    .empty-section{
+        height: 430px;
+         position: relative;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .empty-section{
+        height: 520px;
+         position: relative;
+    }
+}
+
+@media (min-width: 900px) {
+
+   .empty-section{
+        height: 600px;
+        position: relative;
+    }
+}
+
+@media (min-width: 1140px) {
+
+   .empty-section{
+        height: 780px;
+        position: relative;
+       cursor: pointer;
+    }
+}
+
+.title{
+
+    color: #ffffff !important;
+    text-align: center;
+    font-size:35px !important;
+}
+
+
+
+.course-list .course-item .title{
+
+    font-size: 14px !important;
+}
+
+
+.right-nav{
+
+    position: fixed;
+    top:10%;
+    right: 10px;
+    background:rgba(27,27,27,0.4);
+
+
+
+
+}
+.right-nav  ul{
+    width: 40px;
+}
+
+.right-nav  ul li{
+
+    border-bottom: 1px solid #fff;
+
+}
+
+
+.right-nav  ul li a{
+
+    color: #fff;
+    font-size: 18px;
+    font-weight:600;
+    padding: 10px 5px;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
+    /*width: 30px;*/
+}

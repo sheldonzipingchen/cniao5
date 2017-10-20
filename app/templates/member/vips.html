@@ -1,0 +1,91 @@
+{% extends "member/base.html" %}
+{% set active_page = 'vips' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+    <div class="section-header"><h3>会员记录</h3></div>
+
+   <div class="table-responsive">
+
+       <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>购买时间</th>
+                    <th>会员类型</th>
+                    <th>开始时间</th>
+                    <th>到期时间</th>
+                    <th>开通时长(天)</th>
+                </tr>
+            </thead>
+
+
+           <tbody>
+                {% if orders|length>0 %}
+
+                   {% for order in orders %}
+
+                       <tr>
+                           <td>{{ order.created_time }}</td>
+                           <td>高级会员</td>
+                           <td>{{ order.created_time }}</td>
+
+
+                           <td>{{ order.cancel_time }}</td>
+                           <td>{{ (order.cancel_time - order.created_time).days }}</td>
+                       </tr>
+                    {% endfor %}
+
+
+                 {% else %}
+
+                    <tr>
+                     <td colspan="4" class="text-center">
+                         <span class="empty">暂无记录</span>
+
+                    </td>
+                    </tr>
+                {% endif %}
+
+           </tbody>
+
+       </table>
+   </div>
+
+
+
+
+
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+{#            app.controller='app/notebook-detail';#}
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

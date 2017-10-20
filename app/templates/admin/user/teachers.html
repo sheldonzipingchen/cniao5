@@ -1,0 +1,151 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'teachers' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="teachers"></div>
+
+    <div class="row cniao-section">
+        <div class="nav-btn-tab ">
+            <ul class="nav nav-tabs">
+
+                <li class="active"><a href="{{ url_for(".teachers") }}">讲师列表</a></li>
+                <li><a href="{{ url_for(".teacher_incomes") }}">讲师收入</a></li>
+
+
+
+            </ul>
+
+        </div>
+        <a class="btn btn-default  pull-right mbs" href="{{ url_for(".teacher_add") }}"> <i class="icon icon-plug-add-2"></i> 添加讲师 </a>
+
+
+        <div class="teachers">
+
+            <table class="table table-condensed  table-hover table-responsive">
+
+
+                <thead>
+                           <tr>
+                        <th >姓名</th>
+                        <th width="80">分成</th>
+                        <th width="80">收入</th>
+                        <th >账户</th>
+                        <th >操作</th>
+                    </tr>
+
+
+                </thead>
+
+                {% for t in teachers %}
+
+                    <tr class="teacher" >
+                        <td >
+                            <div class="avatar"><img alt="" src="{{ t.logo_url }}"></div>
+                            <div class="info mls">
+                                <span> <i class="icon icon-user"></i>{{ t.teacher_name }} </span>
+                                <br>
+                                <span> <i class="icon icon-phone"></i> {{ t.user.mobi }} </span>
+                                <br>
+                                <span> <i class="icon icon-credit-card"></i> {{ t.id_num }} </span>
+                            </div>
+                        </td>
+                        <td>
+                            {{ t.rate }}
+                        </td>
+                        <td>  <span class="text-danger text-large">{{ t.user.balance }}</span>  </td>
+
+                        <td>
+
+                            银行: {{ t.bank_name if t.bank_name !=none }}<br>
+                            账户: {{ t.bank_account if t.bank_account !=none }}
+                        </td>
+                        <td>
+                              <div class="btn-group" role="group">
+
+                                  <button type="button" class="btn btn-default js-jiesuang"
+                                          data-id="{{ t.user.id }}"
+                                          data-balance="{{ t.user.balance }} "
+                                          data-username="{{ t.teacher_name }}"
+                                          data-bank-name="{{ t.bank_name }}"
+                                          data-bank-account="{{ t.bank_account }}"
+                                          data-get-url="{{ url_for(".teacher_last_month_income",user_id=t.user.id) }}"
+                                          data-post-url="{{ url_for(".teacher_settlement") }}"
+                                      >结算</button>
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                  </button>
+
+
+
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:"  class="js-brief" data-company=" {{ t.company }} " data-brief="{{ t.brief }}">老师介绍</a></li>
+                                </ul>
+                             </div>
+
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div id="jiesuang" style="display: none">
+        <div style="padding: 20px">
+
+
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">讲师:</label>
+                <div class="col-sm-6 checkbox-inline">
+                       <span class="text-large" id="teacherName"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">余额:</label>
+                <div class="col-sm-6 checkbox-inline">
+                       <span class="text-large color-danger" id="balance"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">收款银行:</label>
+                <div class="col-sm-6 checkbox-inline">
+                       <span class="text-large color-danger" id="bankname"></span>
+                </div>
+              </div>
+                <div class="form-group">
+                <label for="" class="col-sm-4 control-label">收款账户:</label>
+                <div class="col-sm-6 checkbox-inline">
+                       <span class="text-large color-danger" id="bankaccount"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="money" class="col-sm-4 control-label">结算金额</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="money" placeholder="输入结算金额">
+                </div>
+              </div>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

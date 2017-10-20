@@ -1,0 +1,63 @@
+
+
+{#foreach $T as c}
+
+
+                <div class="js-reviews">
+
+                    <div class="media media-evaluate">
+                        <div class="media-left">
+                            <a class="js-user-card"
+                               href="/user/{{ $T.c.user.id }}"
+                               data-card-url="/user/{{ $T.c.user.id }}/public/info"
+                               data-user-id="{{ $T.c.user.id }}"
+                               data-original-title="" title="">
+
+
+
+                                  {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                                    <img src="/static/images/head_defualt.jpg"
+                                        class="avatar-md">
+                                {#else}
+
+                                    <img src="{{ $T.c.user.logo_url }}" alt="{{ $T.c.user.username }} 的头像" class="avatar-md"/>
+                                {#/if}
+                            </a>
+
+                        </div>
+
+                        <div class="media-body">
+                            <div class="title">
+                                <a class="link-dark js-user-card "
+                                href="/user/{{ $T.c.user.id }}"
+                               data-card-url="/user/{{ $T.c.user.id }}/public/info"
+                               data-user-id="{{ $T.c.user.id }}">{{ $T.c.user.username }}</a>
+                               <span class="timeago"> {{ $T.c.created_time }}</span>
+                            </div>
+                            <div class="score">
+                              {#for index=1 to $T.c.score }
+                                <i class="icon icon-star-full"></i>
+                             {#/for}
+
+
+                            </div>
+                            <div class="content">
+                                <div class="short-content"> {{ $T.c.comment }}</div>
+                                <div class="full-content" style="display:none;"></div>
+                            </div>
+                            <div class="actions">
+                                <a href="javascript:;" class="show-full-btn">[展开全文]</a>
+                                <a href="javascript:;" class="show-short-btn" style="display:none;">[收起全文]</a>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+
+
+
+
+
+
+
+
+{#/for}

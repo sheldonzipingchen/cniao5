@@ -1,0 +1,208 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'courses' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="courses"></div>
+    <div class="row cniao-section">
+
+
+
+               <div class="search-section cniao-section text-center">
+
+                <form class="form-inline" role="form">
+                  <div class="form-group ">
+                    <input type="text" class="form-control "  style="width: 200px" placeholder="课程名字">
+                  </div>
+
+
+                  <a id="btn-search" class="btn btn-default ml25 disabled">搜索</a>
+                </form>
+            </div>
+
+
+            <table class="table   table-hover table-responsive">
+
+                <thead>
+                    <tr>
+                    <th>名称</th>
+                    <th>价格</th>
+                    <th>学习数</th>
+                    <th>发布时间</th>
+                    <th>是否销售</th>
+                    <th>优惠码</th>
+                    <th>操作</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                    {% for course in pagination.datas %}
+
+                        <tr>
+                            <td style="width: 300px">
+
+                                <div class="media" >
+                                    <div class="media-left">
+
+                                        <a
+                                            href="{{ url_for("course.course_detail",id=course.id) }}"
+                                                              target="_blank"
+                                        > <img src="{{ course.img_url }}"  style="max-width: 100px"></a>
+
+                                    </div>
+                                    <div class="media-body">
+
+                                        <div class="title"><a class="gray-darker js-update"
+                                                              href="javascript:"
+
+
+                                                         data-id="{{ course.id }}"
+                                        data-action="name"
+                                           data-val="{{ course.name }}"
+                                        data-url="{{ url_for('.course_update_field') }}">{{ course.name }}</a>
+
+                                        </div>
+                                        <div class="mtm">
+                                            <span class="text-sm">讲师:{{ course.teacher.username }} </span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </td>
+                            <td>
+                                {% if course.is_free %}
+                                    <span class="text-success">免费</span>
+                                {% else %}
+                                        <a href="javascript:" class="js-update text-danger"
+
+                                               data-id="{{ course.id }}"
+                                        data-action="now_price"
+                                           data-val="{{ course.now_price }}"
+                                        data-url="{{ url_for('.course_update_field') }}"> 折扣价:{{ course.now_price }}</a> {% if course.is_vip() %} / 会员{% endif %}<br/>
+
+
+                                        <a href="javascript:"
+                                           class="js-update text-sm"
+                                           data-id="{{ course.id }}"
+                                           data-val="{{ course.cost_price }}"
+                                            data-action="cost_price"
+                                            data-url="{{ url_for('.course_update_field') }}"
+
+                                        > 原价:{{ course.cost_price }}</a>
+
+
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <div class="text-sm">
+
+                                    总课时: <a href="javascript:"
+                                           class="js-update text-md gray-dark"
+                                           data-id="{{ course.id }}"
+                                           data-val="{{ course.lessons_count }}"
+                                            data-action="lessons_count"
+                                            data-url="{{ url_for('.course_update_field') }}"
+
+                                        >{{ course.lessons_count }}
+                                    </a>
+                                    <br>
+                                    已更新:
+                                    <a href="javascript:"
+                                           class="js-update text-md gray-dark"
+                                           data-id="{{ course.id }}"
+                                           data-val="{{ course.lessons_finished_count }}"
+                                            data-action="lessons_finished_count"
+                                            data-url="{{ url_for('.course_update_field') }}"
+
+                                        >
+                                    {{ course.lessons_finished_count }}
+                                        </a>
+                                        <br>
+                                    播放数: <span class="text-md gray-dark">{{ course.lessons_played_time }}</span>
+                                </div>
+                            </td>
+                            <td> <span class="text-sm"> {{ course.created_time.strftime('%Y-%m-%d')}}</span></td>
+                            <td>
+
+
+
+
+                                <div class="switch  switch-mini" data-on-label="销售" data-off-label="停止" data-on="success" data-off="warning">
+                                    <input class="switch-checkbox" type="checkbox"  {% if course.can_buy %}checked {% endif %}
+                                         data-id="{{ course.id }}"
+                                        data-action="can_buy"
+                                        data-url="{{ url_for('.course_update_field') }}"
+                                    />
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="switch  switch-mini" data-on-label="可用" data-off-label="否" data-on="success" data-off="warning">
+                                    <input class="switch-checkbox" type="checkbox" {% if course.can_use_coupon %}checked {% endif %}
+                                        data-id="{{ course.id }}"
+                                        data-action="can_use_coupon"
+                                        data-url="{{ url_for('.course_update_field') }}"
+                                    />
+                                </div>
+                            </td>
+                            <td>
+
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default " >
+                                      编辑
+                                    </button>
+
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                      <li><a href="{{ url_for(".courser_desc",id=course.id) }}" target="_blank">介绍</a></li>
+                                      <li><a href="{{ url_for(".courser_pics",id=course.id) }}" target="_blank">效果图</a></li>
+                                    </ul>
+                              </div>
+
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+
+
+
+
+            </table>
+
+
+        <nav class="text-center">
+
+            <ul class="pagination">
+
+                {% for index in range(1,pagination.totalPage) %}
+
+                    <li {% if index == pagination.pageIndex %} class="active" {% endif %}><a href="{{ url_for(".courses",page_index=index) }}">{{ index }}</a> </li>
+                {% endfor %}
+
+            </ul>
+
+        </nav>
+    </div>
+
+
+    <div  id="dialog-modify" style="display: none">
+        <div  style="padding: 20px" class="">
+
+            <input id="txt_val" class="form-control">
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

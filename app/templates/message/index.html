@@ -1,0 +1,145 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+    我的私信-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div id="content-container" class="container">
+
+         <div class="row">
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default panel-page">
+                        <div class="panel-heading" style="border-bottom: 1px solid #c3c3c3;padding-bottom: 10px">
+
+                            <h4 class="text-center">我的私信</h4>
+                        </div>
+
+                            <ul class="media-list conversation-list">
+
+                            {% if messages|length >0 %}
+
+                                {% for m in messages %}
+
+
+                             <li class="media" data-url="{{ url_for("message.message_conversation",id=m.conversation_id) }}">
+                                    <a class="pull-left media-object " >
+
+
+                                        <!-- 当前用户是-->
+                                        {% if m.from_user_id == current_user.id %}
+
+
+                                                  {% if m.to_user.logo_url is none or m.to_user.logo_url=='' %}
+
+                                                     <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+
+                                              {% else %}
+                                                 <img class="avatar-sm" src="{{ m.to_user.logo_url }}">
+                                                  {% endif %}
+                                            {%else  %}
+
+                                             {% if m.from_user.logo_url is none or m.from_user.logo_url=='' %}
+                                                     <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                              {% else %}
+                                                 <img class="avatar-sm" src="{{ m.from_user.logo_url }}">
+                                             {% endif %}
+
+                                        {% endif %}
+
+                                    </a>
+
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a class="link-dark " >
+
+                                                {% if m.from_user_id == current_user.id %}
+
+
+                                                {{ m.to_user.username }}
+                                            {%else  %}
+
+                                              {{ m.from_user.username }}
+
+
+                                        {% endif %}
+
+                                            </a>
+
+                                            {% if  m.is_read==0 %}
+                                            <span class="text-warning">(有未读消息)</span>
+                                            {% endif %}
+
+
+                                            <time class="pull-right text-muted time timeago"  datetime="{{ m.send_time }}">{{ m.send_time }}</time>
+                                        </h4>
+
+                                        <div class="conversation-footer clearfix">
+                                            <span class="pull-left">{{ m.msg |truncate(200) }}</span>
+{#                                            <span class="pull-right">共{{ m[6] }}条</span>#}
+{#                                            <div class="actions pull-right">#}
+{#                                                <a class="delete-conversation-btn text-muted" href="javascript:" data-url="">删除</a>#}
+{#                                                <span class="text-muted mhm">|</span>#}
+{#                                            </div>#}
+                                        </div>
+                                    </div>
+                            </li>
+
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <li class="empty">暂无私信</li>
+
+                             {% endif %}
+
+
+                        </ul>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+     </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+        app.controller='app/messages';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

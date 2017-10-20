@@ -1,0 +1,74 @@
+{% extends "course/base_course_detail.html" %}
+
+
+{% block sub_script %}
+
+
+    <script type="text/javascript">
+
+
+        $(function(){
+
+            loadNotes()
+
+        })
+
+
+        function loadNotes(){
+
+            $.get('/api/v1/notes?class_id='+class_id,function(data){
+
+                if(data.length >0){
+                    $("#empty_note").addClass('hide');
+                    $("#notes").setTemplateURL("{{ url_for('static', filename='jtemplate/course/course_notes.html') }}",null, {filter_data: false});
+                    $("#notes").processTemplate(data);
+                }else{
+                    $("#empty_note").removeClass('hide')
+                }
+            })
+
+        }
+
+
+    </script>
+
+
+{% endblock %}
+
+
+{% block course_bottom_left %}
+
+<!-- course_js -->
+         <div class="wrap-box course_js">
+
+            <!--tab_area-->
+            <div class="tab_area">
+                <ul>
+                    <li><a href="{{ url_for('course.course_detail', id=class_item.id) }}">主页</a></li>
+                    <li><a href="{{ url_for('course.course_comment', id=class_item.id) }}">评论</a></li>
+                    <li><a href="{{ url_for('course.course_notes', id=class_item.id) }}" class="cur">笔记</a></li>
+                    <li><a href="{{ url_for('course.course_courseware', id=class_item.id) }}">源码</a></li>
+                </ul>
+
+            </div>
+            <!--end tab_area-->
+
+
+
+             <div class="note_list" id="notes">
+
+                 <div class="empty hide"  id="empty_note">暂无笔记</div>
+
+             </div>
+
+
+         </div>
+            <!--end course_js-->
+
+
+
+
+
+
+
+{% endblock %}

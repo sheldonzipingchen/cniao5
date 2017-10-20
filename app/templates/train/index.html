@@ -1,0 +1,618 @@
+{% extends "base_new.html" %}
+
+{% block title %} {% if training_class.page_tilte ==none or training_class.page_tilte =='' %}{{ training_class.title }}-国内专业的Android职业技能在线学习平台
+    {% else %}
+        {{ training_class.page_tilte  }}
+    {% endif %}
+
+{% endblock %}
+
+{% block keywords %}{{ training_class.page_keywords }}{% endblock %}
+
+{% block description %}{{ training_class.page_description }}{% endblock %}
+
+
+
+
+{% block main_block %}
+
+
+    <div class="train-header"
+         data-href="http://cniao5-imgs.qiniudn.com/FmmzD0PdroWkFzqVFEUTKO-BQqOP"
+        data-sharpness="40"
+        data-class-id="{{ training_class.id }}"
+        data-is-join-class="{% if is_join_class %}1{%else  %}0{% endif %}"
+    >
+
+        {% if is_join_class %}
+
+            <div
+                    id="study-progress"
+                    data-start-time="{{ train_user.created_time }}"
+                         data-total-days="{{ training_class.learn_days }}"
+                         data-status-check-url="{{ url_for('train.user_active_task',class_id=training_class.id) }}"
+                         >
+
+            </div>
+        {% endif %}
+
+        <div class="container">
+
+            <div class="course-info">
+
+                <div class="avatar-wrap hidden-xs">
+
+                    <img class="img-responsive" src="{{ training_class.logo_url }}"#}
+                                 alt="{{ training_class.title }}">
+
+                </div>
+
+                <div class="title">
+                    {{ training_class.title }}
+                </div>
+
+                 {% if is_join_class %}
+
+                   <div class="study-info">
+
+                    <ul class="data">
+
+                        <li>
+                            <span>{{ train_user.ranking }}</span>
+                            排名
+                        </li>
+                        <li>
+                            <span>{{ train_user.course_credit }}</span>
+                            学分
+                        </li>
+
+                        <li>
+                            <span>{{ training_class.total_students }}</span>
+                            学习数
+                        </li>
+                    </ul>
+
+                   </div>
+
+                {% else %}
+                  <div class="desc">
+                     {{ training_class.intro }}
+                  </div>
+                 <div class="learn-num">
+                    <i class="icon icon-user2 mr5"></i>{{ training_class.total_students }}人正在学习
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+            <div class="metas">
+
+                    {% if  is_join_class==false %}
+
+
+                        <button  class="btn btn-xlg  btn-primary  js-btn-join"
+                                 data-join-url="{{ url_for('train.join_train_class') }}"
+                                 data-is-open="{{ training_class.is_open }}"
+                                data-user-check-url="{% if current_user.is_authenticated() %} {{ url_for('common.check_user_profile_complete',id =current_user.id ) }} {% endif %}"
+                                 data-apply-status="{{ apply.status }}"
+                                >学习该课程</button>
+
+
+
+                     {% else %}
+
+                        <a href="javascript:void(0)" class="btn btn-primary  ">
+                                进入课程讨论区
+                        </a>
+                        <a href="{{ training_class.qqgroup.group_link }}" class="btn btn-warning  " target="_blank">
+                           <i class="icon icon-qq"></i> 加入课程QQ群
+                        </a>
+
+                    {% endif %}
+
+                    <div class="share js-social-share-params"
+                         style="line-height: 0px"
+                            data-title="{{ training_class.title  }}"
+                                             data-summary="{{ training_class.title  }}"
+                                             data-message="{{ training_class.page_description }}"
+                                             data-url="{{ url_for('train.detail',id=training_class.id,_external=True) }}"
+                                             data-picture="{{ training_class.logo_url }}"
+                            >
+                            分享:
+
+                                <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url=""><i class="icon icon-weixin"></i></a>
+                                <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="icon icon-weibo"></i></a>
+                                <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="icon icon-qq"></i></a>
+                                <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="icon icon-icon-qzone-full"></i></a>
+
+                            </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <section class="mtl ">
+
+        <div class="container">
+
+            <div class="row">
+
+                 <div class="col-lg-9 col-md-8">
+
+
+                     {% for m in training_class.modules %}
+
+                         <div class="px-class  section-white">
+
+                              <div class="text-line">
+                                <h5>
+                                    第<strong class="color-danger">{{ m.sort_num }}</strong>阶段：
+
+                                    <span class="module-title">{{ m.title }}</span>
+                                </h5>
+                                <div class="subtitle"> 目标: <span class="study_target">{{ m.target }}</span> </div>
+
+                            </div>
+
+
+                             <div class="plan-step-wrap js-route-panel" id="js-route-panel">
+
+                                  <ul class="plan-step clearfix">
+
+                                      {% for t in m.tasks %}
+
+                                        <li id="litask{{ t.id }}"
+                                                class="step-item clearfix  js-step-item{{ t.id }}  {% if loop.first %}step-first{% endif %}  {% if loop.last %}step-last{% endif %}
+
+                                        ">
+                                            <i class="line"></i>
+                                            <i class="dot"></i>
+                                            <span class="hd pull-left">
+
+                                                <a href="javascript:;" class="title">
+                                                    任务{{ loop.index }}: {{ t.title }}
+                                                </a>
+                                            </span>
+                                            <i class="v-line pull-left"></i>
+
+                                            <div class="bd pull-left clearfix">
+
+                                                 <span class="step-anchor">学习周期: {{ t.min_study_days }}-{{ t.max_study_days }}天</span>
+                                            </div>
+
+
+                                            <div class="step-medias-wrap">
+
+
+                                                <div class="step-medias  course-list row">
+
+                                                    {% for c in t.courses %}
+
+
+                                                          <div class="col-md-4 col-sm-6">
+
+                                                            <div class="course-item js-course-item"
+                                                                 data-task-id="{{ t.id }}"
+                                                                 data-course-url="{{ url_for('course.course_detail',id=c.id) }}"
+
+
+                                                                >
+                                                                <div class="course-img">
+                                                                    <a href="javascript:void(0)">
+
+                                                                        <img src="{{ c.img_url }}" alt="{{ c.name }}" class="img-responsive">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="course-info">
+                                                                    <div class="title">
+                                                                        <a class="" href="javascript:void(0)" target="_blank">
+                                                                            {{ c.name }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="metas clearfix"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    {% endfor %}
+
+
+                                                </div>
+
+                                            <div class="text-center ">
+                                                <a href="javascript:;"
+                                                   class="btn btn-rectangle btn-warning {% if is_join_class==false %} disabled{% endif %} js-finish-task js-finish-task{{ t.id }}"
+
+                                                   data-task-id="{{ t.id }}"
+                                                    data-task-status-url="{{ url_for('train.task_status',id=t.id) }}"
+                                                   data-url="{{ url_for('train.task_finish',id=t.id) }}"
+                                                >
+                                                    设为完成
+                                                    <i class="icon icon-gou"></i>
+                                                </a>
+                                            </div>
+
+                                            </div>
+
+                                        </li>
+
+                                      {% endfor %}
+
+
+                                  </ul>
+
+
+
+                             </div>
+
+                         </div>
+
+                       {% endfor %}
+
+                 </div>
+
+                 <div class="col-lg-3 col-md-4">
+
+
+
+                        <div class="panel panel-default study-rank">
+                        <div class="panel-heading">
+
+                            <a href="" title="时时更新排名" class="more"><i class="icon icon-question2"></i></a>
+                            <h3 class="panel-title">
+                                <i class="icon icon-zan"></i>
+                                学霸版
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {% for rank in ranks %}
+
+                                 <div class="media media-default">
+                                <div class="media-left">
+                                    <a class=" js-user-card-xx"
+                                       href="javascript:void(0)" data-card-url="/user/{{ rank.user.id }}/card/show"
+                                       data-user-id="{{ rank.user.id }}" data-original-title="" title="">
+
+
+                                        {% if rank.user.logo_url is none or rank.user.logo_url=='' %}
+                                            <img class="avatar-md" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                        {% else %}
+                                            <img class="avatar-md" src="{{ rank.user.logo_url }}">
+                                        {% endif %}
+                                    </a>
+
+                                </div>
+                                <div class="media-body">
+                                    <div class="title">
+                                        <a class="link-dark link-light">{{ rank.user.username }}</a>
+
+                                    </div>
+                                    <div class="content">学分:{{ rank.course_credit }}</div>
+                                </div>
+
+                                <div class="media-right rank1">
+                                    <span class="rank-num">{{ loop.index }}</span>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                    {% if is_join_class %}
+
+{##}
+{#                        <div class="panel panel-default">#}
+{##}
+{#                            <div class="panel-heading">#}
+{##}
+{#                                <h3 class="panel-title">#}
+{#                                    <i class="icon icon-star"></i>#}
+{#                                    当前任务#}
+{#                                </h3>#}
+{##}
+{#                             <div class="more">#}
+{#                                 共 <span class="color-danger">#}
+{#                                     {% if train_user.current_task ==none %}#}
+{#                                         0#}
+{#                                     {% else %}#}
+{##}
+{#                                         {{ (train_user.current_task.should_finish_time -  train_user.current_task.should_start_time).days}}#}
+{##}
+{#                                     {% endif %}#}
+{##}
+{#                                 </span> 天#}
+{##}
+{#                              </div>#}
+{##}
+{##}
+{#                            </div>#}
+{##}
+{#                            <div class="panel-body">#}
+{##}
+{#                                {% if train_user.current_task ==none %}#}
+{#                                   <div class="empty">还未开始任务</div>#}
+{#                                {% else %}#}
+{##}
+{#                                    {% if train_user.current_task.status ==2 %}#}
+{##}
+{#                                         <div class="color-primary text-center">#}
+{#                                             已完成,请开启下一个任务#}
+{##}
+{#                                         </div>#}
+{#                                    {% else %}#}
+{##}
+{#                                        <div class="task-countdown-container"#}
+{#                                         data-task-start-time="{{ train_user.current_task.reality_start_time }}"#}
+{#                                         data-task-days ="{{ (train_user.current_task.should_finish_time - train_user.current_task.should_start_time).days}}"></div>#}
+{##}
+{#                                    {% endif %}#}
+{##}
+{##}
+{##}
+{#                                {% endif %}#}
+{##}
+{##}
+{##}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+
+
+                        <div class="panel panel-default  live-course-body  ">
+
+                            <div class="panel-heading">
+
+                                <h3 class="panel-title">
+                                    <i class="icon icon-clock3"></i>
+                                   我的学习计划表
+                                </h3>
+
+                                <a href="" class="more">
+                                    <i class="icon icon-share3"></i>
+                                </a>
+
+
+                            </div>
+                            <div class="panel-body es-live-list">
+
+                                {% if user_study_plan|length >0 %}
+
+                                    {% for p in user_study_plan %}
+
+
+                                        <div class="es-live-item">
+                                            <div class="live-content
+                                            {% if train_user.current_task.task_id == p.task.id %}
+                                            living
+                                            {% else %}
+                                            live
+                                            {% endif %}  mbl">
+                                                <div class="timeline">
+                                                    <span class="time-icon"><em></em></span>
+                                                    <a href="#litask{{ p.task.id }}"><span class="label label-success">任务{{ loop.index }}: {{ p.task.title }}</span></a>
+                                                </div>
+                                                <ul class="live-courses">
+                                                    <li><a href="">时间: <span>{{ p.should_start_time.strftime('%m-%d') }} - {{ p.should_finish_time.strftime('%m-%d') }}</span></a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                    {% endfor %}
+
+
+                                {% endif %}
+
+
+
+
+                            </div>
+
+                        </div>
+
+
+                    {% else %}
+
+
+                    {% endif %}
+
+
+                 </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+  <div class="modal" id="tip-dialog">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content clearfix">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">完善个人信息</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-success text-center">
+
+                    您的个人信息不完善，请先到会员中心完善 :
+
+
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <a id="btn-info" href="{{ url_for('member.setting_info')}}" class=" btn btn-success hidden" >  </a>
+                <a id="btn-head" href="{{ url_for('member.setting_avatar')}}" class=" btn btn-success hidden" > 上传 <strong>《头像》</strong> </a>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+  <div class="modal" id="class-dialog">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content clearfix">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">加入提示</h4>
+            </div>
+
+            <div class="modal-body text-center">
+
+
+
+                 <div class="color-danger" style="margin-bottom: 10px;font-size: 15px">
+                     该课程目前只对高级VIP用户开放学习,分享该课程给10个好友即可申请获取学习资格.
+                 </div>
+
+
+
+                    <div class="share js-social-share-params"
+                         style="font-size: 25px"
+                         data-title="《{{ training_class.title  }}》"
+                                     data-summary="我正在学习菜鸟窝《{{ training_class.title  }}》"
+                                     data-message="{{ training_class.page_description }}"
+                                     data-url="{{ url_for('train.detail',id=training_class.id,_external=True) }}"
+                                     data-picture="{{ training_class.logo_url }}">
+
+                     <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url=""><i class="icon icon-weixin"></i></a>
+                        <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="icon icon-weibo"></i></a>
+                        <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="icon icon-qq"></i></a>
+                        <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="icon icon-icon-qzone-full"></i></a>
+
+
+                </div>
+
+
+
+
+            </div>
+
+            <div class="modal-footer">
+
+                <a  href="{{ url_for('train.join_apply',id=training_class.id)}}" class=" btn btn-primary " > 先填写申请信息 </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+  <div class="modal" id="join-cf-dialog">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content clearfix">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">报名提示</h4>
+            </div>
+
+            <div class="modal-body">
+
+               <p class="color-primary">
+                该课程为任务学习制,请按时完成学习任务,否则将会被取消学习资格
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <a id="btn-start-task" href="javascript:;" class=" btn btn-primary " > 确 认 </a>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+  <div class="modal" id="join-tip-dialog">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content clearfix">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">报名须知</h4>
+            </div>
+
+            <div class="modal-body">
+
+               <p class="color-danger" style="font-size: 18px">
+                    本课程为任务学习制,需要在规定的时间内完成相应的学习任务. <br>
+                   如延时完成,将会被取消学习资格.
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <a id="btn-cfg-join-class" href="javascript:;" class="  btn btn-primary " > 确 认 开通 </a>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.mainScript = 'path-js/app';
+        app.controller='app/training';
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

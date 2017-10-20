@@ -1,0 +1,174 @@
+{% extends "member/base.html" %}
+{% set active_page = 'coupons' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+    <div class="section-header"><h3>我的优惠码</h3></div>
+
+{#    <div class="alert alert-success alert-dismissible" role="alert"#}
+{#                             >#}
+{#            <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+{#                <span aria-hidden="true">×</span>#}
+{#            </button>#}
+{#            把优惠码赠予好友，好友使用该优惠码购买课程后您可以获取相应金额的现金返现#}
+{#        </div>#}
+
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover" id="orders-table">
+
+                    <thead>
+                        <tr>
+                            <th>优惠码</th>
+                            <th>适用课程</th>
+                            <th>抵扣金额</th>
+                            <th>返现金额</th>
+                            <th>到期时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% if coupons|length <=0 %}
+
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <span class="empty">暂无优惠码</span>
+                            </td>
+                        </tr>
+                    {% else %}
+                        {% for c in coupons %}
+                            <tr>
+                                <td>{{ c.code }}</td>
+                                <td>{{ c.use_for_title }}</td>
+                                <td>{{ c.val }}</td>
+                                <td>
+                                    <a
+                                            data-container="body"
+                                               data-toggle="popover"
+                                               data-trigger="hover" data-placement="top"
+                                               data-html="true" title=""
+                                               data-content="把优惠码赠予好友，好友使用该优惠码购买课程您可以获取 {{ c.payback }} 元现金返现"
+                                            >
+                                         {{ c.payback }}
+                                    </a>
+                                  </td>
+                                <td> <span class="text-muted small">{{ c.expiry_time }}</span> </td>
+                                <td>
+                                   {% if c.state ==1 %}
+                                    <span class="label label-success">未使用</span>
+                                   {% elif c.state ==3 %}
+                                        <span class="text-muted">已使用</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+
+                                    {% if c.state ==1 and c.allow_give %}
+
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-sm btn-warning give"
+                                           data-coupon-code="{{ c.code }}"
+                                           data-coupon-id="{{ c.id }}">赠予好友</a>
+
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+        <div class="modal" id="give-dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content clearfix">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h4 class="modal-title">赠予好友优惠卷</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form id="form-give" action="" class="form-horizontal " data-post-url="{{ url_for('member.coupon_give') }}">
+
+                              <div class="form-group">
+                                <label class="col-md-3 control-label">优惠码</label>
+                                <div class="col-md-7 controls">
+                                    <div class="control-text coupon-code">
+
+                                    </div>
+                                </div>
+                              </div>
+
+
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label" for="user-phone">好友手机号</label>
+                                <div class="col-md-7  controls">
+                                  <input class="form-control " type="text"
+                                         name="user-phone"
+                                         id="user-phone"
+                                         placeholder="好友手机号"  >
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                              </div>
+
+
+                            <div class="form-group">
+                                <div class=" col-md-offset-3 col-md-7 controls">
+                                    <div class="">
+                                        <button id="btn-submit" class="btn btn-primary "  data-submiting-text="正在保存" type="submit">确定赠予</button>
+                                    </div>
+                                </div>
+                              </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/coupons';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+{% endblock %}
+

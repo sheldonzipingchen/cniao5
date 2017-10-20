@@ -1,0 +1,107 @@
+{% extends "member/base.html" %}
+{% set active_page = 'index' %}
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+        <div class="section-header"><h3>我的课程</h3></div>
+
+        <ul class="nav nav-pills">
+            <li class=""><a href="{{ url_for('member.course_learning') }}">学习中</a></li>
+            <li class=""><a href="{{ url_for('member.course_done') }}">已学完</a></li>
+            <li class="active"><a href="{{ url_for('member.course_fav') }}">收藏课程</a></li>
+        </ul>
+
+         <ul class="course-grids">
+
+            {% for fav in course_favorites %}
+
+                  <li class="course-grid">
+                    <a href="{{ url_for('course.course_detail',id=fav.clazz.id) }}" class="grid-body" target="_blank">
+                        <img src="{{ fav.clazz.img_url }}" class="img-responsive thumb">
+
+                        <span class="title">{{ fav.clazz.name }}</span>
+
+
+                        <span class="metas clearfix">
+                            <span class="price-col">
+                            <span class="meta-label">价格</span>
+                            <span class="price-num">
+
+                                 {% if fav.clazz.types==2 %}
+
+                                                        <span>{{ fav.clazz.now_price }}</span>
+                                                  {% else %}
+
+
+                                                        {% if fav.clazz.is_free == 1 %}
+                                                            <span class="text-success">免费</span>
+                                                        {% else %}
+                                                            <span class="text-danger">会员</span>
+                                                        {% endif %}
+
+
+                                                  {% endif %}
+                            </span>
+                        </span>
+
+
+                        <span class="review-col">
+                                       <span class="meta-label"><strong>{{ fav.clazz.comment_count }}</strong> 评价</span>
+                                            <span class="review-rating">
+                                                <span class="stars-5">&nbsp;</span>
+                                            </span>
+                                       </span>
+
+                        </span>
+
+                         <span class="teacher clearfix">
+                              {% if fav.clazz.teacher.logo_url is none or fav.clazz.teacher.logo_url =='' %}
+                                <img src="{{ url_for('static', filename='images/head_defualt.jpg') }}"
+                                 class="thumb">
+                            {% else %}
+                                <img src="{{ fav.clazz.teacher.logo_url }}"
+                                    class="thumb">
+                            {% endif %}
+
+                          <span class="nickname ellipsis">{{ fav.clazz.teacher.username }}</span>
+                          <span class="user-title ellipsis">金牌讲师</span>
+                        </span>
+
+
+                    </a>
+                </li>
+            {% endfor %}
+
+          </ul>
+    </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+{#            app.controller='app/index';#}
+            app.mainScript = 'path-js/app';
+            app.currItem = 1;
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+
+
+
+<table class="table table-hover ">
+
+                <thead>
+                        <tr>
+                            <th>模板名称</th>
+                            <th>邮件主题</th>
+                            <th>调用名称</th>
+                            <th>创建时间</th>
+                            <th>模板类型</th>
+                            <th>审核状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                <tbody >
+
+                    {#foreach $T as ep}
+
+                        <tr>
+                            <td>{{ $T.ep.name }}</td>
+                            <td>
+                                <a href="javascript:void(0)" onclick="runCode(this)" data="{{ $T.ep.html }}">{{ $T.ep.subject }}</a>
+                            </td>
+                            <td>{{ $T.ep.invoke_name }}</td>
+                            <td>{{ $T.ep.gmt_created }}</td>
+                            <td> {#if $T.ep.email_type== 1} 批量 {#else} 触发 {#/if}</td>
+                            <td> {#if $T.ep.is_verify== 1} 通过 {#else} 待审核 {#/if}</td>
+                            <td>
+
+                                {#if $T.ep.email_type== 1}<a href="/admin/email/prepare/{{ $T.ep.invoke_name }}"> 发送邮件</a> {#/if}
+                            </td>
+                        </tr>
+
+                   {#/for}
+                </tbody>
+
+
+
+             </table>

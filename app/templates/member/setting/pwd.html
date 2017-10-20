@@ -1,0 +1,88 @@
+{% extends "member/base.html" %}
+{% set active_page = 'setting_info' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+        <div class="section-header"><h3>修改密码</h3></div>
+
+          <form id="user-pwd-form" class="form-horizontal" method="post" novalidate="novalidate" data-post-url="{{ url_for('member.update_pwd') }}" >
+
+
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="old_pwd">原密码</label>
+                                <div class="col-md-7 controls radios">
+                                    <input type="password" id="old_pwd" name="old_pwd" class="form-control" >
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="new_pwd">新密码</label>
+                                <div class="col-md-7 controls radios">
+                                    <input type="password" id="new_pwd" name="new_pwd" class="form-control" >
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                        <label class="col-md-2 control-label" for="new_pwd_cfr">再输入一次</label>
+                                        <div class="col-md-7 controls radios">
+                                            <input type="password" id="new_pwd_cfr" name="new_pwd_cfr" class="form-control" >
+                                            <div class="help-block" style="display:none;"></div>
+                                        </div>
+                             </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-2">
+                                    <button id="pwd-save-btn" data-submiting-text="正在保存" type="submit" class="btn btn-primary">确认修改</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </form>
+
+
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+        var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/"
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/pwd';
+            app.mainScript = 'path-js/app';
+
+
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

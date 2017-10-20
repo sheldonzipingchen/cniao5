@@ -1,0 +1,305 @@
+
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+.p{
+    color: #000;
+}
+.p40{
+    font-size: 40px;
+    color: #000;
+}
+.p20{
+    font-size: 20px !important;
+}
+.p25{
+    font-size: 25px !important;
+}
+.p30{
+    font-size: 30px !important;
+}
+
+.title{
+    font-size: 20px;
+    color: #000;
+}
+
+.sub_title{
+
+    text-align: center;
+    color: #5d5c5c;
+}
+
+.color_yellow{
+    color: #FF8800 !important;
+}
+
+.color_blue{
+    color: #00ABD7 !important;
+}
+
+.color_green{
+    color: #00A082 !important;
+}
+.color_white{
+    color: #ffffff !important;
+}
+
+.color_red{
+    color: #E21127 !important;
+}
+
+
+
+
+.button_{
+    color:#f47378 !important;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid #f47378;
+    padding: 10px 40px;
+    border-radius: 20px
+}
+
+.circle{
+
+    width: 150px;
+    height: 150px;
+    background: #00A082;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+
+}
+
+.circle_box{
+    color: #ffffff;
+    padding-top: 30px;
+}
+
+.circle_box span{
+
+
+    font-size: 50px;
+    font-weight: 500;
+
+}
+
+.circle_box p{
+    margin-top: 10px;
+    font-size: 20px;
+
+}
+
+.line_link{
+    background: #00A082;
+    width: 77px;
+    height: 6px;
+    margin-top: 75px;
+
+}
+
+
+
+
+.header{
+
+    font-size: 25px;
+    font-family: '微软雅黑';
+    color: #000;
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 20px;
+    margin-top: 20px;
+
+}
+
+.header.gray{
+    border-bottom: 1px solid #FF8800;
+}
+
+.box{
+    cursor: pointer;
+    padding: 10px 0px;
+}
+
+.box:hover{
+    background: #f1f1f1;
+}
+
+.box.gray:hover{
+    background: #fff;
+}
+
+
+.content{
+    border:  2px dashed #FF8800;
+    padding: 40px 20px;
+    margin-top: 30px;
+}
+
+.content .content-head{
+
+    font-size: 25px;
+}
+
+.content .content-head span{
+    font-size: 35px;
+}
+
+.content .content-body{
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+
+.content.step{
+    
+}
+
+.content.step.step1{
+    background: url("../images/class/num-1.png") 100% 100% no-repeat;
+}
+
+.content.step.step2{
+    background: url("../images/class/num-2.png") 100% 100% no-repeat;
+}
+
+.content.step.step3{
+    background: url("../images/class/num-3.png") 100% 100% no-repeat;
+}
+
+.content.step.step_finish{
+    background: url("../images/class/ico-09-b.png") 100% 100% no-repeat;
+}
+
+
+
+.button_:hover{
+
+    background: #f47378;
+    color: #fff !important;
+}
+
+.banner{
+    
+
+    height: 490px;
+
+
+}
+
+
+.teacher_detail{
+
+    margin-left: 20px;
+    width: 700px;
+
+}
+
+.teacher_desc{
+
+    font-size: 16px;
+    letter-spacing: 2px;
+
+}
+
+
+.class_dic{
+
+
+}
+
+.class_dic .li{
+
+    border-bottom: 8px solid #fff;
+    overflow: hidden;
+
+
+}
+
+.class_dic.white .li{
+    border-bottom: 8px solid #f1f1f1;
+}
+
+
+.class_dic_name{
+
+    width: 250px;
+}
+.class_dic_name p{
+
+    margin-top: 40px;
+}
+
+.class_dic_list{
+    border-left: 5px solid #fff;
+    padding: 20px;
+}
+
+.class_dic_list.white{
+    border-left: 5px solid #f1f1f1;
+}
+
+.class_dic_list li{
+    border: none;
+    font-size: 18px;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+
+
+
+
+
+
+
+.block{
+
+    padding: 20px 0px;
+}
+
+
+
+.one_div{
+
+    height: 100px;
+
+   line-height: 100px;
+}
+
+
+.three_div{
+
+    margin-top: 20px;
+    padding: 20px 0px;
+
+}
+
+.four_div{
+    background: #fff;
+
+    margin-top: 20px;
+    padding: 20px 0px;
+
+
+    overflow: hidden;
+
+}
+
+.fiv_div{
+    padding: 20px 0px;
+}
+
+.six_div{
+    padding: 20px 0px;
+    background: #fff;
+}
+
+.seven_div{
+    padding: 20px 0px;
+}

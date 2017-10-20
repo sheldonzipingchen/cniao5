@@ -1,0 +1,33 @@
+ <div class="course-item">
+        <div class="course-img">
+        <a href="/course/{{cla.id }}" target="_blank">
+
+            <img src="{{ cla.img_url }}" alt="{{ cla.name }}" class="img-responsive">
+        </a>
+    </div>
+        <div class="course-info">
+            <div class="title">
+                <a class="link-dark" href="/course/{{cla.id }}" target="_blank">
+                   {{ cla.name }}
+                </a>
+            </div>
+            <div class="metas clearfix">
+                <span class="nums">{{cla.lessons_played_time}}人学习</span>
+                <span class=" pull-right">
+                      {% if cla.is_free==1 %}
+                          <span class="color-primary text-large">免费</span>
+                       {% else %}
+                          {% if cla.now_price !=none and cla.now_price>0 %}
+                              <span class="color-danger text-large">￥{{ cla.now_price }}</span>
+                           {% else %}
+                               <span class="color-danger text-large">会员</span>
+
+                          {% endif %}
+                      {% endif %}
+                </span>
+
+            </div>
+
+        </div>
+
+</div>

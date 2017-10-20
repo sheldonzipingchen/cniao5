@@ -1,0 +1,42 @@
+
+
+
+
+{#foreach $T as c}
+
+   <li class="media">
+
+        <div class="media-body pts">
+            <div class="media-heading">
+                <a class="title gray-darker" href="/forum/thread/{{ $T.c.id  }}" target="_blank"> {{ $T.c.title }}</a>
+
+                 {#if $T.c.is_hot}
+                    <span class="label label-danger">热门</span>
+                {#/if  }
+
+                {#if $T.c.is_top}
+                    <span class="label label-primary">置顶</span>
+                {#/if  }
+
+
+
+            </div>
+            <div class="brief">
+                {{ $T.c.brief }}
+            </div>
+
+            <div class="metas">
+
+                <span class="mlm timeago" datatime=" {{ $T.c.created_time }}" title=" {{ $T.c.created_time }}">
+                <i class="icon icon-clock3"></i>
+                    {{ $T.c.created_time }}
+                </span>
+                <span class="mlm"> <i class="icon icon-eye2"></i> {{ $T.c.read_count }}人围观</span>
+                <span class="mlm"> <i class="icon icon-comment"></i> {{ $T.c.reply_count }}人发表观点</span>
+
+            </div>
+        </div>
+     </li>
+
+{#/for}
+

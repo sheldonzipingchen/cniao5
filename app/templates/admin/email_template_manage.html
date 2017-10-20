@@ -1,0 +1,55 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+
+<script src="{{ url_for('static', filename='libs/jquery/jquery-jtemplates.js') }}"></script>
+
+
+
+
+<script type="text/javascript">
+
+
+
+    $(function(){
+
+        loadTemplates();
+    })
+
+    function loadTemplates(){
+
+
+        $.get('/admin/email/templates',function(data){
+
+
+                 $("#templates").setTemplateURL("{{ url_for('static', filename='jtemplate/admin/email/templates.html') }}?d="+(+new Date()));
+                 $("#templates").processTemplate(data.templates);
+            })
+
+    }
+
+    function runCode(self)  //定义一个运行代码的函数，
+    {
+
+       var target=$(self)
+      var code=target.attr('data');//即要运行的代码。
+      var newwin=window.open('','','');  //打开一个窗口并赋给变量newwin。
+      //newwin.opener = null // 防止代码对论谈页面修改
+      newwin.document.write(code);  //向这个打开的窗口中写入代码code，这样就实现了运行代码功能。
+      newwin.document.close();
+    }
+
+
+
+</script>
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+        <div class="well" id="templates"></div>
+
+    </div>
+{% endblock %}

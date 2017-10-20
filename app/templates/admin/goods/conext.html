@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'goods-content' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="goods-content"></div>
+
+    <div class="row">
+
+    <p>{{ goods.title }}</p>
+
+
+          <div id="editor-container"
+               class=""
+               data-img-upload-token-url="{{ url_for('common.get_qiniu_upload_token',bucket='cniao5-imgs') }}">
+
+                    <textarea id="goods_content"
+                        name="goods[content]"
+                        class="form-control"
+                        rows="20"
+                    >{{ goods.content if goods.content !=none }}</textarea>
+          </div>
+
+        <button class="btn btn-primary mts" data-id="{{ goods.id }}" data-post-url="{{ url_for(".goods_update") }}" id="btnSave">保存</button>
+
+    </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,342 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   菜鸟窝-国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,在线学Android开发,免费学Android开发,android官方培训,怎么学android,android高级培训,零基础学Android　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+{% block main_block %}
+
+
+
+
+
+<!--轮播广告  -->
+
+<section  class="cniao-poster swiper-container ">
+
+
+   <div class="menu container hidden-xs">
+
+        <div class="menuwrap"></div>
+            <div class="menuContent">
+
+                {% for m in menus %}
+
+                    <div class="item" >
+                        <a href="{{ m.redirect_url }}" target="_blank">
+                            <span class="group ">{{ m.title }}</span>
+                            <i class="icon icon-arrow-right3"></i>
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+    </div>
+
+
+    <div class="swiper-wrapper">
+
+        {% for banner in banners %}
+
+        <div class="swiper-slide swiper-hidden" style="background: {{ banner.bg_color }}" >
+            <div class="">
+                <a {% if banner.redirect_url is none or banner.redirect_url=='' %}href="javascript:void(0)" {% else %}href="{{ banner.redirect_url }}"  {% endif %} target="_blank" >
+                     <img class="img-responsive" data-echo="{{ banner.img_url }}"
+                          src="{{ banner.img_url }}" alt="{{ banner.name }}">
+                </a>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+    <div class="swiper-pager"></div>
+
+</section>
+
+
+
+<!--Android 就业课程-->
+<section class="introduction-section ">
+
+    <div class="container ">
+
+        <div class="text-line pvl">
+            <h5>
+                Android就业学习线路
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle color-primary">以就业为导向，精心打造的职业培训课程。游戏通关式教学，任务制学习</div>
+        </div>
+
+
+        <div class="text-center">
+            <a href="/train/android"  class="btn  btn-xlg btn-primary ">
+                立即学习
+            </a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12 introduction-item">
+                <img class="img-responsive" src="/static/images/icon_introduction_1.png">
+                <h4>体系化学习</h4>
+                <h5>体系化学习，掌握完整知识结构</h5>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 introduction-item">
+                <img class="img-responsive" src="/static/images/icon_introduction_2.png">
+                <h4>全面项目实战</h4>
+                <h5>BAT大牛带你开发，快速积累工作经验</h5>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 introduction-item">
+                <img class="img-responsive" src="/static/images/icon_introduction_3.png">
+                <h4>游戏通关试教学</h4>
+                <h5>魔鬼式的练习和测试，不通关不往后学</h5>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 introduction-item">
+                <img class="img-responsive" src="/static/images/icon_introduction_4.png">
+                <h4>全天在线答疑</h4>
+                <h5>讲师全天在线一对一解答问题</h5>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<!--end Android 就业课程-->
+
+<!--热门项目-->
+        <section class="project-course-section " id="course-list">
+            <div class="container">
+
+                <div class="text-line">
+                    <h5>
+                        热门项目课程
+                        <div class="line"></div>
+                    </h5>
+                    <div class="subtitle">以企业项目为导向，快速掌握实战技能</div>
+                </div>
+
+
+                <div class="course-list row">
+
+                    {% for cla in pro_list %}
+
+                        <div class="col-md-3 col-sm-6">
+
+                            {% include "course/item.html" %}
+                        </div>
+
+                    {% endfor %}
+
+
+
+            </div>
+
+             <div class="text-center mvl">
+                <a href="{{ url_for("course.course_topic_projects") }}" class="btn btn-default btn-lg">
+                    更多项目课程
+                    <!--<i class="mrs-o icon icon-arrow-right2"></i>-->
+                </a>
+             </div>
+          </div>
+        </section>
+
+        <!--end 热门项目-->
+
+
+        <!--热门课程-->
+        <section class="course-list-section " id="">
+
+            <div class="container">
+                <div class="text-line">
+                    <h5>
+                        热门课程
+                        <div class="line"></div>
+                    </h5>
+                    <div class="subtitle">学习量最高的课程</div>
+                </div>
+                <div class="course-list row">
+
+                    {% for cla in class_list %}
+
+                    <div class="col-md-3 col-sm-6">
+
+                       {% include "course/item.html" %}
+
+                    </div>
+
+
+                    {% endfor %}
+
+            </div>
+                <div class="text-center mvl">
+                <a href="{{ url_for("course.index") }}" class="btn btn-default btn-lg">
+                    更多课程
+                    <!--<i class="mrs-o icon icon-arrow-right2"></i>-->
+                </a>
+            </div>
+           </div>
+
+        </section>
+
+        <!--end 热门课程-->
+
+                <!--讲师-->
+        <section class="recommend-teacher ">
+            <div class="container">
+                <div class="text-line">
+                    <h5>
+                        推荐讲师
+                        <div class="line"></div>
+                    </h5>
+                    <div class="subtitle">汇集业界大牛，保证教学质量与学习效果</div>
+                </div>
+
+                <div class="row">
+
+                    {% for t in teach_list %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="teacher-item">
+                            <div class="teacher-top">
+                                <a class="teacher-img" >
+                                    <img class="avatar-lg" src="{{ t.logo_url }}" alt="">
+                                </a>
+                                <h3 class="title">
+                                    <a class="link-dark" >{{ t.user.username }}</a>
+                                </h3>
+                                <div class="position">
+                                    {{ t.company }}
+                                </div>
+                            </div>
+
+                                <div class="more">
+                                    {{ t.brief }}
+                                </div>
+                            <div class="teacher-bottom">
+
+                               <div class="metas">
+                                      <a class="btn  btn-primary follow-btn mrl" href="javascript:;"
+                                 data-url="{{ url_for('user.follow',id=t.user.id) }}"
+                                       data-status-url="{{ url_for('user.follow_status',id=t.user.id) }}"
+                             >关注</a>
+                        <a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="{{ url_for('user.unfollow',id=t.user.id) }}" style="display:none;">已关注</a>
+                        <a class="btn  btn-default js-send-message mrl"
+                        data-user-id="{{ t.user.id }}"
+                                data-user-head=" {% if t.user.logo_url is none or t.user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg')}} {% else %}{{ t.user.logo_url }} {% endif %} ">私信</a>
+
+
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+
+                <div class="text-center mvl">
+                <a href="{{ url_for("main.teachers") }}" class="btn btn-default btn-lg">
+                    更多讲师
+                </a>
+            </div>
+            </div>
+        </section>
+
+
+
+            <!--友情链接-->
+        <section class="friendlink-section hidden-xs">
+
+
+            <div class="container">
+                <div class="pvl">
+                    <h3>
+                        合作伙伴
+                        <div class="line"></div>
+                    </h3>
+
+                </div>
+
+
+            <div class="row">
+                <ul class="friendlink-list" >
+
+                        <li><a href="http://www.cniao5.com" target="_blank">菜鸟窝</a></li>
+
+                        <li><a href="http://www.cniao5.net" target="_blank">菜鸟窝论坛</a></li>
+
+                        <li><a href="http://www.jq-school.com" target="_blank">jquery学堂</a></li>
+
+                        <li><a href="http://www.jikequ.com" target="_blank">技客区</a></li>
+
+                        <li><a href="http://www.baofengcloud.com" target="_blank">暴风云视频</a></li>
+
+                        <li><a href="http://mx.nonobank.com/" target="_blank">名校贷</a></li>
+
+                        <li><a href="http://www.qiniu.com/" target="_blank">7牛</a></li>
+
+                        <li><a href="http://www.lcode.org" target="_blank">江清清技术专栏</a></li>
+
+                </ul>
+            </div>
+
+            </div>
+
+
+        </section>
+
+
+
+
+
+    <div class="cniao-service clearfix">
+
+      <div >
+          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2974458870&site=qq&menu=yes">
+            <img class="img-service" src="/static/images/icon-qq.png">
+          </a>
+      </div>
+
+
+
+      <div class="wechat">
+        <img src="/static/images/icon-wechat.png" >
+        <div class="wechat-hover">
+          <img src="/static/images/rcode_for_weixin.jpg" width="150px" height="150px" >
+        </div>
+      </div>
+  </div>
+
+
+{% endblock %}
+
+
+
+     {% block custom_js_block %}
+
+
+            <script type="text/javascript">
+
+                var app={};
+                app.debug = true;
+                app.jsPaths={};
+                app.global_script='path-js/global-config';
+                app.controller='app/index';
+                app.mainScript = 'path-js/app';
+                app.currItem = 1;
+
+                seajs.use(app.mainScript);
+
+            </script>
+
+
+    {% endblock %}
+

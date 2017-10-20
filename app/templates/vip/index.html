@@ -1,0 +1,162 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   会员专区-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div class="vip-banner" style="background:#e83d2c ">
+            <div class="container">
+                <div class="vip-banner-thumb">
+                    <img class="img-responsive" src="{{ url_for('static', filename='images/vip_banner.jpg') }}" alt="">
+                </div>
+                <div class="vip-user hidden-sm hidden-xs">
+
+                {% if current_user.is_authenticated() %}
+                    <a class="user-avatar" >
+
+                        {% if current_user.logo_url is none or current_user.logo_url=='' %}
+                                    <img  src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                        {% else %}
+                            <img  src="{{ current_user.logo_url }}">
+                        {% endif %}
+                    </a>
+                    <h3><a class="link-dark text-overflow" href="#">{{ current_user.username }}</a></h3>
+
+                    {% if is_vip %}
+
+                        <p class="text-danger mbl">您是尊贵的高级会员</p>
+                        <p><a class="btn btn-warning mrm js-buy-vip" href="{{ url_for('vip.buy') }}">会员续费</a></p>
+                        <p class="text-muted text-sm mtl">{{ product_order.cancel_time }} 到期</p>
+
+                    {% else  %}
+                         <p class="text-muted mbl">您还不是会员</p>
+                        <p><a class="btn btn-danger btn-xlg js-buy-vip" href="{{ url_for('vip.buy') }}">开通会员</a></p>
+                        <p class="text-muted text-sm mtl">开通会员，享受更多课程！</p>
+                    {%endif %}
+
+
+
+
+                {% else %}
+
+                    <a class="user-avatar" >
+
+
+                       <img  src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+
+                    </a>
+                    <h3><a class="link-dark" href="javascript:void(0)">您好</a></h3>
+                    <p class="text-muted mbl">请登录后查看会员状态</p>
+                    <p><a class="btn btn-danger btn-xlg " href="{{ url_for('auth.login',next=url_for('vip.index')) }}">立即登录</a></p>
+
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="vip-filer">
+
+           <div class="container">
+
+               <div class="text-line">
+                   <h5><span>会员特权</span><div class="line"></div></h5>
+               </div>
+
+                <div class="vip-show">
+
+                    <div class="cniao-piece piece-lg">
+
+                        <div class="course-list">
+
+                            <div class="row">
+
+                                  {% for cla in vip_courses%}
+
+                                    <div class="col-md-3 col-sm-6">
+
+                                       {% include "course/item.html" %}
+
+                                    </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="vip-new-member">
+
+                  <div class="container">
+                       <div class="text-line">
+                           <h5>最新会员<div class="line"></div></h5>
+                       </div>
+
+                       <div class="member-list clearfix">
+
+
+                           {% for m in vip_members %}
+
+                                <a  class="js-user-card"  href="{{url_for('user.detail',id=m.id) }}" data-user-id="{{ m.id }}" data-card-url="{{ url_for('user.user_public_info',id=m.id) }}">
+
+
+                                 {% if m.logo_url is none or m.logo_url=='' %}
+                                    <img class="avatar-md"  src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                {% else %}
+                                    <img  class="avatar-md" src="{{ m.logo_url }}">
+                                {% endif %}
+
+                                </a>
+
+                            {% endfor %}
+
+                       </div>
+
+
+
+                  </div>
+        </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+        app.controller='app/vip';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

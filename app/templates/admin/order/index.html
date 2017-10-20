@@ -1,0 +1,155 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'orders' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="orders"></div>
+
+
+    <div class="cniao-section">
+
+
+            <form class="form-inline mbm text-center" role="form">
+
+                <div class="form-group">
+                    <input id="txt_query" type="text" class="form-control"  placeholder="输入订单号">
+                  </div>
+                  <a href="javascript:" data-url="{{ url_for(".orders",status='',pay='') }}" class="btn btn-default js-search">查询</a>
+            </form>
+            <hr>
+
+            <div class="btn-group">
+                  <a href="{{ url_for(".orders",status='',pay=pay) }}" class="btn btn-default {% if status==none %}active{% endif %}">全部</a>
+                  <a href="{{ url_for(".orders",status='TRADE_SUCCESS',pay=pay) }}" class="btn btn-default {% if status=='TRADE_SUCCESS' %}active{% endif %}">已付款</a>
+                  <a href="{{ url_for(".orders",status='INIT',pay=pay) }}" class="btn btn-default {% if status=='INIT' %}active{% endif %}">未付款</a>
+                  <a href="{{ url_for(".orders",status='CANCEL',pay=pay) }}" class="btn btn-default {% if status=='CANCEL' %}active{% endif %}">取消</a>
+                  <a href="{{ url_for(".orders",status='EXPIRE',pay=pay) }}" class="btn btn-default {% if status=='EXPIRE' %}active{% endif %}">超时</a>
+                  <a href="{{ url_for(".orders",status='REFUND',pay=pay) }}" class="btn btn-default {% if status=='REFUND' %}active{% endif %}">退款</a>
+            </div>
+
+
+             <div class="btn-group ml25">
+                  <a href="{{ url_for(".orders",status=status,pay='') }}" class="btn btn-default {% if pay==none %}active{% endif %}">全部</a>
+                  <a href="{{ url_for(".orders",status=status,pay='ALIPAY') }}" class="btn btn-default {% if pay=='ALIPAY' %}active{% endif %}">付费订单</a>
+                  <a href="{{ url_for(".orders",status=status,pay='FREE') }}" class="btn btn-default {% if pay=='FREE' %}active{% endif %}">免费订单</a>
+
+             </div>
+            <div class="pull-right">
+                {{ pagination.info }}
+            </div>
+
+
+
+        <table class="table table-condensed  table-hover table-responsive">
+
+            <thead>
+            <tr>
+                <th>课程/套餐</th>
+                <th>用户</th>
+                <th>价格</th>
+                <th>时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            
+            {% for order in orders %}
+
+                <tr>
+                    <td>
+                        <span class="gray-darker">{{ order.title }}</span>
+                        <br>
+                        <span class="text-sm">{{ order.order_num }}</span>
+                    </td>
+                    <td>
+
+                            <span class="gray-darker"> {{ order.user.username }} </span>
+                                <br>
+                        <span  class="text-small"> 电话:{{ order.user.mobi }} </span>
+                    </td>
+                    <td>
+
+                        <span class="text-large">{{ order.total_price }}</span>
+
+                        {% if order.trade_status =='INIT' %}
+
+                            <a  href="javascript:" class="js-update ml10"
+
+                                         data-id="{{ order.id }}"
+                                         data-val="{{ order.price }}"
+                                         data-action="price"
+                                         data-url="{{ url_for(".order_update") }}"
+
+                                    >
+                                      修改
+                                    </a>
+                        {% endif %}
+                    </td>
+                    <td><span class="text-sm">{{ order.created_date }}</span></td>
+                    <td>
+
+                        {% if order.trade_status =='INIT' %}
+                            <span class="color-primary">待付款</span>
+
+                         {% elif order.trade_status =='TRADE_SUCCESS' %}
+                            <span class="color-success">已付款</span>
+
+                        {% elif order.trade_status =='CANCEL' %}
+                            <span class="color-gray">取消</span>
+
+                        {% elif order.trade_status =='EXPIRE' %}
+                            <span class="color-gray">超时</span>
+
+                        {% elif order.trade_status =='REFUND' %}
+                            <span class="color-danger">退款</span>
+                        {% endif %}
+
+                    </td>
+                    <td>
+                          {% if order.trade_status =='INIT' %}
+
+                                  <div class="btn-group" role="group">
+                                    <a  href="javascript:" class="btn btn-default js-update-status"
+
+                                         data-id="{{ order.id }}"
+                                         data-val="CANCEL"
+                                         data-action="status"
+                                         data-url="{{ url_for(".order_update") }}"
+                                    >
+                                      取消订单
+                                    </a>
+
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                      <li><a href="">删除</a></li>
+                                    </ul>
+                              </div>
+
+                         {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+    {{ pagination.links }}
+
+    </div>
+
+
+      <div  id="dialog-modify" style="display: none">
+        <div  style="padding: 20px" class="">
+
+            <input id="txt_val" class="form-control">
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

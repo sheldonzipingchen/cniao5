@@ -1,0 +1,450 @@
+{% extends "base_new.html" %}
+
+
+
+{% block title %} {{ class_item.name }} 菜鸟窝-国内专业的Android职业技能在线学习平台{% endblock %}
+{% block keywords %}{{ class_item.key_words }}{% endblock %}
+{% block description %}{% endblock %}
+
+
+
+{% block main_block %}
+
+        {% set is_vip = class_item.is_vip() %}
+
+         <div id="content-container"
+              data-class-id="{{ class_item.id }}"
+              data-class-auth-url="{{ url_for('course.course_authority',id=class_item.id) }}">
+
+
+             <section   class="course-detail-header before">
+
+                  <div class="container">
+
+                       <div class="cniao-section clearfix">
+
+                             <div class="course-header-top clearfix">
+
+                                <div class="course-img">
+                                    <img class="img-responsive" src="{{ class_item.img_url }}" alt="{{ class_item.name }}">
+                                    <div class="tags">
+
+                                        {% if class_item.lessons_finished_count >= class_item.lessons_count %}
+                                             <span class="tag-finished"></span>
+                                        {% else %}
+                                            <span class="tag-serialing"></span>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+
+                                <div class="course-info">
+                                    <h2 class="title">{{ class_item.name }}</h2>
+
+
+
+
+                                    <div class="metas">
+
+                                      {% if  is_vip %}
+                                          <span class="text-danger mbs">会员可免费学习此课程</span>
+
+                                      {% endif %}
+
+                                        <p class="discount-price">
+
+                                        {% if class_item.now_price>0 %}
+
+                                             <label>价格</label>
+                                            <span class="course-price-widget">
+                                                <span class="price">
+
+                                                  {% if class_item.is_free==1 %}
+
+                                                      <span class="text-success">免费</span> <!-- 免费课程-->
+
+                                                  {% elif class_item.is_free==0 and class_item.now_price>0 %} <!-- 付费-->
+
+                                                        <span>{{ class_item.now_price }}</span>
+
+                                                  {% endif %}
+
+
+                                                </span>
+                                            </span>
+
+                                            {% if class_item.cost_price >0 %}
+
+                                                <span class="discount">原价：{{ class_item.cost_price }}</span>
+                                           {% endif %}
+
+                                        {% endif %}
+
+
+
+                                        </p>
+                                    </div>
+
+                                    <ul class="course-data">
+
+                                        <li>
+
+
+                                            <div class="block">
+                                                <span class="total-lesson-count">{{ class_item.lessons_count }}</span>
+                                                总课时
+                                            </div>
+
+
+                                        </li>
+
+
+                                        <li>
+                                            <a href="javascript:void (0)"
+                                               style="color: #f3f3f3"
+                                               data-container="body"
+                                               data-toggle="popover"
+                                               data-trigger="hover" data-placement="top"
+                                               data-html="true" title=""
+                                               data-content="从购买日起，学习周期为{{ class_item.expiry_day }}天"
+
+                                                    >
+                                                <div class="block">
+                                                    <span>{{ class_item.expiry_day }}</span>
+                                                    有效期
+                                                </div>
+                                              </a>
+
+
+                                        </li>
+
+
+
+                                        <li>
+
+                                            <div class="block">
+                                                <span>{{ class_item.lessons_played_time }}</span>
+                                                学习数
+                                            </div>
+
+
+                                        </li>
+                                        <li>
+
+                                            <div class="block">
+                                                <span>{{ class_item.comment_count }}</span>
+                                                评价数
+                                            </div>
+
+
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="actions">
+
+                                        {% if class_item.is_free==0 and class_item.now_price >0 %}
+
+
+                                            {% if class_item.can_buy==1 %}
+
+                                            <a href="javascript:void(0)"
+                                               data-loginurl="{{ url_for("auth.login",next=url_for('course.course_detail',id=class_item.id)) }}"
+                                               data-buy-url="{{ url_for('order.show',product_id=class_item.id,product_type=3) }}"
+                                               class="btn btn-xlg  btn-warning buy js-btn-buy"
+
+                                                    > 购买课程</a>
+
+                                              {% else %}
+                                                  <a href="javascript:void(0)"
+                                                        class="btn btn-xlg  btn-warning buy  disabled"
+
+                                                    > 暂不支持购买</a>
+
+                                             {% endif %}
+
+                                        {% endif %}
+
+                                    {% if is_vip %}
+
+                                         <a href="javascript:void(0)"
+                                                       data-buy-url="{{ url_for('vip.buy') }}"
+                                                       target="_blank"
+                                                       data-loginurl="{{ url_for("auth.login",next=url_for('course.course_detail',id=class_item.id)) }}"
+                                                       class="btn btn-xlg  btn-warning buy js-btn-buy"> 购买会员</a>
+                                    {% endif %}
+
+
+
+
+                                        {% if  class_item.is_free ==1 %}
+
+                                            <a href="javascript:void(0)" class="btn btn-xlg  btn-primary js-btn-try  "
+                                                 data-loginurl="{{ url_for("auth.login",next=url_for('course.course_detail',id=class_item.id)) }}"> 免费学习</a>
+
+
+                                         {% else %}
+                                            <a href="javascript:void(0)" class="btn btn-xlg  btn-warning btn-rectangle  js-btn-try  "
+                                                 data-loginurl="{{ url_for("auth.login",next=url_for('course.course_detail',id=class_item.id)) }}"> 免费试学</a>
+
+                                        {% endif %}
+
+                                        <a href="{{ url_for('lesson.play_first_lesson',course_id=class_item.id) }}"
+                                           target="_blank"
+                                           class="btn btn-xlg  btn-primary  hidden   js-btn-learn  "> 开始学习</a>
+
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="course-operation clearfix">
+
+
+                                    <div class="teacher">
+                                        <div class="teacher-img">
+                                            <a class="js-user-card"  href="{{url_for('user.detail',id=class_item.teacher.id) }}" data-user-id="{{ class_item.teacher.id }}" data-card-url="{{ url_for('user.user_public_info',id=class_item.teacher.id) }}">
+
+
+                                                 {% if class_item.teacher.logo_url is none or class_item.teacher.logo_url =='' %}
+                                                    <img src="{{ url_for('static', filename='images/head_defualt.jpg') }}"
+                                                     class="avatar-md">
+                                                {% else %}
+                                                    <img src="{{ class_item.teacher.logo_url }}"
+                                                        class="avatar-md">
+                                                {% endif %}
+
+                                            </a>
+                                        </div>
+                                        <div class="desc">
+                                            <a class="name js-user-card" href="{{url_for('user.detail',id=class_item.teacher.id) }}" data-user-id="{{ class_item.teacher.id }}" data-card-url="{{ url_for('user.user_public_info',id=class_item.teacher.id) }}">{{class_item.teacher.username  }}</a>
+                                            <span class="badge">金牌讲师</span>
+                                        </div>
+                                        <div class="mtl">
+                                            <a class="btn btn-primary btn-sm follow-btn mrl" href="javascript:;"
+                                                 data-url="{{ url_for('user.follow',id=class_item.teacher.id) }}"
+                                                       data-status-url="{{ url_for('user.follow_status',id=class_item.teacher.id) }}"
+                                             >关注</a>
+                                            <a class="btn btn-default unfollow-btn btn-sm mrl" href="javascript:;" data-url="{{ url_for('user.unfollow',id=class_item.teacher.id) }}" style="display:none;">已关注</a>
+                                            <button
+                                                    class="btn btn-default js-send-message btn-sm mrl"
+                                                    data-user-id="{{ class_item.teacher.id }}"
+                                                    data-user-head=" {% if class_item.teacher.logo_url is none or class_item.teacher.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg')}} {% else %}{{ class_item.teacher.logo_url }} {% endif %} ">
+                                                私信</button>
+                                        </div>
+
+                                    </div>
+
+
+{#                                    <div class="class-serve hidden-sm hidden-xs">#}
+{#                                        <div class="serve-frame">#}
+{#                                            承<br>诺<br>服<br>务#}
+{#                                        </div>#}
+{##}
+{##}
+{#                                        <ul class="list-unstyled clearfix">#}
+{##}
+{#                                            <li class="">#}
+{#                                                <a tabindex="0" role="button" data-container="body"#}
+{#                                                   data-toggle="popover"#}
+{#                                                   data-trigger="hover" data-placement="top" data-html="true" title=""#}
+{#                                                   data-content="24小时内完成作业批改，即时反馈并巩固您的学习效果"#}
+{#                                                   data-original-title="24小时作业批改 <small class='text-muted'>(暂未提供)</span>">练#}
+{#                                                </a>#}
+{#                                            </li>#}
+{#                                            <li class="">#}
+{#                                                <a tabindex="0"#}
+{#                                                   role="button" data-container="body"#}
+{#                                                   data-toggle="popover" data-trigger="hover"#}
+{#                                                   data-placement="top" data-html="true" title=""#}
+{#                                                   data-content="24小时内批阅您提交的试卷，给予有针对性的点评"#}
+{#                                                   data-original-title="24小时阅卷点评 <small class='text-muted'>(暂未提供)</span>">试</a>#}
+{#                                            </li>#}
+{#                                            <li class="active">#}
+{#                                                <a tabindex="0" role="button"#}
+{#                                                   data-container="body" data-toggle="popover"#}
+{#                                                   data-trigger="hover" data-placement="top"#}
+{#                                                   data-html="true" title=""#}
+{#                                                   data-content="对于提问做到有问必答，帮您扫清学习过程中的种种障碍"#}
+{#                                                   data-original-title="提问必答 <small class='text-muted'></span>">问</a>#}
+{#                                            </li>#}
+{#                                            <li class="active">#}
+{#                                                <a tabindex="0" role="button" data-container="body"#}
+{#                                                   data-toggle="popover" data-trigger="hover" data-placement="top"#}
+{#                                                   data-html="true" title=""#}
+{#                                                   data-content="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，学员关系更为紧密"#}
+{#                                                   data-original-title="学员活动">动</a>#}
+{#                                            </li>#}
+{#                                            <li class="active">#}
+{#                                                <a tabindex="0" role="button" data-container="body" data-toggle="popover" data-trigger="hover"#}
+{#                                                   data-placement="top" data-html="true" title=""#}
+{#                                                   data-content="提供专属的一对一在线答疑，快速答疑解惑" data-original-title="一对一在线答疑">疑</a>#}
+{#                                            </li>#}
+{#                                            <li class="">#}
+{#                                                <a tabindex="0" role="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" title="" data-content="完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导" data-original-title="就业指导 <small class='text-muted'>(暂未提供)</small>">业</a>#}
+{#                                            </li>#}
+{##}
+{#                                        </ul>#}
+{##}
+{#                                    </div>#}
+
+                                </div>
+
+                               <div class="shared js-social-share-params hidden-xs"
+                                     data-title="{{ class_item.name  }}"
+                                                     data-summary="{% if class_item.brief ==none %}{{ class_item.name }}是现在江湖上最接近互联网公司的项目课程,干货多多! {% else %}{{ class_item.brief  }}{% endif %}"
+                                                     data-message="我正在菜鸟窝学习 《{{ class_item.name  }}》课程，良心话学到很多,有兴趣的童鞋也来看看! "
+                                                     data-url="{{ url_for('course.course_detail',id=class_item.id,_external=True) }}"
+                                                     data-invite-code="{% if current_user.is_authenticated() %}{{ current_user.get_unique_code() }}{% else %}0{% endif %}"
+                                                     data-picture="{{ class_item.img_url }}">
+
+                                    赚鸟币:
+
+                                        <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="icon icon-qq"></i></a>
+                                        <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url=""><i class="icon icon-weixin"></i></a>
+                                        <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="icon icon-weibo"></i></a>
+
+                                        <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="icon icon-icon-qzone-full"></i></a>
+
+
+                                    </div>
+
+                             </div>
+
+                            <div class="progress progress-sm hidden ">
+                                    <div class="progress-bar" role="progressbar"
+                                         style="width: 0"
+                                         data-toggle="tooltip"
+                                         data-placement="right"
+                                         title=""
+                                         data-original-title="0%">
+                                    </div>
+                              </div>
+
+                            <div class="course-header-bottom clearfix hidden ">
+                                <span class="pull-left"></span>
+                                <a class="btn btn-lg btn-primary js-btn-continue" target="_blank" >继续学习</a>
+                               <span class="next-class hidden-xs">正在学习：<a  id="current_lesson_name"></a></span>
+                            </div>
+                       </div>
+                  </div>
+             </section>
+
+
+             <section class="course-detail-bottom">
+                <div class="container">
+
+                        <div class="course-detail row">
+
+                             <div class="col-lg-9 col-md-8  course-detail-main">
+
+                                <section class="cniao-section">
+
+                                    {% block course_bottom_left %}
+
+                                    {% endblock %}
+
+
+                                </section>
+
+                                {% block course_bottom_left2 %}{% endblock %}
+
+
+                             </div>
+
+
+                             <div class="col-lg-3 col-md-4  course-sidebar">
+
+                                  <a target="_blank"
+                                     title="加入{{ class_item.qqgroup.group_name }}：{{ class_item.qqgroup.group_num }}"
+                                   href="{{ class_item.qqgroup.group_link }}"
+                                   class="btn  btn-primary btn-block join-group">
+                                    <i class="icon icon-qq"></i>加群获取学习资料
+                                </a>
+
+
+                                  <div class="panel panel-default ">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            学员列表<small class="text-muted" id="play_count">( 0 )</small>
+                                        </h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        
+                                        <div class="user-avatar-list-spinner"></div>
+
+                                        <ul class="user-avatar-list clearfix" data-classid="{{ class_item.id }}"></ul>
+
+                                    </div>
+
+                                   </div>
+
+
+                                  <div class="panel panel-default student-dynamic">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">学员动态</h3>
+                                    </div>
+
+                                    <div class="panel-body student-dynamic-list"></div>
+
+
+                                  </div>
+
+
+                             </div>
+
+                        </div>
+
+                </div>
+
+
+             </section>
+
+         </div>
+
+
+  <div class="cniao-service clearfix">
+
+      <div >
+          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2974458870&site=qq&menu=yes">
+            <img class="img-service" src="/static/images/icon-qq.png">
+          </a>
+      </div>
+
+
+
+      <div class="wechat">
+        <img src="/static/images/icon-wechat.png" >
+        <div class="wechat-hover">
+          <img src="/static/images/rcode_for_weixin.jpg" width="150px" height="150px" >
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+     var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/";
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/course-detail';
+        app.mainScript = 'path-js/app';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "member/base.html" %}
+{% set active_page = 'notebooks' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+    <div class="section-header"><h3>我的笔记</h3></div>
+
+   <ul class="media-list notebook-list" id="notebook-list">
+
+        {% if notes|length >0 %}
+
+           {% for c in notes %}
+
+            <div class="media">
+                                    <img class="pull-left media-object" src="{{ c.img_url }}">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{ c.name }}</h4>
+                                        <div class="notebook-metas">
+                                            <span class="notebook-number">共 {{ c[5] }} 篇笔记</span>
+                                        </div>
+                                        <div class="notebook-metas">
+                                            <span class="notebook-time">最后更新:{{ c.created_time }}</span>
+                                            <a class="pull-right notebook-go" href="{{ url_for('member.notebook_detail',class_id=c.class_id) }}">查看笔记</a>
+                                        </div>
+                                    </div>
+                                </div>
+           {% endfor %}
+
+        {% else %}
+            <li class="empty">你还没有写过笔记</li>
+        {% endif %}
+
+   </ul>
+
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/notebooks';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

@@ -1,0 +1,72 @@
+
+
+<ul class="media-list thread-list" >
+
+
+
+
+
+
+{#foreach $T as c}
+
+
+   <li class="media">
+        <div class="media-body pts">
+            <div class="media-heading">
+                <a class="title gray-darker " href="/forum/thread/{{ $T.c.id  }}" target="_blank"> {{ $T.c.title }}</a>
+
+                 {#if $T.c.is_hot}
+                    <span class="label label-danger">热门</span>
+                {#/if  }
+
+                {#if $T.c.is_top}
+                    <span class="label label-primary">置顶</span>
+                {#/if  }
+
+                 {#if $P.is_admin}
+
+                    <a href="javascript:void(0)" class="pull-right js-hot-setting" data-url="/forum/{{ $P.forum_id }}/thread/{{ $T.c.id  }}/hot/setting"> {#if $T.c.is_hot}取消热门{#else}设为热门{#/if  }</a>
+
+
+                 {#/if  }
+
+
+
+            </div>
+
+            <div class="metas">
+                <a class="userImg js-user-card" href="/user/{{ $T.c.user.id }}" data-card-url="/user/{{ $T.c.user.id }}/public/info" data-user-id="{{ $T.c.user.id }}">
+
+                       {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                        <img src="/static/images/head_defualt.jpg"
+                            class="avatar-xxs">
+                    {#else}
+
+                        <img src="{{ $T.c.user.logo_url}}" alt="{{ $T.c.user.username }} 的头像" class="avatar-xxs"/>
+                    {#/if}
+                </a>
+
+                <a class="link-dark pls js-user-card" href="/user/{{ $T.c.user.id }}" data-card-url="/user/{{ $T.c.user.id }}/public/info" data-user-id="{{ $T.c.user.id }}">{{ $T.c.user.username }}</a>
+
+                <span class="mlm timeago" datatime="{{ $T.c.created_time }}" title="{{ $T.c.created_time }}">
+                <i class="icon icon-clock3"></i>
+                    {{ $T.c.created_time }}
+                </span>
+                <span class="mlm hidden-xs"> <i class="icon icon-eye2"></i> {{ $T.c.read_count }}人围观</span>
+                <span class="mlm hidden-xs"> <i class="icon icon-comment"></i> {{ $T.c.reply_count }}人发表观点</span>
+
+            </div>
+        </div>
+
+       <div class="media-right thread-img">
+
+           <img src="{#if $T.c.logo_url=='' || $T.c.logo_url==null} http://cniao5.com/static/images/rcode_for_weixin.jpg{#else}{{ $T.c.logo_url }}{#/if}" alt="{{ $T.c.title }}">
+       </div>
+
+   </li>
+
+
+
+{#/for}
+
+</ul>

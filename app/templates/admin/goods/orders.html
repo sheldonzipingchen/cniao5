@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'goods-orders' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="goods-orders"></div>
+
+    <div class=" cniao-section">
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="">虚拟订单</a></li>
+            <li><a href="">实物订单</a></li>
+
+        </ul>
+
+        <nav class="text-center">
+            <ul id="pagination" class="pagination"></ul>
+        </nav>
+
+
+        <div id="data-list">
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

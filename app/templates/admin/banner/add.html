@@ -1,0 +1,84 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'banner' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="banner-add" ></div>
+
+
+
+    <div class="row cniao-section " >
+
+
+            <di class="col-md-7 col-md-offset-1">
+
+                 <form id="add-form" class="form-horizontal" method="post"
+                    novalidate="novalidate"
+                    data-post-url="{{ url_for('.banner_save') }}" >
+
+                    <div class="form-group">
+                        <div class="col-md-10 controls">
+                                <input type="text" id="redirect_url" name="redirect_url" class="form-control"  placeholder="目标地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 controls">
+                                <input type="text" id="bg_color" name="bg_color" class="form-control"  placeholder="颜色值">
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <div class="col-md-10 controls">
+
+                            <div class="radio">
+                              <label>
+                                <input type="radio" name="is_blank"  value="0" checked>
+                                新窗口打开
+                              </label>
+
+                                <label class="ml25">
+                                <input type="radio" name="is_blank"  value="1">
+                                同页面打开
+                              </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                  <div class="form-group">
+                        <div class="col-md-10 controls">
+                                <input type="text" id="order_num" name="order_num" class="form-control"  placeholder="排序">
+                        </div>
+                    </div>
+
+
+                  <div class="form-group">
+                        <div class="col-md-10 controls">
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-save"> 保存</button>
+                        </div>
+                    </div>
+              </form>
+
+            </di>
+
+            <div class="col-md-4">
+
+
+                <div class="screenshot-container" id="img-block" data-token-url="{{ url_for('common.get_qiniu_upload_token',bucket='cniao5-imgs') }}">
+                        <a class="pickfiles" id="pickfiles"> <i class="icon icon-plug-add-3"></i>  选择图片</a>
+
+                    <img id="img_url"  alt="" style="display: none">
+
+                    <div class="progress" style="display: none">
+                      <div class="progress-bar progress-bar-success" role="progressbar"  style="width: 10%"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+{% endblock %}

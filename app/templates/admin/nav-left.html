@@ -1,0 +1,43 @@
+
+
+                       {% set navigations = [
+                            (url_for('.index'), 'dashboard', 'Dashboard','fa fa-dashboard'),
+                            (url_for('.teachers'), 'teachers', '讲师管理','icon icon-teacher'),
+                            (url_for('.coupon_manager'), 'coupon_manager', '优惠码管理','icon icon-zhuanshi'),
+
+
+
+
+                        ] -%}
+
+                      {% set active_page = active_page|default('index') -%}
+
+
+
+
+
+        <nav class="navbar-default navbar-side" role="navigation">
+		    <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+
+                       {% for href, id, name,icon_class in navigations %}
+
+                           <li >
+                             <a class="{% if id == active_page %} active-menu {% endif %}" href="{{ href }}">
+                                 <i class="{{ icon_class }}"></i>{{ name }}</a>
+                            </li>
+
+                       {% endfor %}
+
+
+
+
+
+
+                </ul>
+
+            </div>
+
+        </nav>

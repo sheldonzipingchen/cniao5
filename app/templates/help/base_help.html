@@ -1,0 +1,49 @@
+{% extends "base_new.html" %}
+
+
+{% block main_block %}
+<div class="container" id="content-container">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/help.css') }}"/>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="list-group">
+
+
+                  {%
+                          set navigation_bar = [
+                                                (url_for('help.about_us'), 'about_us', '关于我们'),
+                                                (url_for('help.contact_us'), 'contact_us', '联系我们'),
+                                                (url_for('help.teacher_recruit'), 'teacher_recruit', '讲师招募'),
+                                                (url_for('help.service'), 'service', '服务条款'),
+
+
+
+                                               ]
+                          -%}
+
+                {% set active_page = active_page|default('about_us') -%}
+
+                {% for href, id, caption in navigation_bar %}
+
+                    <a href="{{ href|e }}" class="list-group-item {% if id == active_page %} active {% endif %}">{{ caption|e }}</a>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="col-md-9">
+
+            <div class="row right">
+
+                {% block help_content %} {% endblock %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+
+
+
+
+
+
+.list-group{
+
+    border-radius: 1px;
+}
+
+a.list-group-item{
+
+    line-height: 40px;
+    font-size: 18px;
+}
+.right {
+
+    background: #fff;
+
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-indent:2em;
+}
+
+
+.right>p{
+
+    margin: 1.5em 0;
+    line-height: 150%;
+    color: #656e73;
+}
+
+.right>h4{
+
+
+    font-family: '宋体';
+    font-size: 14px;
+    color: #303538;
+
+}
+
+.right>ol{
+    margin-top: 10px;
+    padding-left: 40px;
+    line-height: 20px;
+    list-style:none;
+
+}
+
+.right>ol>li{
+
+    font-size: 14px;
+    line-height: 30px;
+    color: #656e73;
+}
+
+.contact_label{
+    color: #f60;
+    font-size: 16px;
+}

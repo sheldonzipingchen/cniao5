@@ -1,0 +1,189 @@
+{% extends "base_new.html" %}
+
+{% block title %}鸟币商城-菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+{% block description %}精品技术文章,Rect Native,Android视频教程下载 {% endblock %}
+
+
+{% block main_block %}
+
+    <div id="content-container" class="cniao-section " >
+
+
+        <div class=" container">
+
+
+            <div class="col-md-9 ">
+
+                <div class="cniao-filter">
+                    <a href="http://www.cniao5.com/forum/thread/3544" target="_blank" class="pull-right mr10" style="line-height: 40px"> 赚鸟币</a>
+                </div>
+
+
+                <div class="course-list row">
+
+                    {% for g in goods %}
+
+                        <div class="col-md-4 ">
+
+                          <div class="course-item" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)">
+                                <div class="course-img">
+                                    <a href="{{ url_for(".detail",id=g.id) }}" >
+
+                                        <img src="{{ g.logo_url }}" alt="{{ g.title }}" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="course-info">
+                                    <div class="title">
+                                           <a class="gray-dark" href="{{ url_for(".detail",id=g.id) }}" >{{ g.title }}</a>
+                                    </div>
+
+                                    <div class="metas  clearfix" >
+
+
+                                       <div>
+
+
+
+
+                                        <span class="color-gray text-sm">{{ g.stock }}个库存</span>
+
+                                          {% if g.expiry_date>0 %}
+                                            <span class="mhs gray-light">|</span>
+                                            <span class="color-gray text-sm">{{ g.expiry_date }}天有效期</span>
+                                        {% endif %}
+
+                                        <span class="color-danger text-large pull-right">{{ g.price }}鸟币</span>
+                                    </div>
+
+
+
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                {% if current_user.is_authenticated()  %}
+
+                    <div class="panel">
+                        <div class="panel-body">
+
+
+                            <div class="media media-default">
+
+
+                                <div class="media-left">
+
+                                    <a class=" js-user-card"
+                                       href="{{url_for('user.detail',id=user.id) }}"
+                                       data-user-id="{{ user.id }}" data-card-url="{{ url_for('user.user_public_info',id=user.id) }}">
+
+                                         {% if user.logo_url is none or user.logo_url=='' %}
+                                            <img class="avatar-md" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                        {% else %}
+                                            <img class="avatar-md" src="{{ user.logo_url }}">
+                                        {% endif %}
+
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="title">
+                                          <a class=" link-lighter"  href="{{url_for('user.detail',id=user.id) }}">{{ user.username }}</a>
+
+                                    </div>
+                                    <div class="content" id="myCoin" data-coin="{{  user.coin }}">我的鸟币: <span class="text-danger"> {{ user.coin }} </span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                {% endif %}
+
+
+                <div class="panel">
+                        <div class="panel-heading">
+
+                            <h3 class="panel-title"> TA们兑换了</h3>
+
+                        </div>
+                        <div class="panel-body">
+
+
+                            {% for order in orders %}
+
+                             <div class="media media-default">
+
+
+                                <div class="media-left">
+
+                                    <a class=" js-user-card"
+                                       href="{{url_for('user.detail',id=order.user.id) }}"
+                                       data-user-id="{{ order.user.id }}" data-card-url="{{ url_for('user.user_public_info',id=order.user.id) }}">
+
+                                         {% if order.user.logo_url is none or order.user.logo_url=='' %}
+                                            <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                        {% else %}
+                                            <img class="avatar-sm" src="{{ order.user.logo_url }}">
+                                        {% endif %}
+
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="title" style="margin-bottom: 0px;font-size: 14px">
+                                          <a class="link-dark link-light"  href="{{url_for('user.detail',id=order.user.id) }}">{{ order.user.username }}</a>
+
+                                    </div>
+                                    <div class="content text-overflow" style="font-size: 12px"> {{ order.title }}</div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+
+
+
+
+
+
+                        </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/mall-index';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

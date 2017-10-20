@@ -1,0 +1,31 @@
+
+
+
+
+{#foreach $T as c}
+
+
+ <div class="media group-item">
+        <div class="media-left">
+            <a class=" js-user-card"  href="/user/{{ $T.c.user.id }}" data-card-url="/user/{{ $T.c.user.id }}/public/info" data-user-id="{{ $T.c.user.id }}" data-original-title="" title="">
+
+                  {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                        <img src="/static/images/head_defualt.jpg"
+                            class="avatar-sm">
+                    {#else}
+
+                        <img src="{{ $T.c.user.logo_url}}" alt="{{ $T.c.user.username }} 的头像" class="avatar-sm"/>
+                    {#/if}
+            </a>
+
+        </div>
+        <div class="media-body">
+            <div><a class="title" href="/forum/thread/{{ $T.c.id  }}" target="_blank">{{ $T.c.title }}</a></div>
+            <div class="text-small" style="color: #aaaaaa"><span class="mlm"> <i class="icon icon-eye2"></i>{{ $T.c.read_count  }} </span> <span class="mlm"> <i class="icon icon-comment"></i>{{ $T.c.reply_count  }} </span></div>
+        </div>
+ </div>
+
+
+
+{#/for}
+

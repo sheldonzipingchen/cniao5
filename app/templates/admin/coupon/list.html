@@ -1,0 +1,117 @@
+{% extends "admin/base_admin.html" %}
+{%  import "page_macros.html" as macros  %}
+
+{% block script_css %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/datepicker/skin/WdatePicker.css') }}"/>
+    <script src="{{ url_for('static', filename='libs/datepicker/WdatePicker.js') }}"></script>
+
+ <script>
+
+    $(function() {
+
+    });
+
+    /**查询订单数据*/
+    function searchCoupon(){
+        $('#frmCoupon').submit();
+    }
+
+
+ </script>
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+        <div class="well search-well">
+            <form  role="form" class="form-inline" action="coupon_manager.html" id="frmCoupon" method="post">
+                <div class="form-group" >
+                    <a href="{{ url_for('admin.coupon_create') }}"  class="button_yellow button" >生成优惠券</a>
+                    <div class="input-group">
+                        <input id="d12" type="text" class="form-control" name="date_start"  placeholder="开始时间"  value="{{ date_start }}" />
+                         <div class="input-group-addon">
+                            <img onclick="WdatePicker({el:'d12'})" src="{{ url_for('static', filename='libs/datepicker/skin/datePicker.gif') }}"
+                               onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d13\')}'})" height="20"  align="absmiddle">
+                         </div>
+                    </div>
+                    <div class="input-group">
+                        <input id="d13" type="text" class="form-control" name="date_end" placeholder="结束时间" value="{{ date_end }}"/>
+                         <div class="input-group-addon">
+                            <img onclick="WdatePicker({el:'d13'})" src="{{ url_for('static', filename='libs/datepicker/skin/datePicker.gif') }}"
+                               onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d12\')}'})" height="20"  align="absmiddle">
+                         </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="par_value"
+                                placeholder="输入面值" value={{ par_value }}>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0)" onclick="searchCoupon()" >
+                                <i class="icon icon-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="well">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>优惠码</th>
+                    <th>面额</th>
+                    <th>课程</th>
+                    <th>失效时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for coupon_item in coupon_list %}
+                    <tr>
+                        <td>
+                            <p> <span>{{ coupon_item.code }}</span></p>
+                        </td>
+                        <td>
+                            {{ coupon_item.val }}
+
+                        </td>
+                        <td>{{ coupon_item.use_for_title }}</td>
+                        <td>
+                            <p> <span>{{ coupon_item.expiry_time }}</span></p>
+                        </td>
+                        <td>
+                            {% if coupon_item.state == 1 %}
+                               <p> <span class="text-success">未使用</span></p>
+                            {%elif coupon_item.state == 2 %}
+                               <p> <span class="highlight">已领取</span></p>
+
+                            {%elif coupon_item.state == 3 %}
+                               <p> <span class="highlight">已使用</span></p>
+                            {% endif  %}
+                        </td>
+
+                        <td>
+                            <a href="">删除</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                <tr>
+                <td colspan="8">
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.coupon_manager') }}
+                </div>
+                </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

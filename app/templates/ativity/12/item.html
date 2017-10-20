@@ -1,0 +1,33 @@
+  <div class="col-md-3 col-sm-6">
+
+
+                             <div class="course-item">
+                                <div class="course-img">
+                                <a href="/course/{{c.course.id }}" target="_blank">
+
+                                    <img src="{{ c.course.img_url }}" alt="{{ c.course.name }}" class="img-responsive">
+                                </a>
+                            </div>
+                                <div class="course-info" style="overflow: hidden">
+                                    <div class="title">
+                                        <a class="link-dark" href="/course/{{c.course.id }}" target="_blank">
+                                           {{ c.course.name }}
+                                        </a>
+                                    </div>
+                                    <div class="metas clearfix">
+
+                                        <span class="color-danger text-large">￥{{ c.current_price }}</span>
+                                        <span class="nums ml10" style="text-decoration:line-through">原价: {{c.original_price}}</span>
+
+                                    </div>
+
+                                    <div class=" text-center mvm">
+
+                                        <a href="{{ url_for('order.show',product_id=c.course.id,product_type=3) }}" target="_blank" class="btn btn-danger btn-block js-buy-btn  " style=" -webkit-border-radius: 1px;-moz-border-radius: 1px;border-radius: 1px;">立即购买</a>
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        </div>

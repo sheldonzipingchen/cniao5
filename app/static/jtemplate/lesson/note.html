@@ -1,0 +1,23 @@
+<form id="lesson-note-plugin-form" method="post" action="/lesson/note/save">
+  <div class="form-group note-content">
+    <div class="controls" id="note-editor-container"
+    data-img-upload-token-url="/common/qn/upload/token/cniao5-imgs">
+      <textarea id="note_content"
+                name="note[content]"
+                rows="5"
+                style="visibility: hidden; display: none;height: 500px">
+
+            </textarea>
+
+    </div>
+  </div>
+
+  <div class="form-group note-actions">
+    <div class="controls clearfix">
+      <span class="text-muted" data-role="saved-message"></span>
+      <button id="note-save-btn" class="btn btn-primary  pull-right" type="submit">保存笔记</button>
+      <label class="text-muted"><input id="share_note" type="checkbox" name="status" checked> 分享笔记</label>
+    </div>
+  </div>
+</form>
+

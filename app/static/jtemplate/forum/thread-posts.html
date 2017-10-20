@@ -1,0 +1,44 @@
+
+
+{#foreach $T as c}
+
+
+{{ }}
+<div class="comment_details">
+
+<div class="avatar ">
+    <a href="/user/{{ $T.c.user.id }}" class="js-user-card" data-user-id="{{ $T.c.user.id }}" data-card-url="/user/{{ $T.c.user.id }}/public/info">
+        <img alt="菜鸟窝用户{{ $T.c.user.username }}"  class="before-fade-in after-fade-in"
+                               src=" {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}/static/images/head_defualt.jpg{#else}{{ $T.c.user.logo_url}}{#/if}">
+
+    </a>
+</div>
+
+<div class="comment-wrapper">
+
+    <div class="postmeta">
+        <a  href="/user/{{ $T.c.user.id }}" class="user_info_name js-user-card" data-user-id="{{ $T.c.user.id }}" data-card-url="/user/{{ $T.c.user.id }}/public/info">{{ $T.c.user.username }}</a>
+        <i class="icon icon-clock3 ml5"></i>
+        <time class="timeago" title="{{ $T.c.created_time }}" datetime="{{ $T.c.created_time }}">{{ $T.c.created_time }}</time>
+    </div>
+
+    <div class="commemt-main">
+        {{ $T.c.content }}
+    </div>
+
+     <div class="opts thread-post-action" data-user="{{ $T.c.user.username }}">
+          {#if  $P.login_user==$T.c.user.id }
+             <a title="确定删除这条回复" class="mrm post-delete-btn" href="javascript:" data-url="/forum/thread/post/delete/{{ $T.c.id }}">删除</a>
+          {#/if}
+         <a class="pull-right reply"  href="#thread-post-form" >回复</a>
+     </div>
+
+
+</div>
+
+
+</div>
+
+
+
+{#/for}

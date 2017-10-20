@@ -1,0 +1,106 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+
+    {{ user.username }}的个人主页
+
+    菜鸟窝-国内领先专业的移动开发IT技能在线教育平台
+
+{% endblock %}
+{% block description %}{% endblock %}
+
+
+{% block main_block %}
+
+ <div class="user-center-header "
+             data-href="{% if user.logo_url is none or user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg') }}{% else %}{{ user.logo_url }}{% endif %}"
+             data-sharpness="40"
+             >
+
+            <div class="container clearfix">
+                <div class="user-avatar">
+                    <div class="avatar-wrap">
+                        <img class="avatar-lg" src="{% if user.logo_url is none or user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg') }}{% else %}{{ user.logo_url }}{% endif %}">
+                        <span class="icon-user-status icon-md">
+
+                           <i class="icon {% if user.is_teacher() %}icon-teacher{% else %}icon-school{% endif %} "></i>
+                        </span>
+                    </div>
+                    <div class="name">
+                        {% if user.username is none or user.username==''  %}无名{% else %}{{ user.username }}{% endif %}
+                    </div>
+                    <div class="position">
+                        <span class="mrm">{% if user.is_teacher() %}金牌讲师{% else %}忠实用户{% endif %}</span>
+                    </div>
+                    <div class="mates">
+                        <span class="mrm">{{ user.thread_count }}</span>文章 ｜ <span class="mrm">{{ user.follower_count }}</span>粉丝<span class="mlm mrm">｜</span><span class="mrm">{{ user.following_count }}</span>关注
+                    </div>
+                    <div class="actions">
+
+                        {% if user.id == current_user.id %}
+                            <a href="{{ url_for("user.thread_write") }}" target="_blank" class="btn  btn-primary">
+                                <i class="icon icon-write"></i>
+                                写文章
+                            </a>
+                        {% else %}
+                             <a class="btn btn-primary follow-btn mrl" href="javascript:;"
+                                 data-url="{{ url_for('user.follow',id=user.id) }}"
+                                       data-status-url="{{ url_for('user.follow_status',id=user.id) }}"
+                             >关注</a>
+                        <a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="{{ url_for('user.unfollow',id=user.id) }}" style="display:none;">已关注</a>
+                        <button class="btn js-send-message mrl"
+                        data-user-id="{{ user.id }}"
+                                data-user-head=" {% if user.logo_url is none or user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg')}} {% else %}{{ user.logo_url }} {% endif %} ">私信</button>
+                        {% endif %}
+
+
+
+                    </div>
+                </div>
+                <div class="user-about hidden-sm hidden-xs">
+                    <div class="user-about-content">
+                           {{ user.desc|safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="mask" style="position: absolute; left: 0px; right: 0px; z-index: 1;"></div>
+        </div>
+ <section class="cniao-section">
+
+            <div id="content-container" class="container">
+
+                <ul class="nav nav-tabs clearfix">
+                    <li class="{% if active_page =='threads' %}active{% endif %}"><a href="{{ url_for(".detail",id=user.id) }}">文章</a></li>
+
+                    <li class="{% if active_page =='followers' %}active{% endif %}"><a href="{{ url_for(".followers",id=user.id) }}">粉丝</a></li>
+                    <li class="{% if active_page =='following' %}active{% endif %}"><a href="{{ url_for(".following",id=user.id) }}">关注</a></li>
+                    <li class="highlight" style="left: 620px; width: 139px; overflow: hidden;"></li>
+                </ul>
+
+                {% block user_content_block %}{% endblock %}
+
+
+            </div>
+
+
+
+
+        </section>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+    <script type="text/javascript">
+     var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/";
+        var app={};
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/user';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

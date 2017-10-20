@@ -1,0 +1,299 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+
+        <div class="btn-toolbar">
+
+           <!--这里创建最根级 分类-->
+           <a href="javascript:void(0)"  class="button_yellow button" data-toggle="modal" data-target="#modal-addSecondCategory">添加二级分类</a>
+        </div>
+
+
+       <div class="block">
+                <p class="block-heading"> <span class="highlight">{{ classType.name }}</span> 的二级分类</p>
+                <div class="block-body">
+
+                    <table class="table table-hover">
+
+                <thead>
+                        <tr>
+                            <th>名称</th>
+
+                            <th>创建时间</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                        {% for classtype in second_classTypes %}
+
+                            <tr>
+                                <td>{{ classtype.name }}</td>
+                                <td>{{ classtype.created_time }}</td>
+                                <td>{{ classtype.desc }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" data-toggle="modal"
+                                       data-target="#modal-addThirdCategory" title="添加子类">
+                                        <i class="icon icon-plus size20"></i></a>
+                                    <a href="javascript:void(0)" title="编辑"> <i class="icon icon-pencil size20"></i></a>
+                                    <a href="">
+                                        <i class="icon icon-bin"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                </tbody>
+
+            </table>
+                </div>
+
+
+
+        </div>
+
+        <div class="block">
+                <p class="block-heading"> <span class="highlight">{{ classType.name }}</span> 的三级分类</p>
+                <div class="block-body">
+
+                      <table class="table table-hover">
+
+                         <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>父类</th>
+
+                                    <th>创建时间</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                       </table>
+
+                </div>
+        </div>
+
+
+
+<div class="modal fade" id="modal-addSecondCategory">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><span class="highlight">{{ classType.name  }}</span>  添加二级分类</h4>
+            </div>
+            <div class="modal-body">
+
+
+                  <form class="form-horizontal" novalidate="novalidate" method="post" action="{{ url_for('admin.classtype_add_second') }}">
+
+
+                      {{ new_clastype_form.hidden_tag() }}
+
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">分类名称</label>
+                        <div class="col-sm-8">
+                            {{ new_clastype_form.name(class_='form-control') }}
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">简介</label>
+                        <div class="col-sm-8">
+                            {{ new_clastype_form.desc(class_='form-control') }}
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <a  class="button  button_default  button_big" data-dismiss="modal">关闭</a>
+                            {{ new_clastype_form.submit(class_="button  button_green button_big") }}
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="modal-addThirdCategory">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><span class="highlight">入门</span>  添加子分类</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal" novalidate="novalidate">
+
+
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">分类名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control"  placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control"  placeholder="">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">简介</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="3"></textarea>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <a  class="button button_default" data-dismiss="modal">关闭</a>
+                            <a  class="button button_green ">保存</a>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modal-courseManage">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><span class="highlight">环境配置</span>  关联课程</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="btn-toolbar">
+                    <a href="" class="button_yellow button">添加课程</a>
+                </div>
+
+                <ul class="course-gallery">
+
+                    <li class="item">
+                        <div class="img">
+                            <a href="">
+                                <img src="http://img.cniao5.com/61acc80074ea440b8806b5c58990269b.jpg" alt="" class="img-thumbnail img-mid"/>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <p class="name"><a href="">自定义圆形进度条</a></p>
+                            <p>
+                                <a href="">
+                                    <i class="icon icon-bin"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="item">
+                        <div class="img">
+                            <a href="">
+                                <img src="http://img.cniao5.com/61acc80074ea440b8806b5c58990269b.jpg" alt="" class="img-thumbnail img-mid"/>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <p class="name"><a href="">自定义圆形进度条</a></p>
+                            <p>
+                                <a href="">
+                                    <i class="icon icon-bin"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="item">
+                        <div class="img">
+                            <a href="">
+                                <img src="http://img.cniao5.com/61acc80074ea440b8806b5c58990269b.jpg" alt="" class="img-thumbnail img-mid"/>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <p class="name"><a href="">自定义圆形进度条</a></p>
+                            <p>
+                                <a href="">
+                                    <i class="icon icon-bin"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+
+
+
+
+
+                    <li class="item">
+                        <div class="img">
+                            <a href="">
+                                <img src="http://img.cniao5.com/61acc80074ea440b8806b5c58990269b.jpg" alt="" class="img-thumbnail img-mid"/>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <p class="name"><a href="">自定义圆形进度条</a></p>
+                            <p>
+                                <a href="">
+                                    <i class="icon icon-bin"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="item">
+                        <div class="img">
+                            <a href="">
+                                <img src="http://img.cniao5.com/61acc80074ea440b8806b5c58990269b.jpg" alt="" class="img-thumbnail img-mid"/>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <p class="name"><a href="">自定义圆形进度条</a></p>
+                            <p>
+                                <a href="">
+                                    <i class="icon icon-bin"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+
+
+
+                </ul>
+
+                <div class="clearfix"></div>
+
+
+
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+    </div>
+{% endblock %}

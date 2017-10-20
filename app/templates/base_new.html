@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <meta name="is-login" content="{% if current_user.is_authenticated() %}1{%else  %}0{% endif %}">
+
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <meta name="Keywords" content="{% block keywords %} {% endblock %}" />
+    <meta name="description" content="{% block description %} {% endblock %}" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_new.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+<body>
+
+<div class="cniao-wrap">
+
+
+        <!--头部-->
+        <header class="cniao-header navbar ">
+
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="visible-xs  navbar-mobile">
+                        <a href="javascript:;" class="navbar-more js-navbar-more">
+                            <i class="icon icon-menu"></i>
+                        </a>
+                        <div class="html-mask"></div>
+                        <div class="nav-mobile">
+                            <form class="navbar-form" action="/search" method="get">
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="搜索" name="q">
+                                    <a class="search icon icon-search" ></a>
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav" id="curr_nav">
+
+                                <li class="">
+                                    <a href="{{ url_for('main.index') }}">首页 </a>
+                                </li>
+                                 <li class="">
+                                    <a href="{{ url_for('course.course_topic_projects') }}">项目课</a>
+                                </li>
+
+                                <li class="">
+                                    <a href="{{ url_for('train.android') }}">就业课 </a>
+                                </li>
+
+                               <li class="">
+                                    <a href="{{ url_for('course.index') }}">课程库 </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{ url_for('forum.index') }}">干货专题 </a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="/" class="navbar-brand">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}">
+                    </a>
+                </div>
+
+                <nav class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav clearfix hidden-xs " id="curr_nav2">
+                        <li class="active" id="nav-index">
+                            <a href="{{ url_for('main.index') }}" >首页 </a>
+                        </li>
+
+                        <li class="" id="nav-project">
+                            <a href="{{ url_for('course.course_topic_projects') }}">项目课 </a>
+                        </li>
+
+                        <li class="" id="nav-train">
+                            <a href="{{ url_for('train.android') }}">就业课 </a>
+                        </li>
+                        <li class="" id="nav-course">
+                            <a href="{{ url_for('course.index') }}">课程库</a>
+
+
+
+                        </li>
+
+                        <li class="" id="nav-forum">
+                            <a href="{{ url_for('forum.index') }}">干货专题 </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="navbar-user left">
+                        <ul class="nav user-nav">
+
+                            {% if current_user.is_authenticated() %}
+                                <li class=" user-avatar-li nav-hover ">
+                                    <a href="{{ url_for('member.index') }}" class="dropdown-toggle" >
+                                        {% if current_user.logo_url is none or current_user.logo_url=='' %}
+                                            <img class="avatar-xs" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                        {% else %}
+                                            <img class="avatar-xs" src="{{ current_user.logo_url }}">
+                                        {% endif %}
+                                    </a>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="presentation" class="dropdown-header">{{ current_user.username }}</li>
+
+                                        <li><a href="{{ url_for('user.detail',id=current_user.id) }}"><i class="icon icon-user2"></i>个人主页</a></li>
+                                        <li><a href="{{ url_for('member.orders') }}"><i class="icon icon-zhuanshi"></i>我的订单</a></li>
+                                        <li><a href="{{ url_for('member.course_learning') }}"><i class="icon icon-clock3"></i>我的课程</a></li>
+
+                                        <li><a href="{{ url_for('member.revenue') }}"><i class="icon icon-safe"></i>我的收入</a></li>
+
+
+                                        <li><a href="{{ url_for('member.invite_cash') }}"><i class="icon icon-share3"></i>赚现金</a></li>
+                                        <li><a href="{{ url_for('member.invite') }}"><i class="icon icon-share3"></i>赚鸟币&VIP</a></li>
+                                         <li><a href="{{ url_for('member.setting_info') }}"><i class="icon icon-profile2"></i>我的资料</a></li>
+
+                                        <li><a href="{{ url_for('auth.logout') }}"><i class="icon icon-shutdown"></i>退出登录</a></li>
+                                    </ul>
+
+                                </li>
+
+
+                                 <li class="visible-lg nav-hover">
+
+                                    <a class="hasmessage" href="{{ url_for('message.user_messages') }}"><i class="icon icon-notification3"></i></a>
+
+
+                                </li>
+
+
+                            {% else %}
+
+                                <li class="user-avatar-li nav-hover visible-xs">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                           <img class="avatar-xs" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a id="btn_login"  href="javascript:void(0)" data-go="{{ url_for('auth.login') }}">登录</a></li>
+                                        <li><a href="{{ url_for('auth.reg') }}">注册</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="hidden-xs"><a  href="javascript:void(0)" data-go="{{ url_for('auth.login' ) }}" id="btn_login">  <i class="icon icon-user2"></i> 登录</a></li>
+                                <li class="hidden-xs"><a href="{{ url_for('auth.reg') }}"> <i class="icon icon-user_add"></i> 注册</a></li>
+
+                            {% endif %}
+
+                        </ul>
+
+{#                        <form class="navbar-form navbar-right hidden-xs hidden-sm" action="/search" method="get">#}
+{#                            <div class="form-group">#}
+{#                                <input class="form-control js-search" name="q"  id="q" placeholder="搜索">#}
+{#                                <a class="search icon icon-search" ></a>#}
+{#                            </div>#}
+{#                        </form>#}
+                    </div>
+                </nav>
+
+            </div>
+        </header>
+
+{% block main_block %}
+
+
+{% endblock %}
+
+
+
+    <!-- Footer Start -->
+    <footer class="cniao-footer">
+            <div class="footer-link">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 footer-main clearfix">
+                            <div class="link-item ">
+                                <h3>菜鸟窝</h3>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('train.android') }}" target="_blank">Android学习导图</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('course.course_topic_projects') }}" target="_blank">项目实战课程</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for("vip.index") }}" target="_blank">高级会员课程</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for("main.devtools") }}" target="_blank">开发工具</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="link-item ">
+                                <h3>帮助中心</h3>
+                                <ul>
+                                    <li>
+                                        <a href="/help/service.html" target="_blank">常见问题</a>
+                                    </li>
+                                    <li>
+                                        <a href="/help/service.html" target="_blank">服务条款</a>
+                                    </li>
+                                    <li>
+                                        <a href="/help/service.html" target="_blank">版权声明</a>
+                                    </li>
+                                    <li>
+                                        <a href="/help/service.html" target="_blank">免责声明</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="link-item ">
+                                <h3>关于我们</h3>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('help.about_us') }}" target="_blank">关于我们</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('help.contact_us') }}" target="_blank">联系我们</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.cniao5.com/forum/thread/3558" target="_blank">官方Q群</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('help.teacher_recruit') }}" target="_blank">讲师招募</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4 footer-logo hidden-sm hidden-xs">
+
+                            <a class="" href="http://www.cniao5.com" target="_blank">
+                                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="">
+                            </a>
+
+                            <div class="footer-sns">
+                                <a href="http://weibo.com/cniao55" target="_blank" class="qrcode-popover top">
+                                    <i class="icon icon-weibo icon-qq"></i>
+                                    <div class="qrcode-content">
+                                        <img src="{{ url_for('static', filename='images/rcode_for_weibo.png') }}" alt="">
+                                    </div>
+                                </a>
+                                <a class="qrcode-popover top">
+                                    <i class="icon icon-weixin"></i>
+                                    <div class="qrcode-content">
+                                        <img src="{{ url_for('static', filename='images/rcode_for_weixin.jpg') }}" alt="">
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="copyright">
+                <div class="container">
+
+                     <a class="mlm" href="http://www.cniao5.com/" target="_blank">©2015-2016菜鸟窝</a>
+                    <div class="mts">
+                        课程内容版权均归
+                        <a href="/">
+                            广州洋葱头信息科技有限公司
+                        </a>
+                        所有，侵权必究
+                        <a class="mlm" href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备14020911号-1</a>
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+</div>
+
+
+<div style="display:none;">
+
+    <script type="text/javascript">
+        /**
+         * 统计代码
+         * @type {_hmt|*|Array}
+         * @private
+         * */
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256106650'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256106650%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+   <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+   <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+    {% block custom_js_block %}
+
+
+    {% endblock %}
+
+
+</body>
+</html>
+

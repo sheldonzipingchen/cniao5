@@ -1,0 +1,80 @@
+{% extends "member/base.html" %}
+{% set active_page = 'notebooks' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+    <div class="section-header"><h3>我的笔记</h3></div>
+
+
+       <div class="notebook" id="notebook">
+
+            <div class="notebook-heading">
+            <a class="btn btn-default btn-sm pull-right notebook-back-btn" href="javascript:history.back()">返回</a>
+            <img class="notebook-icon" src="{{ course.img_url }}">
+            《{{ course.name }}》的笔记
+         </div>
+
+        <div class="notebook-body">
+
+            {% for note in notes %}
+            <div class="notebook-note notebook-note-collapsed">
+               <div class="notebook-note-heading">
+                   <a href="{{ url_for('lesson.play',lesson_id=note.lesson_id) }}" target="_blank">{{ note.lesson.name }}</a>
+                   <span class="pull-right notebook-note-length">共{{ note.note |safe|wordcount }}字</span>
+               </div>
+               <div class="notebook-note-summary">
+
+                   {{ note.note|safe |truncate(200)  }}
+               </div>
+               <div class="notebook-note-body">
+                         {{ note.note|safe  }}
+
+                   <div class="notebook-note-actions clearfix">
+                       <a href="javascript:" data-url="{{ url_for('member.notebook_delete',id=note.id) }}" class="pull-right notebook-note-delete" title="删除笔记"><span class="glyphicon glyphicon-trash"></span></a>
+                   </div>
+                   <div class="notebook-note-collapse-bar"><span class="glyphicon glyphicon-chevron-up"></span></div>
+               </div>
+           </div>
+
+            {% endfor %}
+
+
+         </div>
+
+       </div>
+
+
+
+   </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/notebook-detail';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

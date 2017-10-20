@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+   <meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+    <title>菜鸟窝双12不只是5折</title>
+
+    <meta name="description" content="邀请好友购买课程送现金,各种实战项目(直播,商城,聊天,音乐,团购,新闻,微博,手机助手 等),2016热门技术 (RxJava,Dagger2,Retrofit 等) ,React-Native 跨平台,HTML5项目实战 等课程大优惠 一年仅此一次">
+
+    <link rel="stylesheet" type="text/css" href="http://www.cniao5.com/static/libs/bootstrap/3.3.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://www.cniao5.com/static/css/style_new.css"/>
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='activity/12/style.css') }}"/>
+</head>
+<body  >
+
+
+    <div class="bg">
+
+
+         <div class="empty-section">
+{#             <a href="" class="js-jump"></a>#}
+         </div>
+
+         <div class="section" id="section1">
+
+
+             <div class="container">
+
+                    <div class="text-line">
+
+                       <h5 class="title">
+                                企业项目实战
+                       </h5>
+                        <div class="subtitle">消费满700元送一本《Android群英传:神兵利器》</div>
+                    </div>
+
+                        <div class="course-list ">
+
+                            {% for c in course_sz %}
+
+                              {% include 'ativity/12/item.html' %}
+
+                            {% endfor %}
+
+                    </div>
+
+             </div>
+
+         </div>
+
+      <div class="section" id="section5">
+
+
+            <div class="container">
+
+             <div class="text-line">
+                    <h5 class="title">
+                        预售:企业实战项目
+                    </h5>
+                    <div class="row">
+
+                        <div style="" class="col-md-offset-3 col-md-6">
+                            <ul class="color-danger" style="text-align: left; ">
+                                <li>1.预售课程在2017.01.11日前上线发布,如超过该日期则全额退款</li>
+                                <li>2.预售价是原价的5折</li>
+                                <li>3.非菜鸟窝原因不支持退款</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-list ">
+
+                    {% for c in course_ys %}
+
+                        {% include 'ativity/12/item.html' %}
+
+                    {% endfor %}
+
+            </div>
+
+            </div>
+
+        </div>
+
+           <div class="section" id="section2">
+
+
+            <div class="container">
+
+             <div class="text-line">
+                    <h5 class="title">
+                        小项目课程
+                    </h5>
+                    <div class="subtitle">消费满700元送一本新书《Android群英传:神兵利器》</div>
+                </div>
+
+                <div class="course-list ">
+
+                    {% for c in course_xxm %}
+
+                       {% include 'ativity/12/item.html' %}
+
+                    {% endfor %}
+
+            </div>
+
+            </div>
+
+        </div>
+
+       <div class="section" id="section3">
+
+
+            <div class="container">
+
+             <div class="text-line">
+                    <h5 class="title">
+                        跨平台/前端开发
+                    </h5>
+                    <div class="subtitle">消费满700元送一本新书《Android群英传:神兵利器》</div>
+                </div>
+
+                <div class="course-list ">
+
+                    {% for c in course_qd %}
+
+                       {% include 'ativity/12/item.html' %}
+
+                    {% endfor %}
+
+            </div>
+
+            </div>
+
+        </div>
+
+        <div class="section" id="section4">
+
+
+            <div class="container">
+
+             <div class="text-line">
+                    <h5 class="title">
+                        2016热门技术/实用案例
+                    </h5>
+                    <div class="subtitle">消费满700元送一本新书《Android群英传:神兵利器》</div>
+                </div>
+
+                <div class="course-list ">
+
+                    {% for c in course_rm %}
+
+                        {% include 'ativity/12/item.html' %}
+
+                    {% endfor %}
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+
+     <div class="section" style="padding-bottom: 50px">
+
+            <div class="container">
+
+                <div class="text-line">
+                    <h5 class="title">
+                        活动声明
+                    </h5>
+                </div>
+
+                <div class="col-md-6 col-md-offset-3">
+
+                    <ul class="" style="color: #ffffff">
+                        <li>1.活动期间不能使用从鸟币商城兑换的优惠码</li>
+                        <li>2.如因个人原因未在活动期间购买享受优惠，造成个人损失，学员自主承担</li>
+                        <li>3.活动最终解释权归菜鸟窝所有</li>
+                    </ul>
+
+                    <table style="margin-top: 30px">
+                        <tr>
+                            <td>
+                                <img src="http://cniao5.com/static/images/rcode_for_weixin.jpg" alt="" style="max-width: 200px">
+                            </td>
+                            <td>
+                                <span class="" style="color: #ffffff;margin-left: 20px">更多优惠请关注微信公众号</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+       </div>
+
+
+
+
+   </div>
+
+
+
+
+     <div class="right-nav hidden-xs" id="scrollspy_mine">
+
+     <ul id="nav nav-tabs">
+         <li><a href="#section1">企业项目</a></li>
+          <li ><a href="#section5">预售</a></li>
+         <li><a href="#section2">小项目</a></li>
+         <li><a href="#section3">跨平台</a></li>
+         <li  style="border: none"><a href="#section4">2016热门</a></li>
+
+
+
+
+     </ul>
+ </div>
+
+
+ <div style="display:none;">
+
+    <script type="text/javascript">
+        /**
+         * 统计代码
+         * @type {_hmt|*|Array}
+         * @private
+         * */
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256106650'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256106650%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+   <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+   <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        var app={};
+
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/activity/12';
+        app.mainScript = 'path-js/app';
+
+        seajs.use(app.mainScript);
+
+
+    </script>
+
+
+</body>
+</html>

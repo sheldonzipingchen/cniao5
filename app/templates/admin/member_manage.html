@@ -1,0 +1,147 @@
+{% extends "admin/base_admin.html" %}
+{%  import "page_macros.html" as macros  %}
+
+{% block script_css %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/datepicker/skin/WdatePicker.css') }}"/>
+    <script src="{{ url_for('static', filename='libs/datepicker/WdatePicker.js') }}"></script>
+
+    <script>
+        /**查询用户数据*/
+        function searchMember(){
+            $('#frmMember').submit();
+        }
+    </script>
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+        <div class="well search-well">
+            <form  role="form" class="form-inline" action="/admin/member_manage.html" id="frmMember" method="post">
+                <div class="form-group">
+
+                    <div class="input-group">
+                        <input id="d12" type="text" class="form-control" name="date_start"  placeholder="开始时间"  value="{{ date_start }}" />
+                         <div class="input-group-addon">
+                            <img onclick="WdatePicker({el:'d12'})" src="{{ url_for('static', filename='libs/datepicker/skin/datePicker.gif') }}"
+                               onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d13\')}'})" height="20"  align="absmiddle">
+                         </div>
+                    </div>
+                    <div class="input-group">
+                        <input id="d13" type="text" class="form-control" name="date_end" placeholder="结束时间" value="{{ date_end }}"/>
+                         <div class="input-group-addon">
+                            <img onclick="WdatePicker({el:'d13'})" src="{{ url_for('static', filename='libs/datepicker/skin/datePicker.gif') }}"
+                               onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d12\')}'})" height="20"  align="absmiddle">
+                         </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="email"
+                                placeholder="输入邮箱 搜索" value={{ email }}>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0)" onclick="searchMember()" >
+                                <i class="icon icon-search"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+        <div class="well">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                   <th>用户名</th>
+                        <th>注册时间</th>
+                        <th>注册来源</th>
+                        <th>手机/QQ</th>
+
+                        <th>状态</th>
+                        <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user_item in usre_list %}
+                    <tr>
+
+                    <td width="300px">
+                                <div class="item">
+
+                                    <div class="img">
+
+                                        {% if user_item.logo_url is none or user_item.logo_url=='' %}
+                                            <img src="{{ url_for('static', filename='images/head_defualt.jpg') }}"
+                                             class="img-circle head-img-small">
+                                        {% else %}
+                                        <img src="{{ user_item.logo_url }}"
+                                             class="img-circle head-img-small">
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="info">
+                                        <p class="name"><a href="">{{ user_item.username }}</a></p>
+                                        <p class="highlight">
+                                          {{ user_item.email }}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </td>
+
+                            <td>
+                                {{ user_item.reg_time }}
+                            </td>
+
+
+                        <td>
+                            {% if user_item.channel is none %}
+                                自然流量
+                            {% elif user_item.channel =='bd' %}
+                                百度推广
+                            {% elif user_item.channel =='qqgroup' %}
+                                Q群推广
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <p>手机： <span class="highlight">{{ user_item.mobi }}</span> </p>
+                            <p>QQ： <span class="highlight">{{ user_item.qq }}</span> </p>
+                        </td>
+
+
+
+                        <td>
+                            {% if user_item.confirmed == 1 %}
+                               <p> <span class="text-primary">激活</span></p>
+                            {% elif user_item.confirmed == '0' %}
+                               <p> <span class="text-muted">未激活</span></p>
+                            {% endif  %}
+                        </td>
+
+
+                        <td></td>
+                    </tr>
+
+                {% endfor %}
+                <tr>
+                <td colspan="12">
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.member_manage') }}
+                </div>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+{% endblock %}

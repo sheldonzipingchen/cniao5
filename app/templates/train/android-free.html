@@ -1,0 +1,559 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   免费学Android开发-国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}免费学Android开发,android开发入门教程,Android就业培训,零基础学Android,Android入门培训,android学习路线,android开发教程,android培训哪家好,广州Android培训 {% endblock %}
+
+{% block description %}Android特训营是菜鸟窝给在校大学生推出的一个免费Android培训服务，深受来自全国各地高校大学生们爱戴。 体系化职业培训课程，游戏通关式教学，任务制学习，一对一VIP全程辅导；{% endblock %}
+
+
+
+
+{% block main_block %}
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/android_free.css') }}"/>
+
+    <section class="banner">
+
+            <div class="container">
+                 <img src="http://7mno4h.com2.z0.glb.qiniucdn.com/banner_txy_2.jpg" class="pic">
+                <div class="text-center mvl shared-head">
+                    邀请同学一起学习： <div class="share-group">
+
+                    <a class="weixin qrcode-popover top" href="">
+                        <i class="icon icon-weixin"></i>
+                        <div class="qrcode-content">
+                            <img src="/static/images/android-free.png" alt="">
+                        </div>
+                    </a>
+                    <a class="qq" target="_blank"
+                       href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-sqq-1-91048-9737f6f9e09dfaf5d3fd14d775bfee85&title=%E5%85%8D%E8%B4%B9%E5%AD%A6Android%E5%BC%80%E5%8F%91%EF%BC%8C%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91&desc=%E6%88%91%E6%8A%A5%E5%90%8D%E4%BA%86%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%EF%BC%8C%E9%82%80%E8%AF%B7%E4%BD%A0%E4%B8%80%E8%B5%B7%E6%9D%A5%E5%AD%A6%E4%B9%A0&summary=&site=baidu&pics=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg">
+                        <i class="icon icon-qq"></i>
+                    </a>
+                    <a class="weibo" target="_blank"
+                       href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-tsina-1-60899-397232819ff9a47a7b7e80a40613cfe1&title=%E5%85%8D%E8%B4%B9%E5%AD%A6Android%E5%BC%80%E5%8F%91%EF%BC%8C%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91%2C%E4%BD%A0%E4%B9%9F%E4%B8%80%E8%B5%B7%E6%9D%A5%E5%AD%A6%E4%B9%A0%E5%90%A7%EF%BC%81&appkey=1343713053&pic=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg&searchPic=true">
+                        <i class="icon icon-weibo"></i>
+                    </a>
+                    <a class="qzone" target="_blank"
+                       href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-qzone-1-30225-d020d2d2a4e8d1a374a433f596ad1440&title=%E5%85%8D%E8%B4%B9%E5%AD%A6Android%E5%BC%80%E5%8F%91%EF%BC%8C%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91&desc=%E6%88%91%E6%8A%A5%E5%90%8D%E4%BA%86%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%EF%BC%8C%E9%82%80%E8%AF%B7%E4%BD%A0%E4%B8%80%E8%B5%B7%E6%9D%A5%E5%AD%A6%E4%B9%A0&summary=&site=&pics=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg">
+                        <i class="icon icon-icon-qzone-full icon-qzone"></i>
+                    </a>
+
+                </div>
+                </div>
+           </div>
+
+
+        </section>
+
+
+        <section class="section-white pvl xgsm" id="infomation">
+
+            <div class="container ">
+
+                <div class="text-line pvl">
+                    <h5>
+                        相关说明
+                        <div class="line"></div>
+                    </h5>
+
+                </div>
+
+                <div class="row">
+
+
+                    <div class="col-md-3 col-sm-6">
+
+
+                        <div class="intr_block panel panel-default">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title">报名费用</h3>
+
+                            </div>
+                            <div class="panel-body">
+
+                                <span>
+                                    免费
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="intr_block panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">招收对象</h3>
+
+                            </div>
+                            <div class="panel-body">
+
+                                    <span>
+                                        在校大学生
+                                    </span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+
+                        <div class="intr_block panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">招收名额</h3>
+
+                            </div>
+                            <div class="panel-body">
+
+                                    <span>
+                                        100
+                                    </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="intr_block panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">开课时间</h3>
+
+                            </div>
+                            <div class="panel-body">
+
+                                    <span>
+                                        2016.2.18
+                                    </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="text-center mvl">
+                    <a href="#subinfo" class="btn btn-rectangle btn-success btn-xlg">
+                       抢占名额
+                        <!--<i class="mrs-o icon icon-arrow-right2"></i>-->
+                    </a>
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <section class="section-gray pvl" id="jiaoxue">
+
+            <div class="container">
+
+                <div class="text-line pvl">
+                    <h5>
+                        教学模式
+                        <div class="line"></div>
+                    </h5>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="moshi">
+
+                          <a>
+                              <i class="icon icon-film"></i>
+                          </a>
+
+                            <span>
+                                在线视频
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="moshi">
+
+                            <a>
+                                <i class="icon icon-file-text2"></i>
+                            </a>
+
+                            <span>
+                                完成作业
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="moshi">
+
+                            <a>
+                                <i class="icon icon-video"></i>
+                            </a>
+
+                            <span>
+                                直播辅导
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="moshi">
+
+                            <ul>
+                                <li>
+                                   任务制学习模式
+                                </li>
+                                <li>
+                                    在规定时间内完成任务
+                                </li>
+                                <li>
+                                    直播讲解作业及答疑
+                                </li>
+                            </ul>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="text-center mvl">
+                    <a href="" class="btn btn-rectangle btn-warning btn-xlg">
+                        抢占名额
+                        <!--<i class="mrs-o icon icon-arrow-right2"></i>-->
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="section-white pvl" id="xuzhi">
+
+
+            <div class="container">
+
+
+                <div class="text-line pvl">
+                    <h5>
+                        报名须知
+                        <div class="line"></div>
+                    </h5>
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="bmxj">
+
+
+                        <ul>
+                            <li>1.  本次招收学员只限在读大学生（已实习除外）</li>
+                            <li>2.  3次延时完成学习任务取消学习资格</li>
+                            <li>3.  3次延时提交作业或不提交作业取消学习资格</li>
+                            <li>4.  3. 直播课迟到10分钟或者缺课超过3次取消学习资格</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+        </section>
+
+
+        <section class="section-gray pvl" id="dagang">
+
+            <div class="container">
+                <div class="text-line pvl">
+                    <h5>
+                        课程大纲
+                        <div class="line"></div>
+                    </h5>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 class_menu">
+
+                        <img src="/static/images/class_menu.png" alt=""/>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section-white" id="subinfo">
+
+            <div class="container">
+
+                <div class="text-line pvl">
+                    <h5>
+                        提交报名信息
+                        <div class="line"></div>
+                    </h5>
+                </div>
+
+                <div class="login-section">
+                    <div class="login-main">
+                        <form id="login-form"  method="post"  novalidate="novalidate" action="/train/save">
+
+
+                            <div class="form-group mbl">
+                                <label class="control-label" for="realname">姓名</label>
+                                <div class="controls">
+                                    <input class="form-control input-lg"
+                                           id="realname" type="text"
+                                           name="realname" value="{{ info.realname }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbl">
+                                <label class="control-label" for="qq">QQ</label>
+                                <div class="controls">
+                                    <input class="form-control input-lg"
+                                           type="text" id="qq"
+                                           name="qq" value="{{ info.qq }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbl">
+                                <label class="control-label" for="login_username">学校</label>
+                                <div class="controls">
+                                    <input class="form-control input-lg" id="school"
+                                           type="text"  name="school" value="{{ info.school }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbl">
+                                <label class="control-label" for="login_username">专业</label>
+                                <div class="controls">
+                                    <input class="form-control input-lg"
+                                           type="text" id="specialty"
+                                           name="specialty" value="{{ info.specialty }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbl">
+                                <label class="control-label" for="login_username">年级</label>
+                                <div class="controls">
+                                    <select class="form-control input-lg" id="grade"
+                                           type="text" name="grade">
+                                        <option value="大一">大一</option>
+                                        <option value="大二">大二</option>
+                                        <option value="大三">大三</option>
+                                        <option value="大四">大四</option>
+                                        <option value="研一">研一</option>
+                                        <option value="研二">研二</option>
+                                        <option value="研三">研三</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group mbl">
+
+                                {% if current_user.is_authenticated() %}
+                                    <button type="button" onclick="sub_info()" class="btn btn-rectangle btn-success btn-lg btn-block" >提交</button>
+                                {% else %}
+                                    <a href="{{ url_for('auth.login', next='/train/android-free#subinfo') }}" class="btn btn-rectangle btn-success btn-lg btn-block" >提交</a>
+                                {% endif %}
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="handler">
+            <div class="container">
+                <ul class="pc-control">
+                    <li><a href="#infomation">相关说明</a></li>
+                    <li><a href="#jiaoxue">教学模式</a></li>
+                    <li><a href="#xuzhi">报名须知</a></li>
+                    <li><a href="#dagang">课程大纲</a></li>
+                    <li><a href="#subinfo" class="btn btn-warning btn-block">立即报名</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="mobile-bottom-handle">
+            <div class="mob-control">
+                <span>分享给你的同学，邀请他们一起学习</span>
+                <a href="#subinfo" class="btn btn-warning  " style="color: #fff">立即报名</a>
+            </div>
+        </section>
+
+        <div id="su_modal" class="modal">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="javascript: $('#su_modal').hide();">×</button>
+                        <h4 class="modal-title">报名成功</h4>
+                    </div>
+                    <div class="modal-body pvl">
+                        <h5 class="text-center">您是第<span class="color-danger phm text-xlg" id="total_count">10023</span> 报名参加Android特训营的大学生</h5>
+                        <h5 class="hide"　id="hinfo"><span id="message"></span></h5>
+                        <hr/>
+                        <div>
+                            请您支持我们，邀请更多的同学一起学习。
+                            <div class="share-group hidden-xs">
+                                <a class="weixin qrcode-popover buttom" href="">
+                                    <i class="icon icon-weixin"></i>
+                                    <div class="qrcode-content">
+                                        <img src="/static/images/android-free.png" alt="">
+                                    </div>
+                                </a>
+                                <a class="qq" target="_blank"
+                                    href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-sqq-1-91048-9737f6f9e09dfaf5d3fd14d775bfee85&title=%E6%88%91%E6%98%AF%E7%AC%AC1232%E4%B8%AA%E6%8A%A5%E5%90%8D%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%E7%9A%84%E5%A4%A7%E5%AD%A6%E7%94%9F%E3%80%82%20%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91&desc=%E6%88%91%E6%8A%A5%E5%90%8D%E4%BA%86%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%EF%BC%8C%E9%82%80%E8%AF%B7%E4%BD%A0%E4%B8%80%E8%B5%B7%E6%9D%A5%E5%AD%A6%E4%B9%A0&summary=&site=baidu&pics=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg">
+                                    <i class="icon icon-qq"></i>
+                                </a>
+                                <a class="weibo" target="_blank"
+                                   href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-tsina-1-60899-397232819ff9a47a7b7e80a40613cfe1&title=%E6%88%91%E6%98%AF%E7%AC%AC1232%E4%B8%AA%E6%8A%A5%E5%90%8D%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%E7%9A%84%E5%A4%A7%E5%AD%A6%E7%94%9F%E3%80%82%20%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91&appkey=1343713053&pic=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg&searchPic=true">
+                                    <i class="icon icon-weibo"></i>
+                                </a>
+                                <a class="qzone" target="_blank"
+                                   href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fwww.cniao5.com%2Ftrain%2Fandroid-free%3Fs%3D%230-qzone-1-30225-d020d2d2a4e8d1a374a433f596ad1440&title=%E6%88%91%E6%98%AF%E7%AC%AC1232%E4%B8%AA%E6%8A%A5%E5%90%8D%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%E7%9A%84%E5%A4%A7%E5%AD%A6%E7%94%9F%E3%80%82%20%E5%85%A8%E5%9B%BD1000%E6%89%80%E9%AB%98%E6%A0%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E7%88%B1%E5%A5%BD%E8%80%85%E9%83%BD%E5%9C%A8%E8%8F%9C%E9%B8%9F%E7%AA%9D%E5%AD%A6Android%E5%BC%80%E5%8F%91&desc=%E6%88%91%E6%8A%A5%E5%90%8D%E4%BA%86%E8%8F%9C%E9%B8%9F%E7%AA%9D%E3%80%8AAndroid%E7%89%B9%E8%AE%AD%E8%90%A5%E3%80%8B%EF%BC%8C%E9%82%80%E8%AF%B7%E4%BD%A0%E4%B8%80%E8%B5%B7%E6%9D%A5%E5%AD%A6%E4%B9%A0&summary=&site=&pics=http%3A%2F%2F7mno4h.com2.z0.glb.qiniucdn.com%2Fbanner_txy.jpg">
+                                    <i class="icon icon-icon-qzone-full icon-qzone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <section class="cniao-gzh">
+
+            <div class="container ">
+
+                <div class="sns-section">
+                    <ul>
+                        <li>
+                            <img src="/static/images/rcode_for_weixin.jpg" alt=""/>
+                            <span>关注菜鸟窝</span>
+                        </li>
+                        <li>
+                            <img src="/static/images/qr_qq_android_txy.png" alt=""/>
+                            <span>加入特训营QQ群</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+{% endblock %}
+
+  {% block custom_js_block %}
+
+
+<script type="text/javascript">
+
+var app={};
+app.debug = true;
+app.jsPaths={};
+app.global_script='path-js/global-config';
+app.mainScript = 'path-js/app';
+seajs.use(app.mainScript);
+
+
+function sub_info(){
+
+   if('{{info.id}}' != ''){
+       message_box.show('你已经参加过报名，勿重复提交', 'error');
+       return;
+   }
+   var realname=$('#realname').val();
+   var qq=$('#qq').val();
+   var school=$('#school').val();
+   var specialty=$('#specialty').val();
+   var grade=$('#grade').val();
+
+   if(realname == ''){
+       message_box.show('姓名不能为空', 'error');
+       return;
+   }
+   if(qq == ''){
+       message_box.show('QQ号不能为空', 'error');
+       return;
+   }
+
+    var info = {}
+    info.train_type = 1;
+    info.realname =realname;
+    info.qq =qq;
+    info.school =school;
+    info.specialty =specialty;
+    info.grade =grade;
+   $.ajax({
+      url: "/train/save",
+      data: JSON.stringify(info),
+      contentType: "application/json; charset=utf-8",
+      type:"POST",
+      dataType:'json',
+      success: function(data){
+          if(data.status==1){
+              $('#total_count').html(data.data);
+              $('#su_modal').show();
+              //setInterval('reloads()', 3000);
+          }else if(data.status==2){
+              $('#message').html('你已经提交过报名信息，勿重复提交！');
+              $('#su_modal').show();
+              setInterval('reloads()', 3000);
+          }else{
+              message_box.show('保存出错，请重试或者联系客服', 'error');
+          }
+      }
+   });
+}
+
+function reloads(){
+    location.reload();
+}
+
+</script>
+    {% endblock %}

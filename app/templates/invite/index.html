@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <title>邀请好友加入菜鸟窝送30天VIP和鸟币</title>
+ <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_new.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+<body style="padding-top: 0px">
+
+
+
+
+    <div class="cniao-wrap">
+
+
+
+
+        <div class="invite-section">
+
+            <div class="container">
+
+                <img class="logo hidden-xs" src=" {{ url_for('static', filename='images/logo.png') }}">
+
+                <div class="text-line">
+                    <h5>
+                        邀请好友送VIP和鸟币
+                        <div class="line"></div>
+                    </h5>
+                    <div class="subtitle">邀请越多送越多,福利不封顶</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 ">
+
+
+                        <div class="invite-step">
+
+                            <a href="" class="circle">
+
+                               <div class="content">
+                                   <i class="icon icon-share3"></i>
+                                   <h5>1: 分享链接给小伙伴</h5>
+                               </div>
+                            </a>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-xs-4 ">
+
+
+
+                        <div class="invite-step">
+
+                            <a href="" class="circle">
+
+                                <div class="content">
+
+                                    <i class="icon icon-user-plus"></i>
+                                    <h5>2: 小伙伴通过它注册</h5>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="col-xs-4 ">
+
+
+                        <div class="invite-step">
+
+                            <a href="" class="circle">
+
+                                <div class="content">
+
+                                    <i class="icon icon-zhuanshi"></i>
+                                    <h5>3: 各获得30天VIP等福利</h5>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="invite-sns-section section-white">
+
+
+            <div class="container">
+
+                 {% if current_user.is_authenticated() %}
+
+
+                     <div class="row">
+
+                        <div class="col-md-10 col-md-offset-1 ">
+
+                        <div class="link hidden-xs">
+
+                                <div id="username" data-name="{{ user.username if user.username !=None }}"></div>
+
+                                <form action="" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label for="link-url" class="col-md-2 label-text">您的专属链接</label>
+
+                                        <div class="input-group col-md-10">
+
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="link-url"
+                                                   data-code="{{ user.unique_code }}"
+                                            value="">
+
+                                            <div class="input-group-addon">
+
+                                                <div class="copy ">
+
+                                                    <a href="javascript:;"
+                                                       class="btn-copy btn btn-primary"
+                                                    data-share-url ="{{ url_for('invite.invite_user',code=user.unique_code,_external=True) }}">
+                                                        一键复制
+                                                    </a>
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                        </div>
+
+                        <div class="social-login js-social-share-params"
+                        data-title="［限时免费福利］菜鸟窝免费送您价值1W大洋的课程"
+                                             data-summary="想在线学编程的小伙伴不要错过啦！ "
+                                             data-message=""
+                                             data-url=""
+                                             data-picture="http://7mno4h.com1.z0.glb.clouddn.com/invite-hongbao.jpg"
+                        >
+
+                                <a href="javascript:;" class="social-icon js-social-share hidden-xs"
+                                data-share="weixin" >
+                                    <i class="icon icon icon-weixin"></i>
+                                </a>
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="qq" >
+                                    <i class="icon icon-qq"></i>
+                                </a>
+
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="qzone" >
+                                    <i class="icon  icon-icon-qzone-full"></i>
+                                </a>
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="weibo" >
+                                    <i class="icon icon-weibo"
+                                    ></i>
+                                </a>
+                            <!--<div class="line"></div>-->
+                        </div>
+
+                        <div class="share-tip">
+
+                            每个用户最多只能领取360天VIP,但是鸟币无限制哦!行动吧
+                        </div>
+
+                    </div>
+                </div>
+
+                 {% else  %}
+
+                    <div class="nologin ">
+
+
+                    <a  href="javascript:void(0)" class="btn-login btn btn-rectangle btn-warning">
+
+                        登录后再邀请
+                    </a>
+
+                    <p>还没有账号?<a href="javascript:void(0)" class="btn-reg"> 立即注册</a></p>
+
+
+                </div>
+
+
+
+                {% endif %}
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+        <div class="invite-section">
+            <div class="container">
+
+                <div class="text-line">
+                    <h5>
+                        您能获得的福利
+                        <div class="line"></div>
+                    </h5>
+                    <div class="subtitle">邀请越多福利越多</div>
+                </div>
+
+                <div class="course-list row">
+
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="{{ url_for('train.android') }}" target="_blank">
+                                    <img src="http://7mno4h.com2.z0.glb.qiniucdn.com/android_500_300_1.png" alt="Android高级工程师培训课程"
+                                         class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="" href={{ url_for('train.android') }} target="_blank">
+                                        Android高级工程师培训课程
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="http://www.cniao5.com/course/10114" target="_blank">
+                                    <img src="http://7mno4h.com1.z0.glb.clouddn.com/react-native.png" alt="React Native 零基础到高级"
+                                         class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="" href="{{ url_for('train.android') }}" target="_blank">
+                                        React Native  零基础到高级
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="{{ url_for('vip.index') }}" target="_blank">
+                                    <img src="http://www.cniao5.com/static/images/vip_500_300.png" alt="高级VIP课程集合"
+                                         class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="" href="{{ url_for('vip.index') }}" target="_blank">
+                                        高级VIP课程集合
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+
+
+                           <div class="course-item">
+                            <div class="course-img">
+                                <a href="{{ url_for('course.index') }}" target="_blank">
+                                    <img src="http://7mno4h.com1.z0.glb.clouddn.com/more.png" alt="更多课程"
+                                         class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="" href="{{ url_for('course.index') }}" target="_blank">
+                                        更多课程
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="text-center mbl mtl">
+
+                    <p class="" style="color: #fff">＊注：活动最终解释权归菜鸟窝所有。严禁通过违规方式获取VIP，否则收回所有权限。</p>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div style="display:none;">
+
+    <script type="text/javascript">
+        /**
+         * 统计代码
+         * @type {_hmt|*|Array}
+         * @private
+         * */
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256106650'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256106650%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+   <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+   <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        var app={};
+
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/invite';
+        app.mainScript = 'path-js/app';
+
+        seajs.use(app.mainScript);
+
+
+    </script>
+
+
+
+</body>
+</html>

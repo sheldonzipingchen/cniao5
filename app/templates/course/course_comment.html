@@ -1,0 +1,106 @@
+{% extends "course/base_course_detail.html" %}
+
+{% block course_bottom_left %}
+
+    <div class="nav-btn-tab">
+
+        <ul class="nav nav-tabs" role="tablist">
+
+            <li  class="">
+                <a href="{{ url_for('course.course_detail', id=class_item.id) }}"
+
+
+                       title="{{ class_item.name }}课程简介"
+                       >简介</a>
+
+            </li>
+
+            <li  class="">
+                <a href="{{ url_for('course.course_lessons', id=class_item.id) }}"
+                   title="{{ class_item.name }}的目录"
+                        >目录</a>
+            </li>
+
+             <li  class="">
+                <a href="{{ url_for('course.course_thread', id=class_item.id) }}"
+                   title="{{ class_item.name }}的讨论"
+                        >讨论区</a>
+            </li>
+            <li class="active">
+                <a href="{{ url_for('course.course_comment', id=class_item.id) }}"
+                   title="{{ class_item.name }}的评价"
+
+                        >评价
+
+                    <small class="text-muted" id="comment_count">( {{ class_item.comment_count }} )</small>
+
+                </a>
+            </li>
+
+            <li  class="hidden-xs">
+                <a href="{{ url_for('course.course_courseware', id=class_item.id) }}"
+                   title="{{ class_item.name }}的源码"
+                   >源码
+
+                    </small>
+
+                </a>
+            </li>
+         </ul>
+    </div>
+
+     <div class="course-detail-content">
+
+        <div id="evaluate-list" class="course-evaluates  ">
+
+
+            <form id="review-form" method="post" data-url="{{ url_for('course.course_comment_create') }}" novalidate="novalidate">
+                                        <div class="form-group controls">
+                                            请打分：
+                                            <span data-rating="0" data-img-path="/static/images" class="rating-btn" style="cursor: pointer; width: 100px;">
+
+
+                                            <input type="hidden" id="rating" name="rating" value="0" data-explain="">
+                                            <div class="help-block" style="display:none;"></div>
+                                        </div>
+
+                                        <div class="form-group controls">
+                                            <textarea
+                                                    id="content"
+                                                    class="form-control"
+                                                    rows="8"
+
+                                                      data-display="评价详细内容"
+                                                      name="content"
+                                                      data-explain=""></textarea>
+
+                                            <div class="help-block" style=""><span class="text-danger"></span></div>
+
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <span class="text-success pull-left" style="display: none;">评价已保存！</span>
+                                            <button id="comment-save-btn" type="submit" class="btn btn-primary pull-right" data-loading-text="正在保存..." autocomplete="off">保存</button>
+                                            <button class="btn btn-link pull-right js-hide-review-form" type="button">取消</button>
+                                        </div>
+
+            </form>
+
+
+            <div id="js-comments"></div>
+
+
+             <nav class=" text-center">
+                    <ul class="pagination" id="pagination_comment">
+
+                    </ul>
+              </nav>
+
+        </div>
+
+     </div>
+
+
+{% endblock %}
+
+

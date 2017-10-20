@@ -1,0 +1,56 @@
+
+
+   <table class="table table-condensed  table-hover table-responsive">
+
+
+        <thead>
+        <tr>
+            <th>讲师</th>
+            <th>内容</th>
+
+            <th>金额</th>
+             <th>时间</th>
+        </tr>
+        </thead>
+
+        <tbody >
+
+
+            {#foreach $T as c}
+
+                <tr>
+
+
+                    <td class="text-center">
+                        {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                                        <img src="/static/images/head_defualt.jpg"
+                                            class="avatar-md">
+                                    {#else}
+
+                                        <img src="{{ $T.c.user.logo_url}}" alt="{{ $T.c.user.username }} 的头像" class="avatar-sm"/>
+                                    {#/if}
+
+                            <div >{{ $T.c.user.username}}</div>
+
+                    </td>
+                    <td> {{ $T.c.title }}</td>
+
+                    <td>
+                        <span class="text-danger text-large"> {{ $T.c.money }}</span><br>
+                    </td>
+                     <td>
+                       {{ $T.c.created_time}}
+                    </td>
+
+
+                </tr>
+
+            {#/for}
+
+
+        </tbody>
+
+
+
+   </table>
+

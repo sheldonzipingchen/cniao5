@@ -1,0 +1,85 @@
+{% extends "base_new.html" %}
+
+{% block title %}绑定账号 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+
+   <div class="cniao-section login-section">
+       <div class="logon-tab clearfix">
+           <a href="{{ url_for('auth.social_account_create') }}">创建新账号</a>
+           <a  class="active">绑定已有账号</a>
+       </div>
+       <div class="login-main">
+
+
+           <form id="bind-user-form"
+                 class="form-vertical"
+                 role="form"
+                 method="post"
+                 novalidate="novalidate"
+                data-post-url="{{ url_for('auth.user_social_account_bind') }}">
+
+                <div class="text-center mbm">
+
+                    <img src="{{ head_url }}" class="avatar-md">
+                </div>
+
+
+                   <div class="form-group mbl">
+                       <div class="controls">
+                           <input id="emailOrMobile"
+                                  class="form-control"
+                                  type="text"
+                                  name="emailOrMobile"
+                                  placeholder="手机号码/邮箱"
+                                  >
+                           <p class="help-block"></p>
+                       </div>
+                   </div>
+
+                   <div class="form-group mbl">
+                       <div class="controls">
+                           <input id="password" class="form-control"
+                                  type="password" name="password"
+                                  placeholder="登录密码"
+                                  >
+                           <div class="help-block" style="display:none;"></div></div>
+                   </div>
+
+                   <div class="form-group">
+                       <button id="btn-bind" class="btn btn-primary btn-lg btn-block" type="submit" data-loading-text="正在提交...">确认绑定</button>
+                   </div>
+
+
+           </form>
+
+
+
+       </div>
+   </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.mainScript = 'path-js/app';
+        app.controller='app/social-account-bind';
+
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

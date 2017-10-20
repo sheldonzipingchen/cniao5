@@ -1,0 +1,113 @@
+{% extends "member/base.html" %}
+{% set active_page = 'revenue' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+
+       <ul class="nav nav-tabs">
+        <li class="">
+            <a href="{{ url_for('member.revenue') }}">我的收入</a>
+        </li>
+
+        <li class="active">
+            <a href="{{ url_for('member.withdrawals') }}">
+                提现记录
+            </a>
+        </li>
+
+       </ul>
+
+
+
+             <div class="table-responsive">
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>提现金额</th>
+                                        <th>申请时间</th>
+                                        <th>手续费</th>
+                                        <th>实收金额</th>
+                                        <th>收款账户</th>
+                                        <th>处理时间</th>
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                   {% if withdrawals|length > 0  %}
+
+                                        {% for c in withdrawals %}
+
+                                         <tr>
+                                           <td>
+                                               <strong>{{ c.apply_money }}</strong>
+                                           </td>
+                                           <td>{{ c.created_time }}</td>
+                                           <td>{{ c.service_charge  if c.service_charge != none  }}</td>
+                                           <td><strong>{{ c.pay_money if c.pay_money != none }}</strong></td>
+                                           <td>{{ c.beneficiary_account  if c.beneficiary_account != none }}</td>
+                                           <td>{{ c.hande_time if c.hande_time != none}}</td>
+                                           <td>
+
+                                               {% if c.state==0 %}
+                                                   <span class="text-warning">等待处理</span>
+                                               {% elif c.state==1 %}
+                                                   <span class="label label-success">提现成功</span>
+                                               {% elif c.state==2 %}
+                                                   <span class="label label-danger">被驳回</span>
+                                               {% endif%}
+                                           </td>
+                                       </tr>
+
+                                        {% endfor %}
+
+                                   {% else %}
+                                    <tr class="text-center">
+                                        <td colspan="7"> <span class="text-muted ">无数据</span> </td>
+
+                                    </tr>
+
+                                   {% endif %}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+    </div>
+
+
+
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/revenue';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

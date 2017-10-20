@@ -1,0 +1,175 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+        <h1 class="page-title">添加课程-章节和课时</h1>
+
+        <div class="well">
+
+
+            <div class="chapter-box">
+
+                <div class="line"></div>
+
+                {% for chapter in class_item.chapters %}
+                    <div class="chapter-title ">
+                        <span class="chapter pull-left">章节</span>
+
+                         <span class="index pull-left">
+                             1
+                         </span>
+
+                        <div class="c-main pull-left">
+                            <span class="name">
+                                {{ chapter.title }}
+                            </span>
+
+                            <div class="btn-action">
+                                {#                                <a href=""><i class="icon icon-pencil"></i></a>#}
+                                <a href="{{ url_for('admin.chapter_delete', course_id=class_item.id, chapter_id=chapter.id) }}"><i
+                                        class="icon icon-bin"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% for lesson in chapter.lessons %}
+                        <div class="chapter-item ">
+
+                            <span class="chapter pull-left">课时1</span>
+
+                            <span class="index pull-left"></span>
+
+                            <div class="c-main pull-left">
+                            <span class="name">
+                                {{ lesson.name }}
+                            </span>
+
+                                <div class="btn-action">
+                                    {#                                    <a href=""><i class="icon icon-pencil"></i></a>#}
+                                    <a href="{{ url_for('admin.lesson_delete', course_id=class_item.id, chapter_id=chapter.id, lesson_id=lesson.id) }}"><i
+                                            class="icon icon-bin"></i></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% else %}
+
+                    {% endfor %}
+
+                    <div class="chapter-item ">
+
+                        <span class="chapter pull-left"></span>
+
+                        <span class="index pull-left"></span>
+
+                        <div class="c-main pull-left">
+
+
+                            <div class="add-item" id="addLesson">
+                                <i class="icon icon-plus"></i>
+                                添加新课时
+                            </div>
+
+
+                            <div class="add-item-editor hide">
+
+                                <form method="post"
+                                      enctype="multipart/form-data"
+                                      action="{{ url_for('admin.couser_add_lesson', course_id=class_item.id, chapter_id=chapter.id) }}"
+                                      class="form-horizontal" novalidate="novalidate">
+                                    {{ new_lesson_form.hidden_tag() }}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">课时名称</label>
+
+                                        <div class="col-sm-8">
+                                            {{ new_lesson_form.name(class_='form-control') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">课时介绍</label>
+
+                                        <div class="col-sm-8">
+                                            {{ new_lesson_form.desc(class_='form-control', rows='2', cols='10') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">选择视频</label>
+
+                                        <div class="col-sm-8">
+
+                                            {{ new_lesson_form.select_video(class_='form-control') }}
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">免费试看</label>
+
+                                        <div class="col-sm-4">
+                                            {{ new_lesson_form.is_free(class_='form-control') }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">选择课件</label>
+
+                                        <div class="col-sm-8">
+                                            {{ new_lesson_form.file_input(class_='form-control') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-8">
+                                            <a class="button button_default button_small"
+                                               id="btnCancleAddItem">取消</a>
+                                            {{ new_lesson_form.submit(class_='button button_green button_small') }}
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+
+                {% endfor %}
+
+                <div class="chapter-title">
+                    <span class="chapter pull-left">章节</span>
+
+                    <span class="index pull-left"></span>
+
+                    <form method="post"
+                          action="{{ url_for('admin.couser_add_lesson', course_id=class_item.id, chapter_id=0) }}"
+                          class="c-main pull-left">
+                        {{ new_chapter_form.hidden_tag() }}
+
+                        <div class="add-chapter" id="addChapter">
+                            <i class="icon icon-plus"></i>添加新章节
+                        </div>
+
+                        <div class="add-chapter-editor hide">
+                            {{ new_chapter_form.title(class_='form-control', placeholder='请输入章节名字') }}
+
+                            <div class="btn-action">
+                                <a class="button button_default button_small" id="btnCancleAddChapter">取消</a>
+                                {{ new_chapter_form.submit(class_='button button_green button_small') }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-offset-2  of">
+                <a href="couser_add_baseinfo.html" class="button button_default button_big">上一步</a>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

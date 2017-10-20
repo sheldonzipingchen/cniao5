@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'teachers' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="teacher-income"></div>
+
+    <div class="row cniao-section">
+        <div class="nav-btn-tab ">
+            <ul class="nav nav-tabs">
+
+                <li ><a href="{{ url_for(".teachers") }}">讲师列表</a></li>
+                <li class="active"><a href="{{ url_for(".teacher_incomes") }}">讲师收入</a></li>
+
+
+
+            </ul>
+
+        </div>
+
+
+        <div class="income-list">
+
+              <form class="form-inline text-center mbl" role="form" style="padding: 10px">
+                  <div class="form-group ">
+                    <label class="sr-only" for="email_or_mobi">用户</label>
+                    <input type="text" class="form-control " id="email_or_mobi"  style="width: 300px" placeholder="Enter teacher's email or mobi">
+                  </div>
+
+                  <a id="btn-search" class="btn btn-default ml25">搜索</a>
+                </form>
+
+
+            <div id="data-list"></div>
+             <nav class="text-center">
+                    <ul class="pagination" id="pagination"></ul>
+             </nav>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+{% endblock %}

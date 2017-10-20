@@ -1,0 +1,97 @@
+{% extends "base_new.html" %}
+{% block title %}
+   Android项目实战课程 - 国内专业的Android职业技能在线学习平台
+{% endblock %}
+{% block keywords %}Android项目实战课程,菜鸟商城,仿京东,仿淘宝,菜鸟微博,菜鸟新闻,菜鸟应用商店,菜鸟音乐,Android Studio,Android5.0,Android6.0,Android7.0{% endblock %}
+{% block description %}学了几个月Android，还是不会做项目，这是很多人的烦恼；菜鸟窝项目实战课程就是为了解决这个问题。快速积累项目和开发经验、进名企、拿高薪，你只有一套课程的经验{% endblock %}
+
+
+{% block main_block %}
+
+
+      <div id="content-container" class="container">
+
+
+            <div class="row">
+
+                 <div class="col-lg-12 col-md-12">
+
+                      <section class="cniao-section">
+
+                           <div class="class-list row">
+
+                                 {%  for clazz in listclass  %}
+
+                                      <div class="col-md-4 col-sm-6">
+                                        <div class="class-item">
+                                              <div class="class-img">
+                                                  <a href="{{ url_for('course.course_detail',id=clazz.id) }}" target="_blank">
+                                                      <img src="{{ clazz.img_url }}" alt="{{ clazz.name }}" class="img-responsive">
+                                                      <h3>{{ clazz.name }}</h3>
+                                                      <div class="image-overlay"></div>
+                                                  </a>
+                                              </div>
+                                              <div class="class-serve">
+
+
+                                                  <ul class="list-unstyled clearfix">
+
+
+                                                      <li class="active">
+                                                          <a tabindex="0" role="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" title="" data-content="对于提问做到有问必答，帮您扫清学习过程中的种种障碍" data-original-title="提问必答 ">问</a>
+                                                      </li>
+                                                      <li class="active">
+                                                          <a tabindex="0" role="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" title="" data-content="提供专属的一对一在线答疑，快速答疑解惑" data-original-title="一对一在线答疑 ">疑</a>
+                                                      </li>
+                                                      <li class="active">
+                                                          <a tabindex="0" role="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" title="" data-content="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密" data-original-title="班级活动 ">动</a>
+                                                      </li>
+
+                                                  </ul>
+                                              </div>
+                                              <ul class="class-data clearfix">
+
+                                                  <li><i class="icon icon-users"></i>{{ clazz.lessons_played_time }}</li>
+                                                  <li><i class="icon icon-comment"></i>{{ clazz.comment_count }}</li>
+                                                  <li><a href="{{ url_for('lesson.play_first_lesson',course_id=clazz.id) }}" target="_blank" >免费试学</a></li>
+                                              </ul>
+                                      </div>
+                                   </div>
+
+                                 {% endfor %}
+                           </div>
+                      </section>
+                 </div>
+
+
+            </div>
+
+      </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+         app.controller='app/course_projects';
+        app.mainScript = 'path-js/app';
+        app.currItem = 'pro';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

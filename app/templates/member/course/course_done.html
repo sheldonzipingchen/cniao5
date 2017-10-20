@@ -1,0 +1,77 @@
+{% extends "member/base.html" %}
+{% set active_page = 'index' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+        <div class="section-header"><h3>我的课程</h3></div>
+
+        <ul class="nav nav-pills">
+            <li class=""><a href="{{ url_for('member.course_learning') }}">学习中</a></li>
+            <li class="active"><a href="{{ url_for('member.course_done') }}">已学完</a></li>
+            <li><a href="{{ url_for('member.course_fav') }}">收藏课程</a></li>
+        </ul>
+
+         <ul class="course-grids">
+
+            {% for study_record in course_study_list %}
+
+                  <li class="course-grid">
+                   <a href="{{ url_for('course.course_detail',id=study_record.clazz.id) }}" class="grid-body" target="_blank">
+                                    <img src="{{ study_record.clazz.img_url }}" class="img-responsive thumb">
+
+                                    <span class="title">{{ study_record.clazz.name }}</span>
+
+
+                                    <div class="learn-status">
+                                        <div class="mbm">
+                                        </div>
+
+
+
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+                                        </div>
+                                        <!--学习总时长:0小时0分钟-->
+                                        <div class="action clearfix"><span class="btn btn-default btn-sm pull-right">查看课程</span></div>
+                                    </div>
+
+
+                                </a>
+                  </li>
+            {% endfor %}
+
+          </ul>
+    </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+{#            app.controller='app/index';#}
+            app.mainScript = 'path-js/app';
+            app.currItem = 1;
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

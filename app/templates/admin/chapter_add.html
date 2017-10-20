@@ -1,0 +1,40 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+
+        <div class="well">
+
+
+            <form method="post" action="{{ url_for('admin.chapter_add', class_id=class_id) }}"
+                  class="form-horizontal" novalidate="novalidate">
+
+                {{ newChapterForm.hidden_tag() }}
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ newChapterForm.title.label }}</label>
+
+                    <div class="col-sm-8">
+                        {{ newChapterForm.title(class_='form-control') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        {{ newChapterForm.submit(class_='button button_green button_big') }}
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+{% endblock %}

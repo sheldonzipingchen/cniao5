@@ -1,0 +1,243 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+    订单确认-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div id="content-container" class="container">
+
+         <div class="order-pay">
+
+                <div class="cniao-section">
+
+                    <ul class="cniao-step cniao-step-3 clearfix">
+                        <li class="doing"><span class="number">1</span>订单确认</li>
+                        <li><span class="number">2</span>订单支付</li>
+                        <li><span class="number">3</span>订单完成</li>
+                    </ul>
+
+                    <div class="order-pay-body">
+
+
+                        <form action="{{ url_for('order.create') }}">
+
+                            <div class="order-detail-bg">
+
+                                <div class="order-detail clearfix">
+
+                                    <div class="order-img hidden-xs">
+
+                                        {% if product_type ==0 %}
+                                            <a href="">
+                                            <img src="{{ url_for('static', filename='images/vip_500_300.png')  }}" alt=""/>
+                                             </a>
+
+                                        {% elif product_type ==3 %}
+                                            <a href="">
+                                                <img src="{{ order.pic }}" alt=""/>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="order-info text-overflow">{{ order.title }}</div>
+                                    <div class="order-price">
+                                        <span class="pay-rmb">￥</span>
+                                        <span role="total-price" class="pay-rmb">{{ order.total_price }}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- 优惠码模块-->
+
+                             <div class="order-detail-bg" style="margin-bottom: 5px">
+
+                                <div class="order-item clearfix">
+
+
+                                    <div class="order-item-title">
+                                        <span class="title">优惠码</span>
+
+                                        <span role="no-use-coupon-code">（没有使用优惠码）</span>
+
+                                    </div>
+
+                                    {% if order.can_use_coupon %}
+                                        <div class="order-item-detail  coupon-detail">
+                                        <div role="null-coupon-code" style="display: block;">
+                                            <a id="coupon-code-btn" class="btn btn-primary" href="javascript:;" style="display: inline-block;">输入优惠码</a>
+                                        </div>
+
+
+                                        <div role="coupon-code" class="input-group" style="display: none;">
+                                            <input role="coupon-code-verified" name="couponCode" type="hidden" value="">
+
+                                            <input style="width:150px;"
+                                                   role="coupon-code-input"
+                                                   type="text"
+                                                   class="form-control mrm"
+                                                   placeholder="请输入优惠码"
+                                                   >
+                                            <button class="btn btn-primary" type="button" role="coupon-use">使用</button>
+                                            <a href="javascript:;" class="btn btn-link" role="cancel-coupon" style="display: inline-block;">取消</a>
+                                        </div>
+
+                                        <div role="coupon-notify" class="alert alert-xs mtm alert-danger" style="display: none; line-height: 20px;"></div>
+                                    </div>
+                                      {% else %}
+                                       <span class="text-danger"> 活动期间不能使用优惠码</span>
+                                     {% endif %}
+
+                                    <div class="order-item-price" role="coupon-price">
+                                        <span class="mrs">抵扣</span>
+                                        <span>￥</span> <span role="price" style="font-size: 24px">0.00</span>
+                                        <span></span>
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+
+                         <!-- 邀请码模块-->
+                           <div class="order-detail-bg">
+
+
+                                <div class="order-item clearfix">
+
+
+                                    <div class="order-item-title">
+                                        <span class="title">邀请码</span>
+
+                                        <span role="no-use-invite-code">（没有使用邀请码）</span>
+
+                                    </div>
+
+                                        <div class="order-item-detail  coupon-detail">
+                                        <div role="null-invite-code" style="display: block;">
+                                            <a id="invite-code-btn" class="btn btn-primary" href="javascript:;" style="display: inline-block;">输入邀请码</a>
+                                        </div>
+
+
+                                        <div role="invite-code" class="input-group" style="display: none;">
+                                            <input role="invite-code-verified" name="inviteCode" type="hidden" value="">
+
+                                            <input style="width:150px;"
+                                                   role="invite-code-input"
+                                                   type="text"
+                                                   class="form-control mrm"
+                                                   placeholder="请输入邀请码"
+                                                   >
+                                            <button class="btn btn-primary" type="button" role="invite-use">使用</button>
+                                            <a href="javascript:;" class="btn btn-link" role="cancel-invite" style="display: inline-block;">取消</a>
+                                        </div>
+
+                                        <div role="invite-notify" class="alert alert-xs mtm alert-danger" style="display: none; line-height: 20px;"></div>
+                                    </div>
+
+
+                                        <div class="order-item-price" role="invite-price">
+                                            <span class="mrs">抵扣</span>
+                                            <span>￥</span> <span role="price" style="font-size: 24px">0.00</span>
+                                            <span></span>
+                                        </div>
+
+
+
+
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="total-price">
+                                    应付金额：
+                                    <span class="pay-rmb">￥</span><span role="pay-rmb" class="pay-rmb" id="shouldpay-money">{{ order.total_price }}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+
+                                 {% if product_type ==0 %}
+                                     <a href="{{ url_for('vip.index') }}" class="btn btn-link" style="">取消</a>
+                                {% elif product_type ==3 %}
+
+                                    <a href="{{ url_for('course.course_detail',id=product_id) }}" class="btn btn-link" style="">取消</a>
+                                {% endif %}
+
+
+
+                                <input type="hidden" name="product_id" value="{{ product_id }}" />
+                                <input type="hidden" name="product_type" value="{{ product_type }}" />
+                                <input type="hidden" name="price" value="{{ order.price }}" />
+                                <input type="hidden" name="total_price" value="{{ order.total_price }}" />
+                                <input type="hidden" name="count" value="{{ order.count }}" />
+                                <input type="hidden" name="title" value="{{ order.title }}" />
+                                <input type="hidden" name="unit" value="{{ buy_type }}" />
+                                <input type="hidden" name="coupon_id" value="0" />
+                                <input type="hidden" name="invite_id" value="0" />
+                                <input type="hidden" name="discount_type" value="0" />
+
+
+
+                                <button type="submit" class="btn btn-primary  "
+                                   id="js-order-create-sms-btn"
+                                   >提交订单</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+     </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+        app.controller='app/order-create';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

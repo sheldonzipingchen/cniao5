@@ -1,0 +1,188 @@
+{% extends "member/base.html" %}
+{% set active_page = 'invite_cash' %}
+
+
+
+
+{% block block_content %}
+
+
+    <style>
+
+      .invitation-content {
+
+        padding: 10px 20px;
+    }
+
+    .invitation-content label {
+        font-weight: 500;
+        color: #666f80;
+        margin-bottom: 20px;
+    }
+
+    .invite-code-input{
+
+        height: 50px;
+    min-width: 400px;
+    border-color: #e1e6f0;
+    margin-right: 0;
+    }
+
+
+
+    .invitation-content .copy-wapper{
+                width: auto;
+        background: #fff;
+        padding: 0;
+        border-color: #e1e6f0;
+    }
+
+    .invitation-content .copy-wapper button{
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: 0 0;
+        padding: 0;
+        margin-right: 20px
+    }
+
+    .social-login{
+        margin-top: 0px;
+    }
+    .social-login .social-icon{
+        border: 1px solid #e1e6f0;
+    }
+
+    input{
+        color: #ADBCD9;
+    }
+    </style>
+
+
+   <div class="cniao-section h400 ">
+
+        <div class="section-header"><h3>我的邀请码</h3> </div>
+
+        <div class="code clearfix">
+
+            我的邀请码: <span class="text-large color-danger js-invite-code" data-unique-code="{{ current_user.get_unique_code() }}">{{ current_user.get_invite_code() }}</span>
+
+            <span class="pull-right">
+                <a class="btn btn-primary" href="{{ url_for('member.revenue') }}"> 查看收入</a>
+            </span>
+
+        </div>
+
+        <div class="" style="font-size: 20px; color: #2f3033;margin-top: 15px;margin-bottom: 15px">
+            给TA分享您的邀请码，TA购买课程可以打9折 ，TA在消费后您将获得10%的现金收入
+        </div>
+
+       <hr>
+
+
+       <div class="invitation-content ">
+
+
+             <form action="" class="form-horizontal">
+
+                <div class="form-group">
+
+                        <label>1、 分享邀请码(分享到QQ群,微信群)</label>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control invite-code-input" disabled value="使用我的优惠码({{ current_user.get_invite_code() }})购买课程有优惠码。">
+                            <div class="input-group-addon copy-wapper">
+                                <button class="btn btn-lg js-copy-one js-btn" type="button"> 一键复制</button>
+                            </div>
+                        </div>
+                </div>
+
+
+                 <div class="form-group">
+
+                        <label>2、 分享邀请链接到社交平台</label>
+
+                        <div class="input-group">
+                           <div class="social-login js-social-share-params"
+                            data-title="用我的邀请码购买课程打折哦,邀请码:{{ current_user.get_invite_code() }}"
+                                             data-summary="高级人才都在菜鸟窝玩 "
+                                             data-message=""
+                                             data-url=""
+                                             data-picture="http://cniao5.com/static/images/rcode_for_weixin.jpg"
+                        >
+
+                                <a href="javascript:;" class="social-icon js-social-share hidden-xs"
+                                data-share="weixin" >
+                                    <i class="icon icon icon-weixin"></i>
+                                </a>
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="qq" >
+                                    <i class="icon icon-qq"></i>
+                                </a>
+
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="qzone" >
+                                    <i class="icon  icon-icon-qzone-full"></i>
+                                </a>
+                                <a href="javascript:;" class="social-icon js-social-share"
+                                data-share="weibo" >
+                                    <i class="icon icon-weibo"
+                                    ></i>
+                                </a>
+                            <!--<div class="line"></div>-->
+                        </div>
+                        </div>
+                </div>
+                 <div class="form-group">
+
+                        <label>3、 分享邀请文本到简书,掘金,CSDN,微信推文等文章末尾(一劳永逸)</label>
+
+                        <div class="input-group  text-center">
+                            <button class="btn btn-default btn-lg js-copy-one" type="button"> 复制邀请文本</button>
+                        </div>
+                </div>
+
+            </form>
+
+       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/member/cash';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

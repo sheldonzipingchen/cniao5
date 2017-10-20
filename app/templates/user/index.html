@@ -1,0 +1,23 @@
+{% extends "user/base.html" %}
+{% set active_page = 'threads' %}
+
+{% block user_content_block %}
+
+ <div class="row">
+
+                     <div
+                            class="js-thread-query-params"
+                            data-target-id="{{ user.id }}"
+                            data-target-type="user"
+                     > </div>
+
+                    <ul class="media-list thread-list" id="thread-list"></ul>
+                     <nav class=" text-center">
+                                <ul class="pagination" id="pagination-thread">
+
+                                </ul>
+                            </nav>
+                </div>
+
+{% endblock %}
+

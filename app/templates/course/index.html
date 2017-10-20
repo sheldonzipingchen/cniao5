@@ -1,0 +1,106 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   全部课程-国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+    <section class="cniao-section" id="content-container">
+
+
+             <div  class="container">
+
+
+                <div class="cniao-filter">
+
+                    <ul class="nav nav-pills clearfix">
+                        <li  class="js-course-sort {% if order_by==2 %}active{% endif %}" data-order-by="0"><a href="{{ url_for(".index",order_by=2) }}"   >推荐</a></li>
+                        <li  class="js-course-sort {% if order_by==1 %}active{% endif %}"  data-order-by="1"><a href="{{ url_for(".index",order_by=1) }}"  >最热</a></li>
+                        <li  class="js-course-sort {% if order_by==0 %}active{% endif %}" data-order-by="0"><a href="{{ url_for(".index",order_by=0) }}"   >最新</a></li>
+
+
+                    </ul>
+
+                <div class="filter hidden-xs">
+{#                    <label class="checkbox-inline">#}
+{#                        <input type="checkbox" id="free"#}
+{#                               > 免费课程#}
+{#                      </label>#}
+
+                    <label class="checkbox-inline">
+                        <a href="http://www.cniao5.com/help/teacher/recruit.html" target="_blank"><img src="/static/images/for_teacher.png" alt=""></a>
+                    </label>
+                </div>
+
+
+
+
+                </div>
+
+                 <div class="course-list row">
+
+{#                        <div class="empty">正在加载数据...</div>#}
+
+
+                     {% for cla in pagination.datas %}
+                        <div class="col-md-3 col-sm-6">
+                            {% include "course/item.html" %}
+                         </div>
+                     {% endfor %}
+
+                 </div>
+
+
+                <nav class="text-center">
+
+                    <ul class="pagination">
+
+                        {% for index in range(1,pagination.totalPage) %}
+
+                            <li {% if index == pagination.pageIndex %} class="active" {% endif %}><a href="{{ url_for(".index",page_index=index) }}">{{ index }}</a> </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </nav>
+
+
+             </div>
+    </section>
+
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/course';
+        app.mainScript = 'path-js/app';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

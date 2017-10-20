@@ -1,0 +1,121 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'banner' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="banners" ></div>
+
+    <a class="btn btn-default mbl" href="{{ url_for(".banner_add") }}"> <i class="icon icon-plug-add-2"></i> 上传banner </a>
+    <div class="row cniao-section">
+
+
+        <div class="col-md-12  teachers">
+
+            <table class="table   table-hover table-responsive">
+
+               <thead>
+                <tr>
+                    <th></th>
+                    <th>颜色</th>
+                    <th>跳转地址</th>
+                    <th>排序</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+                <tbody>
+                    {% for banner in banners %}
+
+                        <tr>
+                            <td >
+                                <div style="width: 200px">
+                                    <a href="{{ banner.img_url }}" class="fancybox"><img src="{{ banner.img_url }}" style="max-width: 200px"></a>
+                                </div>
+                            </td>
+                            <td>
+                                <span style="width: 20px;height: 20px; display: block; background-color: {{ banner.bg_color }}"></span>
+
+                                <a href="javascript:" class="js-modify"
+                                   data-id="{{ banner.id }}"
+                                   data-val="{{ banner.bg_color }}"
+                                   data-action="color"
+                                   data-url="{{ url_for('admin.banner_update') }}"
+                                >{{ banner.bg_color }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ banner.redirect_url }}" target="_blank">{% if banner.is_blank==0 %}新窗口 {% else %}<span class="text-muted">本窗口</span>  {% endif %}</a>
+
+                            </td>
+                            <td>
+
+                                <a href="javascript:" class="js-modify"
+                                   data-id="{{ banner.id }}"
+                                   data-val="{{ banner.order_num }}"
+                                   data-action="order_num"
+                                   data-url="{{ url_for('admin.banner_update') }}"
+                                >{{ banner.order_num }}</a>
+
+                            </td>
+                            <td>
+
+
+                                {% if banner.state==0 %}
+                                    <a href="javascript:"
+                                       class="js-state"
+                                        data-id="{{ banner.id }}"
+                                       data-val="1"
+                                       data-action="state"
+                                       data-url="{{ url_for('admin.banner_update') }}"
+                                        >
+                                        <span class="text-success">显示</span>
+                                    </a>
+                                  {% else %}
+                                   <a href="javascript:"
+                                        class="js-state"
+                                        data-id="{{ banner.id }}"
+                                       data-val="0"
+                                       data-action="state"
+                                       data-url="{{ url_for('admin.banner_update') }}"
+                                    > <span class="">隐藏</span>
+                                   </a>
+                                {% endif %}
+
+                            </td>
+                            <td>
+
+                               <a href="javascript:" class="js-delete"
+                                        data-id="{{ banner.id }}"
+                                       data-action="delete"
+                                       data-url="{{ url_for('admin.banner_update') }}">删除</a>
+
+                            </td>
+                        </tr>
+
+
+
+                    {% endfor %}
+
+                </tbody>
+
+
+
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="" id="dialog-modify">
+        <div  style="padding: 20px" class="">
+
+            <input id="txt_val" class="form-control">
+
+        </div>
+    </div>
+
+{% endblock %}

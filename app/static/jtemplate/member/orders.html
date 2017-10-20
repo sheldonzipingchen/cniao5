@@ -1,0 +1,43 @@
+{#foreach $T as order}
+
+
+  <tr>
+    <td>
+        <a href="javascript:void(0)" ><strong>{{ $T.order.title }}</strong></a>
+        <br>
+        <span class="text-muted text-sm">订单号：{{ $T.order.order_num }}</span>
+    </td>
+    <td>
+        <span class="text-muted text-sm">{{ $T.order.created_date }}</span>
+    </td>
+    <td>{{ $T.order.total_price }}</td>
+    <td>
+
+       {#if $T.order.trade_status=='INIT' }
+                <span class="text-warning">待付款</span>
+       {#elseif $T.order.trade_status=='TRADE_SUCCESS' }
+                <span class="label label-success">已付款</span>
+       {#elseif  $T.order.trade_status=='CANCEL' }
+                 <span class="text-muted">已取消</span>
+       {#elseif  $T.order.trade_status=='EXPIRE' }
+                <span class="text-muted">已过期</span>
+        {#elseif  $T.order.trade_status=='REFUND' }
+                <span class="label label-danger">已退款</span>
+        {#/if}
+    </td>
+    <td>
+         {#if $T.order.trade_status=='INIT' }
+        <div class="btn-group">
+            <a href="/pay/center/{{ $T.order.order_num }}" target="_blank" class="btn btn-sm btn-warning">去支付</a>
+            <a href="javascript:void(0)" data-url="/member/my/order/{{ $T.order.id }}/cancel" class="btn btn-sm btn-default cancel">取 消</a>
+        </div>
+        {#/if}
+
+    </td>
+
+   </tr>
+
+
+
+{#/for}
+

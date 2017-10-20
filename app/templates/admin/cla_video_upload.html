@@ -1,0 +1,409 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+
+    <script src="{{ url_for('static', filename='js/uploadsdk.min.js') }}"></script>
+
+    <script type="text/javascript">
+
+     var log = document.getElementById("log");
+            var files;
+			var delete_token='http://www.test.com/admin/video_deltoken.html';
+            var uploadtoken='http://www.test.com/admin/video_token.html';
+            var delcallbackurl='http://www.test.com/admin/video_delcallback.html';
+            var uploadcallbackurl = 'http://www.test.com/admin/video_uploadcallback.html';
+            clouds.uploadsdk.SetConfig({"deltokenurl":delete_token,"tokenurl":uploadtoken,"filetype":1, "servicetype":1, "delcallbackurl":delcallbackurl, "uploadcallbackurl":uploadcallbackurl});
+            clouds.uploadsdk.decorate("upload");
+            //initBaofeng();
+
+            /***添加批量上传监听处理*/
+			clouds.uploadsdk.addEventListener("filelist",function(event){
+				var loadfile,loads = event.data;
+				files = loads;
+				var output = [];
+                alert(loads);
+				for(var i =0;i<loads.length;i++){
+					loadfile = loads[i];
+					output.push('<tr id="tr',i,'"><td style="width: 30%">',
+						loadfile.videoname,'</td><td style="width: 7%">',
+						parseFloat(loadfile.videosize/(1024*1024)).toFixed(2) ,
+						'MB</td><td style="width: 10%">',loadfile.videotype,'</td><td style="width: 30%" id="result',loadfile.fileid,'"><progress id="showp', loadfile.fileid ,
+						'" value="0"></progress><span id="ratio',
+						loadfile.fileid,'"></span></td></tr>');
+					loadfile.addEventListener("error", function(event){
+						document.getElementById("result"+event.target.fileid).innerHTML = errorMessage(event.code);
+				 		console.log("异常码->",event.code);
+					});
+					loadfile.addEventListener("progress", function(event){
+				 		var ratio = event.data.bytesLoaded/event.data.bytesTotal;
+						document.getElementById("showp"+event.target.fileid).value = ratio;
+						document.getElementById("ratio"+event.target.fileid).innerHTML = "\t"+ parseInt(ratio*100).toString() + '%';
+						console.log("文件上传进度->",event.data);
+					});
+					loadfile.addEventListener("uploadcomplete", function(event){
+			 			document.getElementById("result"+event.target.fileid).innerHTML = "上传完成";
+						console.log("文件上传成功->",event);
+					});
+					loadfile.addEventListener("deletecomplete", function(event){
+						console.log("文件删除成功",event);
+					});
+				//	loadfile.upload();
+				}
+				document.getElementsByTagName('tbody')[0].innerHTML = output.join('');
+				// setTimeout(function(){
+				// 	console.log("删除文件");
+				// 	loadfile.unload();
+				// },6000);
+			});
+
+			function startUpload(){
+
+                var files = $('#upfile');
+				if (files.length == 0)
+					return;
+				var loads = files;
+				var output = [];
+				var btn = document.getElementById("uploading");
+				btn.innerHTML = '取消';
+				btn.href = 'javascript:stopUpload();';
+				for(var i =0;i<loads.length;i++){
+					loadfile = loads[i];
+					loadfile.upload();
+				}
+
+		  };
+
+		   function stopUpload(){
+			   if (files.length == 0)
+				   return;
+			   var loads = files;
+			   var output = [];
+			   var btn = document.getElementById("uploading");
+			   btn.innerHTML = '开始上传';
+			   btn.href = 'javascript:startUpload();';
+			   for(var i =0;i<loads.length;i++){
+				   loadfile = loads[i];
+				   loadfile.unload();
+			   }
+		   }
+
+           function errorMessage(code){
+	           var msg = "";
+			   switch(code){
+				   case 111:
+					   msg = "取消上传";
+					   break;
+				   case 112:
+					   msg = "上传失败";
+					   break;
+				   case 113:
+					   msg = "上传验证异常";
+					   break;
+				   case 116:
+					   msg = "上传文件格式不支持";
+					   break;
+				   case 404:
+					   msg = "网络连接异常";
+					   break;
+				   case 415:
+					   msg = "上传文件解析失败";
+					   break;
+				   case 200:
+					   msg = "上传完成";
+					   break;
+				   case 103:
+					   msg = "文件已上传";
+					   break;
+				   case 104:
+					   msg = "未购买对应服务";
+					   break;
+				   case 105:
+					   msg = "空间不足";
+					   break;
+				   default:
+					   msg = "上传失败";
+			   }
+			   return msg;
+			}
+
+
+    $(function() {
+
+        //initUploader(); //初始化上传组件
+
+
+
+
+
+
+        $("#btUpload").click(function(){
+            //uploader.start();
+
+            startUpload();
+
+
+
+
+        });
+
+        $("#btnStop").click(function(){
+            //uploader.stop();
+            stopUpload();
+        });
+
+    })
+
+
+
+    function initBaofeng(){
+
+        var delete_token='http://www.test.com/admin/video_deltoken.html';
+        var uploadtoken='http://www.test.com/admin/video_token.html';
+        var delcallbackurl='http://www.test.com/admin/video_delcallback.html';
+        var uploadcallbackurl = 'http://www.test.com/admin/video_uploadcallback.html';
+        clouds.uploadsdk.SetConfig({"deltokenurl":delete_token,"tokenurl":uploadtoken,"filetype":1, "servicetype":1, "delcallbackurl":delcallbackurl, "uploadcallbackurl":uploadcallbackurl});
+
+        clouds.uploadsdk.decorate("upload");
+    }
+
+    var uploader= {};
+    function initUploader(){
+
+
+         // 收费空间
+        uploader = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles',
+                uptoken_url: "{{ url_for('admin.bucket_token', bucket_name='cniao5-course-paid') }}",
+                domain: 'http://video.cniao5.com',
+                container: 'container',
+                max_file_size: '500mb',
+                flash_swf_url: '/static/libs/plupload/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'container',
+                chunk_size: '4mb',
+                auto_start: false,
+                init: {
+                    'FilesAdded': function(up, files) {
+                         plupload.each(files, function(file, i) {
+                            // 文件添加进队列后,处理相关的事情
+                            var progress = new FileProgress(file,i, 'fsUploadProgress');
+                            progress.setStatus("等待...");
+                        });
+                    },
+                    'BeforeUpload': function(up, file) {
+                           // 每个文件上传前,处理相关的事情
+                            var progress = new FileProgress(file, 'fsUploadProgress');
+                            var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                            if (up.runtime === 'html5' && chunk_size) {
+                                progress.setChunkProgess(chunk_size);
+                            }
+                    },
+                    'UploadProgress': function(up, file) {
+                           // 每个文件上传时,处理相关的事情
+                            var progress = new FileProgress(file, 'fsUploadProgress');
+                            var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                            progress.setProgress(file.percent + "%", up.total.bytesPerSec, chunk_size);
+                    },
+                    'FileUploaded': function(up, file, info) {
+                           // 每个文件上传成功后,处理相关的事情
+                           // 其中 info 是文件上传成功后，服务端返回的json，形式如
+                           // {
+                           //    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
+                           //    "key": "gogopher.jpg"
+                           //  }
+                           // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+                           var progress = new FileProgress(file, 'fsUploadProgress');
+                           progress.setComplete(up, info);
+                           var filename=file.name;
+                           var res = $.parseJSON(info);
+                           var hash =res.hash;
+                           var key = res.key;
+                           var domain = up.getOption('domain');
+                           var link = domain  +"/" +res.key;
+
+                           var video ={};
+                           video.bucketname="cniao5-course-paid";
+                           video.filename=filename;
+                           video.hash = hash;
+                           video.key = key;
+                           video.domain = domain;
+                           video.url = link;
+                           saveFile(video);
+                    },
+                    'Error': function(up, err, errTip) {
+                           //上传出错时,处理相关的事情
+                           var progress = new FileProgress(err.file, 'fsUploadProgress');
+                           progress.setError();
+                           progress.setStatus(errTip);
+                    },
+                    'UploadComplete': function() {
+                           //队列文件处理完毕后,处理相关的事情
+                    },
+                    'Key': function(up, file) {
+                        // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                        // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                        var key = "";
+                        $.ajax({
+                            url: "{{ url_for('admin.key') }}",
+                            type: 'GET',
+                            async: false,//这里应设置为同步的方式
+                            success: function(data) {
+                                var ext = Qiniu.getFileExtension(file.name);
+                                key = data + '.' + ext;
+                            },
+                            cache: false
+                        });
+                        return key;
+                    }
+                }
+            });
+
+    }
+
+    function saveFile(video)  {
+
+
+        video.compilation_id = 1;
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/video_data/",
+            contentType: "application/json; charset=utf-8",
+			type:"POST",
+            data: JSON.stringify(video),
+            success: function (data) {
+                if(data.code == 0) {
+                    console.log("文件保存成功")
+                }
+                else {
+                    console.log("文件保存失败")
+                }
+
+            },
+            error: function (request) {
+                alert("Connection error="+request);
+            }
+        });
+    }
+
+    function getAvinfo(video_id){
+        $.get('/admin/avinfo/'+video_id,function(result){
+            console.log(result)
+        })
+    }
+
+</script>
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+            <div class="well search-well">
+
+                {{ chapter.title }}
+            </div>
+
+              <div class="well">
+
+                    <div class="well dashed" id="container">
+
+                        {#<a class="button button_default button_big" href="javascript:void(0)" id="pickfiles">
+                            <i class="icon icon-plus"></i>选择或者拖拽文件到这里
+                        </a>#}
+                        <input type="file" name="upfile" id="upfile" class="button button_default button_big" value="选择或者拖拽文件到这里" >
+
+                    </div>
+
+                    <hr />
+
+                    <div class="btn-toolbar">
+
+                        <a class="button button_green" href="javascript:void(0)" id="btUpload3">
+                            开始上传
+                        </a>
+					    <a href="javascript:startUpload();"  id="uploading">开始上传2</a>
+
+                        <a class="button button_red" href="javascript:void(0)" id="btnStop">
+                            停止上传
+                        </a>
+                    </div>
+
+                  <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td width="30%">视频名称</td>
+                                    <td width="7%">大小</td>
+                                    <td width="10%">视频格式</td>
+                                    <td width="30%">状态</td>
+                                </tr>
+                            </thead>
+                           <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <table class="table table-hover">
+
+                        <thead>
+                        <tr>
+                            <th>视频</th>
+                            <th>时长</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody id="fsUploadProgress">
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+             <div class="block">
+                <p class="block-heading">
+                    <span class="highlight">{{ chapter.title }}</span> 章节下的课时[视频]
+                </p>
+
+                <div class="block-body">
+
+
+                    <table class="table table-hover">
+
+                        <thead>
+                        <tr>
+                            <th>视频</th>
+                            <th>大小</th>
+                            <th>时长</th>
+                            <th>上传时间</th>
+                            <th>操作</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                         {% for lesson in lessons %}
+
+                             <tr>
+                                 <td>{{ lesson.video.filename }}</td>
+                                 <td>{{ lesson.video.filesize }}</td>
+                                 <td>{{ lesson.video.duration }}</td>
+                                 <td>{{ lesson.video.createtime }}</td>
+                                 <td></td>
+                             </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+
+{% endblock %}

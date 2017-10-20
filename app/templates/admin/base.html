@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>菜鸟窝管理后台</title>
+
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_new.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style-admin.css') }}"/>
+    <link href="{{ url_for('static', filename='admin/css/styles.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ url_for('static', filename='admin/css/font-awesome.css') }}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for("main.index") }}" target="_blank"><strong>菜鸟窝</strong></a>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+        <!--/. NAV TOP  -->
+
+
+{#        {% include 'admin/nav-left.html'  %}#}
+
+
+
+                       {% set navigations = [
+                            (url_for('.index'), 'dashboard', 'Dashboard','fa fa-dashboard'),
+
+                            (url_for('.coupon_manager'), 'coupon_manager', '优惠码管理','icon icon-zhuanshi'),
+
+
+
+
+                        ] -%}
+
+                      {% set active_page = active_page|default('index') -%}
+
+
+
+
+
+        <nav class="navbar-default navbar-side" role="navigation">
+		    <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                     {% for href, id, name,icon_class in navigations %}
+
+                           <li >
+                             <a class="{% if id == active_page %} active-menu {% endif %}" href="{{ href }}">
+                                 <i class="{{ icon_class }}"></i>{{ name }}</a>
+                            </li>
+
+                       {% endfor %}
+
+
+
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#teaching" aria-expanded="true" aria-controls="teaching">
+                            <i class="icon icon-star"></i>教务管理<span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" id="teaching">
+                            <li>
+                                <a href="{{ url_for(".courses") }}">课程列表</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for(".course_config") }}">课程配置</a>
+                            </li>
+
+                            <li>
+                                <a href="">视频管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for(".teachers") }}">讲师列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+
+
+
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#goods" aria-expanded="true" aria-controls="goods">
+                            <i class="icon icon-barcode"></i> 商品管理<span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" id="goods">
+                            <li>
+                                <a href="{{ url_for('.goods') }}">商品列表</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for(".goods_orders") }}">商品订单</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#finance" aria-expanded="true" aria-controls="finance">
+                            <i class="fa fa-sitemap"></i> 财务管理<span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" id="finance">
+                            <li>
+                                <a href="{{ url_for(".orders") }}">订单管理</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for(".withdrawals") }}">结算管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#page-manage" aria-expanded="true" aria-controls="page-manage">
+                            <i class="icon icon-setting"></i>网站管理<span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" id="page-manage">
+                            <li>
+                                <a href="{{ url_for(".banners") }}">banner管理</a>
+                                <a href="{{ url_for(".page_menus") }}">菜单管理</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner" class="container">
+
+                {% block main_page %}
+
+                {% endblock %}
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+
+
+
+</body>
+
+ <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+ <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+
+  <script type="text/javascript">
+
+                var app={};
+                app.debug = true;
+                app.jsPaths={};
+                app.global_script='path-js/global-config';
+                app.mainScript = 'admin/app';
+
+                seajs.use(app.mainScript);
+
+  </script>
+
+</html>

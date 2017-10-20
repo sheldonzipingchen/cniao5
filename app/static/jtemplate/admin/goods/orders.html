@@ -1,0 +1,69 @@
+
+
+   <table class="table table-condensed  table-hover table-responsive">
+
+
+        <thead>
+        <tr>
+            <th>用户</th>
+             <th>商品</th>
+
+            <th>价格(鸟币)</th>
+             <th>时间</th>
+             <th>收货信息</th>
+        </tr>
+        </thead>
+
+        <tbody >
+
+
+            {#foreach $T as c}
+
+                <tr>
+
+                    <td class="text-center">
+                        {#if $T.c.user.logo_url=='' || $T.c.user.logo_url==null}
+                                        <img src="/static/images/head_defualt.jpg"
+                                            class="avatar-md">
+                                    {#else}
+
+                                        <img src="{{ $T.c.user.logo_url}}" alt="{{ $T.c.user.username }} 的头像" class="avatar-sm"/>
+                                    {#/if}
+
+                            <div >{{ $T.c.user.username}}</div>
+
+                    </td>
+
+                    <td>
+                        {{ $T.c.title }}<br>
+                        <span class="text-sm color-gray">订单号:{{ $T.c.order_num }}</span>
+                    </td>
+
+
+
+
+                    <td>
+                        <span class="text-danger "> {{ $T.c.total_price }}</span><br>
+                    </td>
+                     <td>
+                       <span class="text-sm">{{ $T.c.created_time}}</span>
+                    </td>
+                    <td>
+                        <span class="gray-dark">收件人:{{ $T.c.receiver }}</span><br>
+                        <span class="color-gray">电话:{{ $T.c.mobi }}</span><br>
+                        <span class="color-gray">地址:{{ $T.c.addr }}</span><br>
+
+                    </td>
+
+
+                </tr>
+
+            {#/for}
+
+
+        </tbody>
+
+
+
+   </table>
+

@@ -1,0 +1,120 @@
+{% extends "base_new.html" %}
+
+{% block title %}创建新账号 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+
+   <div class="cniao-section login-section">
+       <div class="logon-tab clearfix">
+           <a class="active">创建新账号</a>
+           <a href="{{ url_for('auth.social_account_bind') }}">绑定已有账号</a>
+       </div>
+       <div class="login-main">
+
+           <div class="text-center">
+
+                <img src="{{ head_url }}" class="avatar-md">
+           </div>
+
+            <form id="register-form"
+                  method="post"
+
+                  novalidate="novalidate"
+                  data-post-url="{{ url_for('auth.reg_save') }}"
+                  data-reg-type="social"
+                >
+
+                <input type="hidden" id="register_username" value="{{ nickname }}">
+
+                <div class="form-group mbs mtm">
+                       <div class="controls">
+                           <input type="text"
+                                  id="register_mobile"
+                                  name="mobi"
+                                  required="required"
+                                  class="form-control input-lg"
+                                  data-url="{{ url_for('auth.check_mobile_exist') }}"
+                                  placeholder="手机号"
+                                   data-explain="">
+                           <p class="help-block"></p>
+                       </div>
+                   </div>
+
+
+                   <div class="form-group mbs">
+                       <div class="controls">
+                           <input type="password" id="register_password"
+                                  name="password" required="required"
+                                  class="form-control input-lg"
+                                  placeholder="5-20位的密码"
+                           >
+                           <p class="help-block"></p>
+                       </div>
+                   </div>
+
+
+
+                   <!--  手机号码和验证码校验通过  发送验证码按钮才可以使用-->
+                   <div class="form-group mbs  email_mobile_msg">
+                       <div class="controls row">
+                           <div class="col-xs-7">
+                               <input type="text" class="form-control input-lg" id="sms_code" name="sms_code"
+                                      placeholder="短信动态码" required="required"
+                                      data-url="{{ url_for('auth.check_sms') }}" >
+                               <p class="help-block"> </p>
+                           </div>
+                           <div class="col-xs-5">
+                               <a href="javascript:void(0)" class="btn btn-default btn-lg js-sms-send disabled "
+                                   data-sms-url="{{ url_for('auth.send_sms_code_for_reg') }}">
+                                   <span id="js-time-left"></span>
+                                   <span id="js-fetch-btn-text">获取动态码</span>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group mbs">
+                       <div class="controls">
+                           <label>
+                               <input type="checkbox" id="user_terms" checked="checked" data-widget-cid="widget-6" data-explain=""> 我已阅读并同意<a href="/help/service.html" target="_blank">《服务协议》</a>
+                           </label>
+                           <div class="help-block" style="display:none;"></div></div>
+                   </div>
+                   <div class="form-group mbs">
+                       <div class="controls">
+                           <button type="submit" id="register-btn" data-submiting-text="正在提交" class="btn btn-primary btn-lg btn-block">创建</button>
+                       </div>
+                   </div>
+
+
+
+           </form>
+
+
+
+       </div>
+   </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.mainScript = 'path-js/app';
+        app.controller='app/regster';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

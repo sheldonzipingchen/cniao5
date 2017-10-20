@@ -1,0 +1,19 @@
+<ul class="comments">
+                {#foreach $T as record}
+                        <li>
+                            <div class="user_pic">
+                                <a href=""><img class="img-circle head_small" src="{{ $T.record.user.logo_url }}" alt=""/></a>
+                            </div>
+                            <div class="msg_box">
+                                <div class="u_name">
+                                    <span>{{ $T.record.user.username }}</span><label>{{ $T.record.created_time }}</label>
+                                </div>
+                                <div class="c_msg">
+                                    {{ $T.record.note }}
+
+                                </div>
+                            </div>
+                        </li>
+
+                  {#/for}
+</ul>

@@ -1,0 +1,262 @@
+{% extends "base_new.html" %}
+
+{% block title %}{{ forum.title }} 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+{% block description %} {{ forum.intro }}{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+        <div class="group-header section-white hidden-xs">
+
+            <div class="media">
+
+                <div class="media-left">
+
+                    <a href="#">
+                        <img src="{{ forum.logo_url }}" alt="{{ forum.title }}">
+                    </a>
+                </div>
+                <div class="media-body">
+
+                    <h2 class="media-heading">
+                        {{ forum.title }}
+
+                    </h2>
+                    <div class="subtitle hidden-xs">
+                        {{ forum.intro }}
+
+                    </div>
+
+                    <div class="media-metas">
+
+                        <span> <span class="mr5">{{ forum.thread_count }}</span> 篇文章</span>
+
+                        <span class="mlm  cniao-share top">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon icon-share3"></i> 分享</a>
+
+                            <div class="dropdown-menu  js-social-share-params"
+                                 style="padding: 10px 0px !important;"
+                                                     data-title="{{ forum.title }}"
+                                                     data-summary="{{ forum.intro  }}"
+                                                     data-message="这里很多技术干货,我和小伙伴们都在这里混"
+                                                     data-url="{{ url_for('forum.detail',id=forum.id,_external=True) }}"
+                                                    data-invite-code="{% if current_user.is_authenticated() %}{{ current_user.get_unique_code() }}{% else %}0{% endif %}"
+                                                     data-picture="{{ forum.logo_url }}">
+                                                    <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="icon icon-qq"></i></a>
+                                                    <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url=""><i class="icon icon-weixin"></i></a>
+                                                    <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="icon icon-weibo"></i></a>
+
+                                                    <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="icon icon-icon-qzone-full"></i></a>
+
+                            </div>
+
+                        </span>
+
+{#                        <span class=" mlm btn btn-success follow">#}
+{##}
+{#                            <a href="">#}
+{##}
+{#                                <i class="icon icon-plus"></i>#}
+{#                                <span>添加关注</span>#}
+{#                            </a>#}
+{##}
+{#                        </span>#}
+
+                            <span class="mlm">
+                                <a href="{{ url_for('.forum_thread_submit',id=forum.id) }}" class="">
+
+                                            <i class="icon icon-plug-add-3"></i>
+                                            投稿
+                                </a>
+                            </span>
+
+                         {% if current_user.is_authenticated() and is_admin  %}
+
+                            <span  class="mlm">
+                                <a href="{{ url_for('.thread_write',id=forum.id) }}" target="_blank" >
+
+                                    <i class="icon icon-write"></i>
+                                    写文章
+                                </a>
+
+                             </span>
+                        {% endif %}
+
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-9 group-main">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+
+                        <div class="clearfix mbl">
+
+                            <ul class="nav nav-tabs">
+
+                                <li class="active js-thread-type"
+                                data-is-hot="0">
+                                    <a class="js-nav"
+
+                                       href="javascript:void(0)">全部</a>
+                                </li>
+
+                                <li class="js-thread-type"
+                                    data-is-hot="1"
+                                    >
+                                    <a class="js-nav"
+                                       href="javascript:void(0)">热门</a>
+                                </li>
+
+
+
+
+                                <li class="dropdown" >
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size: 12px">
+                                        <span class="text-muted">排序：</span>
+                                          <span class="js-current-thread-sort">最新发帖</span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="active js-thread-sort" data-order-by="0"><a class="js-nav" href="javascript:void(0)">最新发帖</a></li>
+                                        <li class="js-thread-sort" data-order-by="1"><a class="js-nav" href="avascript:void(0)">最后回复</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                            <div
+                            class="js-thread-query-params"
+                            data-target-id="{{ forum.id }}"
+                            data-target-type="forum"
+                            data-is-admin="{% if is_admin %}1{% else %}0{% endif %}"
+                            > </div>
+
+                            <div id="thread-list">
+
+                            </div>
+
+                            <nav class="text-center">
+
+                                <a class="btn btn-rectangle btn-success js-load-more hidden">浏览更多</a>
+                            </nav>
+{#                            <nav class=" text-center hidden">#}
+{#                                <ul class="pagination" id="pagination-thread">#}
+{##}
+{#                                </ul>#}
+{#                            </nav>#}
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 group-sid">
+
+                <form class="mbl hidden" action="" method="get">
+                    <div class="search-with-btn">
+                        <input type="text" class="form-control" placeholder="搜索" name="keyWord">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </form>
+
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">舵主</h3></div>
+                    <div class="panel-body">
+
+                        {% for admin in forum.admins %}
+
+                            <div class="media group-item">
+                            <div class="media-left">
+                                <a class="js-user-card"  href="{{url_for('user.detail',id=admin.user.id) }}" data-user-id="{{ admin.user.id }}" data-card-url="{{ url_for('user.user_public_info',id=admin.user.id) }}">
+
+                                    {% if admin.user.logo_url is none or admin.user.logo_url=='' %}
+                                        <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                    {% else %}
+                                        <img class="avatar-sm" src="{{ admin.user.logo_url }}">
+                                    {% endif %}
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div><a class="gray-darker" href="javascript:void(0)" title="{{ admin.user.username }}">{{ admin.user.username }}</a></div>
+                                <span class="text-sm gray-medium">{% if admin.type==1 %}总舵主 {% else %} 二当家 {% endif %} </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">热门专题</h3></div>
+
+                    <div class="panel-body">
+
+                        {% for f in forums %}
+
+                            {% if f.id !=forum.id %}
+
+                                 <div class="media group-item">
+                                    <div class="media-left">
+                                     <img src="{{ f.logo_url }}"
+                                                        class="avatar-sm">
+
+                                    </div>
+                                    <div class="media-body">
+                                        <div><a class="title" href="{{ url_for("forum.detail",id=f.id) }}" title="{{ f.title }}">{{ f.title }}</a></div>
+                                    </div>
+                             </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/forum';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

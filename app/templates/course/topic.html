@@ -1,0 +1,81 @@
+{% extends "base_new.html" %}
+{% block title %}
+   {{ topic.title }} - 国内专业的Android职业技能在线学习平台
+{% endblock %}
+{% block keywords %}Android项目实战课程,菜鸟商城,仿京东,仿淘宝,菜鸟微博,菜鸟新闻,菜鸟应用商店,菜鸟音乐,Android Studio,Android5.0,Android6.0,Android7.0{% endblock %}
+{% block description %}{% endblock %}
+
+
+{% block main_block %}
+
+
+
+
+    <div class="topic-header">
+
+        <div class="container">
+
+              <div class="topic-header-warp">
+                  <div class="topic-title">
+			        <h1 class="pull-left">{{ topic.title }}</h1>
+                    <div class="pull-left hidden-xs">
+                        {{ topic.desc if topic.desc !=none }}
+                    </div>
+                  </div>
+              </div>
+        </div>
+
+    </div>
+
+    <div class="topic-body">
+
+
+          <div class="container">
+
+               <div class="course-list row">
+
+                 {%  for cla in courses  %}
+
+                      <div class="col-md-3 col-sm-6">
+
+                        {% include "course/item.html" %}
+                      </div>
+
+                 {% endfor %}
+               </div>
+          </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+         app.controller='app/course-topic';
+        app.mainScript = 'path-js/app';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

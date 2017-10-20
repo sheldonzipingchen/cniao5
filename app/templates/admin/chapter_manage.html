@@ -1,0 +1,98 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+    <script>
+
+        function uploadCourseWare(lesson){
+
+            console.log("lesson="+lesson)
+
+        }
+
+
+        $(function(){
+
+        })
+
+    </script>
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+
+        <div class="well">
+
+
+            <div class="chapter-box">
+
+                <div class="line"></div>
+
+
+                {% for c in chapters %}
+
+                    <div class="chapter-title ">
+                        <span class="chapter pull-left">章节</span>
+
+                             <span class="index pull-left">
+                                {{ loop.index }}
+                             </span>
+
+                        <div class="c-main pull-left">
+                                <span class="name">
+                                    {{ c.title }}
+                                </span>
+
+                            <div class="btn-action">
+                                <a href=""><i class="icon icon-pencil"></i></a>
+                                <a href=""><i class="icon icon-bin"></i></a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    {% for lesson in c.lessons %}
+                        <div class="chapter-item ">
+
+                        <span class="chapter pull-left">课时{{ loop.index }}</span>
+
+                        <span class="index pull-left"></span>
+
+                        <div class="c-main pull-left">
+                                <span class="name">
+                                    {{ lesson.name }}
+                                </span>
+
+                            <div class="btn-action">
+
+                                <a href="javascript:void(0)"><i class="icon icon-pencil"></i></a>
+                                <a href=""><i class="icon icon-bin"></i></a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    {% endfor %}
+
+
+                {% endfor %}
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+{% endblock %}

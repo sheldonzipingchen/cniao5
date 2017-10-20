@@ -1,0 +1,90 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+
+    投稿
+    菜鸟窝-国内领先专业的移动开发IT技能在线教育平台
+
+{% endblock %}
+{% block description %}{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+
+                <div class="submit-section cniao-section">
+
+                       <div class="text-line" style="padding: 10px 0px; border-bottom: 1px solid #e0e0e0">
+                                <h5>
+                                    推荐文章
+                                    <div class="line"></div>
+                                </h5>
+                                <div class="subtitle">感谢分享，文章的审核时间约1-2个工作日</div>
+                            </div>
+
+
+                    <form id="submit-thread-form"
+                          class="submit-thread-form form-horizontal"
+                          data-forum-id="{{ forum_id }}"
+                          data-url="{{ url_for(".forum_thread_submit_request") }}"
+                          data-go="{{ url_for(".forum_thread_submit_result",id=forum_id) }}"
+                          >
+
+
+
+                        <div class="form-group">
+                             <div class="controls">
+                                <input type="text" name="thread[title]" placeholder="文章标题"  class="form-control input-lg">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                             <div class="controls">
+                                <input type="text" name="thread[url]" placeholder="文章URL,暂只支持菜鸟窝下的文章"  class="form-control input-lg">
+
+                             </div>
+
+                        </div>
+                        <div class="form-group">
+                             <div class="controls text-center">
+                                 <button id="submit-btn" type="submit" class="btn btn-lg btn-block  btn-primary ">投稿</button>
+                             </div>
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+    <script type="text/javascript">
+     var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/";
+        var app={};
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/forum';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

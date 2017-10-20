@@ -1,0 +1,95 @@
+
+
+
+     <div class="cniao-piece">
+        <div class="piece-body">
+            <ul class="period-list" id="course-item-list">
+
+
+                {#foreach $T.chatpers as c}
+
+                     <li class="chapter clearfix">
+                        <i class="icon icon-list2 icon-toc"></i>
+                            <span class="title">
+
+                                第 {{ $T.c$index+1 }} 章：{{ $T.c.name }}
+                              </span>
+
+                          <span class="period-show"><i class="icon icon-arrow-down3 "></i></span>
+                      </li>
+
+                     {#foreach $T.c.lessons as lesson}
+
+
+                          <li class="period lesson-item ">
+
+                                <a
+                                   href="javascript:void(0)"
+                                   class="js-lesson-item"
+                                   data-lesson-id="{{ $T.lesson.id }}"
+                                   data-lesson-state="{{ $T.lesson.state }}"
+                                   data-lesson-free="{{ $T.lesson.is_free }}"
+                                   data-can-play="{{ $T.can_play}}"
+                                   title="{{ $T.lesson.name }}">
+
+
+                                    {#if $T.lesson.is_free ==1}
+                                        <span class="label label-warning mrm">免费</span>
+
+                                     {#/if}
+
+                                      {#if $T.lesson.pub_tag ==1}
+                                        <span class="label label-success mrm">更新</span>
+
+                                     {#/if}
+
+
+                                    <span class="title">   课时{{ $T.lesson.bsort }}：{{ $T.lesson.name }}</span>
+
+
+
+                                     {#if $T.lesson.state ==1}
+
+                                         <span class="date" title="{{ $T.lesson.name }}的时长" data-duration="{{ $T.lesson.video.duration }}"></span>
+
+
+                                            {#if $T.lesson.is_free ==1}
+
+
+                                             {#else  }
+
+                                                  {#if $T.can_play}
+
+
+                                                  {#else}
+                                                    <span class="course-type">
+                                                          <i class="icon icon-lock2" data-toggle="tooltip"
+                                                             data-placement="top" title=""
+                                                             data-original-title="报名后方可学习"></i>
+
+
+                                                      </span>
+
+
+                                                 {#/if}
+                                            {#/if  }
+
+
+                                    {#else}
+                                        <span class="period-state">未发布</span>
+                                    {#/if}
+
+
+
+                                </a>
+                           </li>
+
+
+                    {#/for}
+
+                {#/for}
+
+             </ul>
+
+         </div>
+     </div>

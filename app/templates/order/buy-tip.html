@@ -1,0 +1,75 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+    暂时不能购买-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div id="content-container" class="container">
+
+         <div class="order-pay">
+
+                <div class="cniao-section">
+
+                    <ul class="cniao-step cniao-step-3 clearfix">
+                        <li class="doing"><span class="number">1</span>订单出错</li>
+                        <li><span class="number">2</span>订单支付</li>
+                        <li><span class="number">3</span>订单完成</li>
+                    </ul>
+
+                    <div class="order-pay-body text-center text-overflow" style="min-height: 100px">
+
+
+                        <span>该课程暂时不支持购买,开放购买日期请关注菜鸟窝公众号通知(cniao5)</span>
+
+                        <div class="pull-right mtl">
+
+                            <a  class="btn btn-primary  "
+                                href="{{ url_for("course.course_detail",id=course_id) }}"
+
+                                   >返回课程</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+     </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+        app.controller='app/order-create';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

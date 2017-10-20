@@ -1,0 +1,112 @@
+{% extends "course/base_course_detail.html" %}
+
+
+{% block course_bottom_left %}
+
+
+    <div class="nav-btn-tab">
+
+        <ul class="nav nav-tabs" role="tablist">
+
+            <li  class="active">
+                <a href="{{ url_for('course.course_detail', id=class_item.id) }}"
+
+
+                       title="{{ class_item.name }}课程简介"
+                       >简介</a>
+
+            </li>
+
+            <li  class="">
+                <a href="{{ url_for('course.course_lessons', id=class_item.id) }}"
+                   title="{{ class_item.name }}的目录"
+                        >目录</a>
+            </li>
+             <li  class="">
+                <a href="{{ url_for('course.course_thread', id=class_item.id) }}"
+                   title="{{ class_item.name }}的讨论"
+                        >讨论区</a>
+            </li>
+
+            <li class="">
+                <a href="{{ url_for('course.course_comment', id=class_item.id) }}"
+                   title="{{ class_item.name }}的评价"
+
+                        >评价
+
+                    <small class="text-muted">( {{ class_item.comment_count }} )</small>
+
+                </a>
+            </li>
+
+            <li  class="hidden-xs">
+                <a href="{{ url_for('course.course_courseware', id=class_item.id) }}"
+                   title="{{ class_item.name }}的源码"
+                   >源码
+
+                    </small>
+
+                </a>
+            </li>
+         </ul>
+    </div>
+
+    <div class="course-detail-content">
+
+        <div  class="course-introduce " >
+
+            <div class="cniao-piece">
+                <div class="piece-header">
+                    简   介
+                </div>
+
+                <div class="piece-body p-lg clearfix">
+
+                     {% if class_item.desc is not none %}
+                     {{ class_item.desc |safe}}
+                    {% endif %}
+                </div>
+
+           </div>
+
+        {% if listDraws|length>0 %}
+
+
+
+           <div class="cniao-piece">
+                <div class="piece-header">
+                    运行截图
+                </div>
+               <div class="piece-body p-lg clearfix">
+
+                   <div class="piece-body-img-list">
+
+                         {% for classdraw in listDraws %}
+                                        <img src="{{ classdraw.img_url }}" border="0">
+                          {% endfor %}
+
+                    </div>
+               </div>
+
+           </div>
+
+        {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+ {% block course_bottom_left2 %}
+     <section class="cniao-section">
+
+      <div class="course-detail-content">
+
+
+
+         <div id="lesson-list">
+
+         </div>
+
+       </div>
+     </section>
+ {% endblock %}

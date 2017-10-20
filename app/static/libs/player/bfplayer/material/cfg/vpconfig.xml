@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<pp>1</pp>
+	<maxtime>9999</maxtime>
+	<vol>0.5</vol>
+    <speed>50</speed>
+	<type>flv</type>
+ 	<buffertime>10</buffertime>
+	<disptachsrvurl></disptachsrvurl>   
+	<stormurl></stormurl>  
+	<extend></extend> 
+</config>

@@ -1,0 +1,210 @@
+{% extends "base_new.html" %}
+
+{% block title %}干货集中营 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+{% block description %}精品技术文章,Rect Native,Android视频教程下载 {% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="" >
+
+
+   <div class="container">
+
+            <div class="forum-left-nav">
+
+                <ul class="forum-list">
+
+                      <li id="forum-0">
+                            <a href="{{ url_for(".index") }}">
+                                <span style="margin-left: 35px">全部文章</span>
+                            </a>
+                        </li>
+                     {% for forum in forums %}
+                        <li id="forum-{{forum.id  }}">
+                            <a href="{{ url_for(".detail",id=forum.id) }}">
+                                 <img class="avatar-sm" src="{{ forum.logo_url }}">
+                                <span>{{  forum.title}}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+
+
+            </div>
+            <div class="forum-main" >
+
+                <div class="nav-btn-tab " style="overflow: hidden">
+                    <ul class="nav nav-tabs mbl pull-left" role="tablist">
+
+                        <li class="active js-thread-type" data-is-hot="0">
+                            <a href="Javascript:void(0)" >最新文章</a>
+
+                        </li>
+
+                         <li class="js-thread-type" data-is-hot="1">
+                            <a href="Javascript:void(0)" title="">热门文章</a>
+
+                        </li>
+
+
+                 </ul>
+                    {% if is_admin %}
+                        <a id="add-thead" href="javascript:" class="pull-right" style="font-size: 20px;font-weight:500;">
+                            <i class="icon icon-plug-add-3"></i>
+                        </a>
+
+                    {% endif %}
+
+
+             </div>
+
+                <div id="thread-list"
+                  class="js-thread-query-params"
+                  data-target-id="{{ forum_id }}"
+                     data-target-type="forum">
+                </div>
+
+                <nav class="text-center">
+
+                    <a class="btn btn-rectangle btn-success js-load-more hidden">浏览更多</a>
+                </nav>
+
+
+
+            </div>
+
+            <div class="forum-right">
+
+                <a href="{{ url_for("user.thread_write") }}" target="_blank" class="btn  btn-default btn-block">
+                                <i class="icon icon-write"></i>
+                                写文章
+                            </a>
+
+                <div class="panel panel-default mtl">
+
+                    <div class="panel-heading">
+                        <h4 class="panel-title">他们都在写</h4>
+                    </div>
+                    <div class="panel-body">
+                        
+                        {% for user in top_writer %}
+
+
+                             <div class="media media-default">
+
+
+                                <div class="media-left">
+
+                                    <a class=" js-user-card"
+                                       href="{{url_for('user.detail',id=user[0]) }}"
+                                       data-user-id="{{ user[0] }}" data-card-url="{{ url_for('user.user_public_info',id=user[0]) }}">
+
+                                         {% if user[2] is none or user[2]=='' %}
+                                            <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                        {% else %}
+                                            <img class="avatar-sm" src="{{ user[2] }}">
+                                        {% endif %}
+
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="title" style="margin-bottom: 0px;font-size: 14px">
+                                          <a class="link-dark link-light"  href="{{url_for('user.detail',id=user[0]) }}">{{ user[1] }}</a>
+
+                                    </div>
+                                    <div class="content text-overflow" style="font-size: 12px"> 文章: {{ user[3] }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+            
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+   </div>
+
+
+</div>
+
+
+    {% if is_admin %}
+        <div id="dialog-add-thread" class="" style="display: none">
+
+
+
+        <form id="thread-add-form" class="form-horizontal" method="post"
+                    novalidate="novalidate"
+                    data-post-url="{{ url_for("forum.spider") }}"
+        style="padding: 20px">
+
+                <div class="form-group">
+                        <div class="col-md-12 controls">
+
+                            <select name="thread_site" id="thread_site" class="form-control"  data-placeholder="站点">
+                                <option value="jianshu">简书</option>
+                                <option value="lcode">lcode.org</option>
+
+                            </select>
+                        </div>
+                </div>
+
+               <div class="form-group">
+                        <div class="col-md-12 controls">
+
+                            <select name="thread_forum_id" id="thread_forum_id" class="form-control"  data-placeholder="专题">
+
+                                 {% for forum in forums %}
+                                    <option value="{{ forum.id }}">{{ forum.title }}</option>
+                                 {% endfor %}
+                            </select>
+                        </div>
+                </div>
+
+                  <div class="form-group">
+                        <div class="col-md-12 controls">
+                                <input type="text" id="article_url" name="article_url" class="form-control"  placeholder="URL 地址">
+
+                        </div>
+                  </div>
+
+
+                <div class="form-group">
+                        <div class="col-md-12 controls">
+
+                            <a href="javascript:" id="btn-save-task" class="btn btn-default btn-block"> 确 认 </a>
+                        </div>
+                  </div>
+
+
+         </form>
+
+
+
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.controller='app/forum-index';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

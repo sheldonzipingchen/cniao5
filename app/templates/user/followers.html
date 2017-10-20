@@ -1,0 +1,53 @@
+{% extends "user/base.html" %}
+{% set active_page = 'followers' %}
+
+{% block user_content_block %}
+
+<div class="row">
+
+  {% if followers|length >0 %}
+
+        {% for user in followers %}
+            <div class="col-md-3">
+                  <div class="teacher-item">
+                    <div class="teacher-top">
+                      <a class="teacher-img" href="/user/{{ user.id }}">
+                        <img class="avatar-lg" src="{% if user.logo_url is none or user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg') }}{% else %}{{ user.logo_url }}{% endif %}" alt="">
+                      </a>
+                      <h3 class="title">
+                        <a class="link-dark" href="/user/{{ user.id }}">{{ user.username }}</a>
+                      </h3>
+                      <div class="position">
+                                      暂无头衔
+                      </div>
+                    </div>
+
+                    <div class="teacher-bottom">
+{#                      <div class="about">#}
+{#                            {{ user.desc|safe }}#}
+{#                      </div>#}
+                      <div class="metas">
+
+                           <a class="btn  btn-primary follow-btn mrl" href="javascript:;"
+                                 data-url="{{ url_for('user.follow',id=user.id) }}"
+                                       data-status-url="{{ url_for('user.follow_status',id=user.id) }}"
+                             >关注</a>
+                        <a class="btn btn-default unfollow-btn mrl" href="javascript:;" data-url="{{ url_for('user.unfollow',id=user.id) }}" style="display:none;">已关注</a>
+                        <button class="btn  btn-default js-send-message mrl"
+                        data-user-id="{{ user.id }}"
+                                data-user-head=" {% if user.logo_url is none or user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg')}} {% else %}{{ user.logo_url }} {% endif %} ">私信</button>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+
+        {% endfor %}
+  {% else %}
+        <div class="empty">暂无粉丝,多写好文章吧</div>
+  {% endif %}
+
+</div>
+
+
+{% endblock %}
+

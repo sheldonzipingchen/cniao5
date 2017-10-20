@@ -1,0 +1,128 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+    支付中心-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+    　{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div id="content-container" class="container">
+
+         <div class="order-pay">
+
+                <div class="cniao-section">
+
+                    <ul class="cniao-step cniao-step-3 clearfix" style="margin-bottom: 5px">
+                        <li class="done"><span class="number">1</span>订单确认</li>
+                        <li class="doing"><span class="number">2</span>订单支付</li>
+                        <li><span class="number">3</span>订单完成</li>
+                    </ul>
+
+                    <div class="order-pay-body">
+
+
+                         <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            订单已提交，请在４８小时内完成支付！逾期订单将被取消。
+                        </div>
+
+                        <div class="order-detail-bg checkout">
+
+                            <div class="order-detail  clearfix">
+                                <div class="order-img hidden-xs">
+
+                                     {% if order.product_type ==0 %}
+                                            <a href="">
+                                            <img src="{{ url_for('static', filename='images/vip_500_300.png')  }}" alt="{{ order.title }}"/>
+                                             </a>
+
+                                        {% elif order.product_type ==3 %}
+                                            <a href="">
+                                                <img src="{{ course.img_url }}" alt="{{ order.title }}"/>
+                                            </a>
+                                        {% endif %}
+                                </div>
+                                <div class="order-info">
+                                    <p>订单名称： {{ order.title }}</p>
+                                    <p>订单号：{{ order.order_num }}</p>
+                                    <p>
+                                        订单价格：
+                                        <span class="pay-rmb">￥{{ order.total_price }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="cniao-piece" style="margin-bottom:10px;"><div class="piece-header">支付方式</div></div>
+
+                             <form class="form-paytype" action="{{ url_for('pay.pay_order') }}">
+
+                                <div class="form-group order-detail-bg">
+
+                                    <div class="check  active " id="alipay">
+                                        <img src="{{ url_for('static', filename='images/pay/alipay1.gif') }}">
+                                        <span class="icon"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="total-price">
+                                        应付金额：
+                                        <span role="pay-rmb" class="pay-rmb mrl">￥{{ order.total_price }}</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group text-right">
+
+                                    <button class="pay-button btn btn-primary mrl" type="submit">确认支付</button>
+                                    <input type="hidden" name="order_num" value="{{ order.order_num }}"/>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+     </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+{#        app.controller='app/order';#}
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

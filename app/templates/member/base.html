@@ -1,0 +1,167 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   用户中心-国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+
+
+{% block main_block %}
+
+    {% if current_user.email ==none  or current_user.email =='' %}
+
+
+    <div class="alert alert-warning alert-notice announcements-alert" role="alert">
+      <div class="container swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide text-center">
+                <a href="{{ url_for('member.setting_info') }}"> 为了保证您的账户安全，请尽快去绑定邮箱</a>
+            </div>
+
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+
+    {% endif %}
+  {% if current_user.mobi ==none  or current_user.mobi =='' %}
+
+
+    <div class="alert alert-warning alert-notice announcements-alert" role="alert">
+      <div class="container swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide text-center">
+                <a href="{{ url_for('member.setting_info') }}"> 为了保证正常登录菜鸟窝，请您尽快绑定手机。两周后停止使用邮箱登录</a>
+            </div>
+
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+
+    {% endif %}
+
+     <div id="content-container" class="container">
+
+
+        <div class="row">
+
+            <div class="col-md-2">
+                  <div class="sidenav">
+
+
+
+                       {% set navigations = [
+                            (url_for('member.invite_cash'), 'invite_cash', '赚现金'),
+                            (url_for('member.invite'), 'invite', '赚鸟币&VIP'),
+
+                            ('', '', '学习中心'),
+                            (url_for('member.course_learning'), 'index', '我的课程'),
+                            (url_for('member.notebooks'), 'notebooks', '我的笔记'),
+
+                             ('', '', '账户中心'),
+
+                            (url_for('member.orders'), 'orders', '我的订单'),
+                            (url_for('member.vips'), 'vips', '我的 VIP'),
+                            (url_for('member.coupons'), 'coupons', '我的优惠码'),
+                             (url_for('member.revenue'), 'revenue', '我的收入'),
+
+                            ('', '', '个人设置'),
+                            (url_for('member.setting_info'), 'setting_info', '基本信息'),
+                            (url_for('member.setting_avatar'), 'setting_avatar', '头像设置'),
+                            (url_for('member.setting_pwd'), 'setting_pwd', '修改密码'),
+
+
+                        ] -%}
+
+                      {% set active_page = active_page|default('index') -%}
+
+
+                      <ul class="list-group" >
+
+                           {% for href, id, name in navigations %}
+                               {% if href =='' %}
+                                   <li class="list-group-heading">{{ name }}</li>
+                               {% else %}
+                               <li class="list-group-item {% if id == active_page %} active {% endif %}">
+                                 <a href="{{ href }}"> {{ name }}</a>
+                                </li>
+                               {% endif %}
+
+                           {% endfor %}
+
+                      </ul>
+
+
+{#                        <ul class="list-group" >#}
+{##}
+{#                            <li class="list-group-heading">学习中心</li>#}
+{##}
+{#                            <li class="list-group-item active">#}
+{#                                <a href="member_my_course_leanning.html"> 我的课程</a>#}
+{#                            </li>#}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="/settings/avatar"> 我的笔记</a>#}
+{#                            </li>#}
+{##}
+{##}
+{##}
+{##}
+{#                            <li class="list-group-heading" style="margin-top: 20px">账户中心</li>#}
+{#                            <li class="list-group-item   ">#}
+{#                                <a href="member_index.html">我的账户#}
+{#                                </a>#}
+{#                            </li>#}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="member_wallet.html">我的钱包</a>#}
+{#                            </li>#}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="member_coupon.html">我的卡卷</a>#}
+{#                            </li>#}
+{##}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="member_vip_list.html">会员记录</a>#}
+{#                            </li>#}
+{##}
+{##}
+{#                            <li class="list-group-heading" style="margin-top: 20px">个人设置</li>#}
+{##}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="/settings/"> 基础信息</a>#}
+{#                            </li>#}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="/settings/avatar"> 头像设置</a>#}
+{#                            </li>#}
+{##}
+{##}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="/settings/email"> 邮箱设置</a>#}
+{#                            </li>#}
+{##}
+{##}
+{#                            <li class="list-group-item ">#}
+{#                                <a href="/settings/binds">第三方登录</a>#}
+{#                            </li>#}
+{##}
+{#                        </ul>#}
+                    </div>
+
+            </div>
+            <div class="col-md-10">
+
+
+                {% block block_content %}{% endblock %}
+
+            </div>
+        </div>
+     </div>
+
+{% endblock %}
+
+
+
+

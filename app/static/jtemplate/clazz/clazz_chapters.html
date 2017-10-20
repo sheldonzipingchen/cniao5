@@ -1,0 +1,95 @@
+
+
+<ul class="period-list" id="course-item-list">
+
+
+    {#foreach $T.chatpers as c}
+        <li class="chapter clearfix">
+            <i class="icon icon-list es-icon-toc"></i>
+                <span class="title">
+                    {{ $T.c.name }}
+                </span>
+        </li>
+
+        {#foreach $T.c.lessons as lesson}
+
+            <!-- 是否登录 -->
+            {#if $T.is_login }
+
+                {#if $T.lesson.state ==1}
+
+                    {#if $T.lesson.is_free ==1}
+                        <li class="period">
+                        <a href="/clazz/video/{{ $T.lesson.id }}.html" target="_blank" data-toggle="modal"  title="{{ $T.lesson.name}}">
+                            <i class="icon icon-play3"></i>
+                            <span class="label label-warning mrm">试学</span>
+                            <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}} </span>
+                        </a>
+                        </li>
+                    {#else}
+
+                        {#if $T.can_play}
+                            <li class="period">
+                            <a href="/clazz/video/{{ $T.lesson.id }}.html" target="_blank" data-toggle="modal"  title="{{ $T.lesson.name}}">
+                            <i class="icon icon-play3"></i>
+                            {#if $T.lesson.pub_tag == 1}
+                            <span class="label label-success">最新</span>
+                            {#/if }
+                            <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}} </span>
+                            </a>
+                            </li>
+                        {#else}
+                            <li class="period">
+                            <a href="javascript:void(0)" >
+                            <i class="icon icon-lock"></i>
+
+                            {#if $T.lesson.pub_tag == 1}
+                            <span class="label label-success">最新</span>
+                            {#/if }
+                            <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}}</span>
+                            </a>
+                            </li>
+                        {#/if }
+
+
+                    {#/if }
+
+                {#else}
+                    <li class="period">
+                    <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}} </span>
+                    </li>
+                {#/if }
+
+
+            {#else}
+                {#if $T.lesson.is_free ==1}
+                        <li class="period">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_login">
+                            <i class="icon icon-play3"></i>
+                            <span class="label label-warning mrm">试学</span>
+                            <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}} </span>
+                        </a>
+                        </li>
+                {#else}
+                    <li class="period">
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_login">
+                        <i class="icon icon-play3"></i>
+                        <span class="title">课时{{ $T.lesson$index+1 }}：{{ $T.lesson.name}} </span>
+                      </a>
+                    </li>
+                {#/if }
+
+
+
+            {#/if }
+
+
+        {#/for}
+
+
+    {#/for}
+
+</ul>
+
+
+

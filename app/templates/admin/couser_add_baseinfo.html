@@ -1,0 +1,130 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+        <h1 class="page-title">添加课程-基本信息</h1>
+
+        <div class="well">
+
+
+            <form action="{{ url_for('admin.couser_add_baseinfo') }}"  method="post"
+                  class="form-horizontal" novalidate="novalidate">
+                {{ new_course_base_info_form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="txtCourseName" class="col-sm-2 control-label">课程名称</label>
+
+                    <div class="col-sm-8">
+                        {{ new_course_base_info_form.name(class_='form-control') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">总课时</label>
+
+                    <div class="col-sm-8">
+                        {{ new_course_base_info_form.lessons_count(class_='form-control') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">授课讲师</label>
+
+                    <div class="col-sm-4">
+                        {{ new_course_base_info_form.teacher(class_='form-control') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">课程类目</label>
+
+                    <div class="col-sm-2">
+                        {{ new_course_base_info_form.lesson_type(class_='form-control') }}
+                    </div>
+                    <div class="col-sm-2">
+                        <select id="second_lesson_type" name="second_lesson_type" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">关联Q群</label>
+
+                    <div class="col-sm-4">
+                        {{ new_course_base_info_form.qq(class_='form-control') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">课程难度</label>
+
+                    <div class="col-sm-4">
+                        {{ new_course_base_info_form.class_difficulty(class_='radio-inline') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否收费</label>
+
+                    <div class="col-sm-4">
+                        {{ new_course_base_info_form.is_free(class_='radio-inline') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">推荐指数</label>
+
+                    <div class="col-sm-4">
+                        {{ new_course_base_info_form.recommend_count() }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">适合人群</label>
+
+                    <div class="col-sm-8">
+                        {{ new_course_base_info_form.fit_to(class_='form-control', rows='3', cols='98') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">课程介绍</label>
+
+                    <div class="col-sm-8">
+                        <!--请换成富文本编辑框-->
+                        {{ new_course_base_info_form.desc(class_='form-control', rows='3', cols='98') }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        {{ new_course_base_info_form.submit(class_='button button_green button_big') }}
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/admin/get_second_class_type/" + $(lesson_type).val(), function (result) {
+                $.each(result, function (i, item) {
+                    $("#second_lesson_type").append("<option value='" + item.id + "'>" + item.name + "</option>");
+                });
+            });
+
+            $('#lesson_type').change(function () {
+                $('#second_lesson_type').empty();
+                $.getJSON("/admin/get_second_class_type/" + $(this).val(), function (result) {
+                    $.each(result, function (i, item) {
+                        $("#second_lesson_type").append("<option value='" + item.id + "'>" + item.name + "</option>");
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

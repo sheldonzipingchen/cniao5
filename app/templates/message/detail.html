@@ -1,0 +1,181 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+    我的私信-菜鸟窝 国内专业的Android职业技能在线学习平台
+{% endblock %}
+
+{% block keywords %}菜鸟窝,Android就业培训,Android职业培训,Android项目课程,Android视频课程,RxJava视频教程,Android6.0视频教程,RxAndroid视频教程,React Native视频教程,OkHttp视频教程
+
+{% endblock %}
+
+{% block description %}菜鸟窝是国内最专业的Android开发人才培训基地，拥有精心打造的、以就业为导向、体系化职业培训课程。游戏通关式教学，任务制学习，一对一VIP全程辅导；
+除此之外还拥有海量的项目实战课程，助你快速积累项目经验，成为Android优秀技术人才！
+{% endblock %}
+
+
+
+{% block main_block %}
+
+
+     <div id="content-container" class="container"
+          data-read-url="{{ url_for("message.message_read",id=conversation) }}"
+     >
+
+         <div class="row">
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default panel-page" style="padding-top: 20px">
+                        <div class="panel-heading" style="border-bottom: 1px solid #c3c3c3;padding-bottom: 10px">
+                               <a class="btn btn-primary btn-sm pull-left" href="{{ url_for("message.user_messages") }}">
+                                返回
+                            </a>
+
+                            <h4 class="text-center">与 <a href="/user/{{ user.id }}"
+                                                         class="js-user-card"
+                                                         data-card-url="/user/{{ user.id }}/card/show"
+                                           data-user-id="{{ user.id }}"
+                                    > {{ user.username }}</a> 对话</h4>
+                        </div>
+
+
+
+                    <div id="message-list" data-message-length="{{ messages|length }}">
+                         <ul class="media-list message-list">
+
+                            {% for message in messages %}
+
+                                {%if  message.from_user.id == current_user.id %}
+
+                                      <li class="media message-me" >
+
+                                        <a class="pull-right js-user-card"
+                                           href="/user/{{ message.from_user.id }}"
+                                           data-card-url="/user/{{ message.from_user.id }}/card/show"
+                                           data-user-id="{{ message.from_user.id }}">
+
+                                            {% if message.from_user.logo_url is none or message.from_user.logo_url=='' %}
+                                                     <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                              {% else %}
+                                                 <img class="avatar-sm" src="{{ message.from_user.logo_url }}">
+                                             {% endif %}
+
+                                        </a>
+
+
+                                        <div class="media-body">
+                                        <div class="popover left">
+                                            <div class="arrow"></div>
+                                            <div class="popover-content">
+                                                <div class="message-content">
+                                                    {{ message.msg }}
+                                                </div>
+                                                <div class="message-footer">
+                                                    <span class="text-muted timeago"  title="{{ message.send_time }}">{{ message.send_time }}</span>
+                                                    <div class="message-actions">
+                                                        <a class="text-muted delete-message" href="javascript:" data-url="{{ url_for('.message_delete',id=message.id) }}">删除</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                      </li>
+
+                                {% else %}
+
+                                      <li class="media message-she" parent-url="/message/">
+
+                                        <a class="pull-left js-user-card" href="/user/{{ message.from_user.id }}"
+                                           data-card-url="/user/{{ message.from_user.id }}/card/show"
+                                           data-user-id="{{ message.from_user.id }}">
+
+                                            {% if message.from_user.logo_url is none or message.from_user.logo_url=='' %}
+                                                     <img class="avatar-sm" src="{{ url_for('static', filename='images/default_head.jpeg') }}">
+                                              {% else %}
+                                                 <img class="avatar-sm" src="{{ message.from_user.logo_url }}">
+                                             {% endif %}
+
+                                        </a>
+
+                                        <div class="media-body">
+                                            <div class="popover right">
+                                                <div class="arrow"></div>
+                                                <div class="popover-content">
+                                                    <div class="message-content">
+                                                        {{ message.msg }}
+                                                    </div>
+                                                    <div class="message-footer">
+                                                       <span class="text-muted timeago" title ="{{ message.send_time }}">{{ message.send_time }}</span>
+                                                        <div class="message-actions">
+                                                            <a class="text-muted delete-message" href="javascript:" data-url="{{ url_for('.message_delete',id=message.id) }}">删除</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                {% endif %}
+
+
+                            {% endfor %}
+
+
+
+
+
+                         </ul>
+                    </div>
+
+                         <form id="message-reply-form"
+                               class="message-reply-form clearfix"
+                               method="post"
+                               data-user-id="{{ user.id }}"
+                               data-current-user-id="{{ current_user.id }}"
+                               data-current-user-logo="{% if current_user.logo_url is none or current_user.logo_url=='' %}{{ url_for('static', filename='images/default_head.jpeg') }}{% else %}{{ current_user.logo_url }}{% endif %}"
+                         >
+                            <div class="form-group">
+                                <textarea id="message_reply_content" name="message_reply[content]" required="required" class="form-control" rows="3" placeholder="请输入私信内容"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <button id="message-send-btn" class="btn btn-primary pull-right disabled">发送</button>
+                            </div>
+
+                        </form>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+     </div>
+
+{% endblock %}
+
+
+{% block custom_js_block %}
+
+
+
+
+     <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+
+        app.mainScript = 'path-js/app';
+        app.controller='app/conversation';
+
+        window.app=app;
+
+        seajs.use(app.mainScript);
+
+    </script>
+
+{% endblock %}

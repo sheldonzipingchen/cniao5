@@ -1,0 +1,378 @@
+{% extends "member/base.html" %}
+{% set active_page = 'setting_info' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+        <div class="section-header"><h3>基本信息</h3></div>
+
+          <form id="user-profile-form" class="form-horizontal" method="post" novalidate="novalidate" data-post-url="{{ url_for('member.update_profile') }}" >
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">用户名</label>
+                                <div class="col-md-7 controls">
+                                    <div class="control-text">
+                                       <span id="user_name"> {{ user.username if user.username != None}}</span>
+                                        <a href="javascript:void(0)" id="txt_edit_username">修改</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="profile_realname">姓名</label>
+                                <div class="col-md-7 controls radios">
+                                    <input type="text" id="profile_realname" name="profile[realname]" class="form-control"  data-explain=""
+                                           value="{{ user.real_name if  user.real_name  != None }}">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="profile_addr" class="col-md-2 control-label">所在地</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text" id="profile_addr" name="profile[addr]" class="form-control"
+                                           value="{{ user.addr if user.addr != None }}">
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <div class="form-group">
+                                <label for="profile_mobile" class="col-md-2 control-label">手机号码</label>
+                                <div class="col-md-7 controls">
+
+                                   <div class="control-text">
+                                        {% if user.mobi =='' or user.mobi is none %}
+                                    <a href="javascript:void(0)" class="js-mobil-bind">无手机号码，请设置</a>
+
+                                    {% else %}
+                                    {{ user.mobi }}
+                                    {% endif %}
+                                   </div>
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile_email" class="col-md-2 control-label">邮箱</label>
+                                <div class="col-md-7 controls">
+
+
+                                     <div class="control-text">
+                                        {% if user.email =='' or user.email is none %}
+                                    <a href="javascript:void(0)" class="js-email-bind">无邮箱，请设置</a>
+
+                                    {% else %}
+                                    {{ user.email }}
+                                    {% endif %}
+                                   </div>
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile_qq" class="col-md-2 control-label">QQ</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text" id="profile_qq" name="profile[qq]" class="form-control"
+                                           data-explain="" value="{{ user.qq if user.qq != None }}">
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+
+                            <div class="form-group">
+                                <label for="profile_company" class="col-md-2 control-label">公司/学校</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text" id="profile_company" name="profile[company]" class="form-control"
+                                           data-explain="" value="{{ user.company if user.company != None }}">
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile_job" class="col-md-2 control-label">职位</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text" id="profile_job" name="profile[job]" class="form-control"  data-explain=""
+                                           value="{{ user.job if user.job != None}}">
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+                         <div class="form-group">
+                                <label for="profile_workyear" class="col-md-2 control-label">工作年限</label>
+                                <div class="col-md-7 controls">
+
+
+                                    <select id="profile_workyear" class="form-control" name="profile[workyear]" >
+
+
+
+                                          {% set ops = [
+
+                                                ('student', '学生'),
+                                                ('1', '1年'),
+                                                ('2', '2年'),
+                                                ('3', '3年'),
+                                                ('4', '4年'),
+                                                ('5>', '5年以上'),
+
+
+                                            ] -%}
+
+
+                                         {% for v, name in ops %}
+                                             <option value="{{ v }}"  {% if v==user.work_years %}selected {% endif %} >{{ name }}</option>
+
+                                        {% endfor %}
+
+
+
+                                    </select>
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="profile_about" class="col-md-2 control-label">自我介绍</label>
+                                <div class="col-md-7 controls">
+
+
+                                    <textarea rows="5" id="profile_about" class="form-control"
+
+                                            >{{ user.desc if user.desc != None }}</textarea>
+
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-2">
+                                    <button id="profile-save-btn" data-submiting-text="正在保存" type="submit" class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
+
+
+
+
+                        </form>
+
+
+
+   </div>
+
+
+
+
+  <div class="modal" id="mobi-dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content clearfix">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h4 class="modal-title">绑定手机号码</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form id="form-bind-mobile" action="" class="pvl phl " data-post-url="{{ url_for('member.profile_bind_mobile') }}">
+
+
+                            <div class="form-group mbs">
+                               <label class="control-label required" for="mobile">手机号码</label>
+                               <div class="controls">
+                                   <input type="text"
+                                          id="mobi"
+                                          name="mobi"
+                                          required="required"
+                                          class="form-control input-lg"
+                                          data-url="{{ url_for('auth.check_mobile_exist') }}"
+                                          placeholder="输入要绑定的手机号"
+                                           data-explain="">
+                                   <p class="help-block"></p>
+                               </div>
+                           </div>
+
+                            <div class="form-group mbs  email_mobile_msg">
+                               <label class="control-label required" for="sms_code">动态码</label>
+                               <div class="controls row">
+                                   <div class="col-xs-7">
+                                       <input type="text" class="form-control input-lg" id="sms_code" name="sms_code"
+                                              placeholder="输入短信动态码" required="required"
+                                              data-url="{{ url_for('member.profile_bind_mobile_code_check') }}" >
+                                       <p class="help-block"> </p>
+                                   </div>
+                                   <div class="col-xs-5">
+                                       <a href="javascript:void(0)" class="btn btn-default btn-lg js-sms-send disabled "
+                                           data-sms-url="{{ url_for('member.profile_send_bind_mobile_sms_code') }}">
+                                           <span id="js-time-left"></span>
+                                           <span id="js-fetch-btn-text">获取动态码</span>
+                                       </a>
+                                   </div>
+                               </div>
+                           </div>
+
+
+                         <div class="form-group mbs">
+                           <div class="controls">
+                               <button type="submit" id="bind-btn" data-submiting-text="正在提交" class="btn btn-primary btn-lg btn-block">绑定</button>
+                           </div>
+                       </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+  <div class="modal" id="email-dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content clearfix">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h4 class="modal-title">绑定邮箱</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form id="form-bind-email" action="" class="pvl phl " data-post-url="{{ url_for('member.profile_bind_email') }}">
+
+
+                            <div class="form-group mbs">
+                               <label class="control-label " for="mobile">邮箱</label>
+                               <div class="controls">
+                                   <input type="text"
+                                          id="email"
+                                          name="email"
+                                          required="required"
+                                          class="form-control input-lg"
+                                          data-url="{{ url_for('auth.check_email_or_mobi_exist') }}"
+                                          placeholder="输入要绑定的邮箱"
+                                           data-explain="">
+                                   <p class="help-block"></p>
+                               </div>
+                           </div>
+
+                            <div class="form-group mbs ">
+                               <label class="control-label required" for="sms_code">验证码</label>
+                               <div class="controls row">
+                                   <div class="col-xs-7">
+                                       <input type="text" class="form-control input-lg" id="email_code" name="email_code"
+                                              placeholder="输入邮件中的验证码" required="required"
+                                              data-url="{{ url_for('member.profile_bind_email_code_check') }}" >
+                                       <p class="help-block"> </p>
+                                   </div>
+                                   <div class="col-xs-5">
+                                       <a href="javascript:void(0)" class="btn btn-default btn-lg js-email-send disabled "
+                                           data-url="{{ url_for('member.profile_send_bind_email_code') }}">
+                                           <span id="js-time-left-email"></span>
+                                           <span id="js-fetch-btn-text-email">获取验证码</span>
+                                       </a>
+                                   </div>
+                               </div>
+                           </div>
+
+
+                         <div class="form-group mbs">
+                           <div class="controls">
+                               <button type="submit" id="bind-btn" data-submiting-text="正在提交" class="btn btn-primary btn-lg btn-block">绑定</button>
+                           </div>
+                       </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+    
+  </div>
+
+
+
+ <div id="dialog-modify-username" style="display: none;padding: 20px">
+
+     <form id="form-modify-username"  class="pvl phl " data-post-url="{{ url_for(".profile_modify") }}">
+
+           <div class="form-group mbs">
+                       <div class="controls">
+                           <input type="text" id="username" name="username" required="required" class="form-control input-lg"
+                                  data-url="{{ url_for('auth.check_username') }}"
+                                  placeholder="用户名,中、英文均可"
+                                  >
+                       </div>
+           </div>
+
+           <div class="form-group mtm">
+                       <div class="controls">
+                           <button type="submit" id="modify-btn" data-submiting-text="正在提交" class="btn btn-primary btn-lg btn-block">修改</button>
+                       </div>
+           </div>
+
+
+     </form>
+
+ </div>
+
+
+
+
+
+
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+        var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/"
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/profile';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

@@ -1,0 +1,106 @@
+{% extends "admin/base_admin.html" %}
+{%  import "page_macros.html" as macros  %}
+
+{% block script_css %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/datepicker/skin/WdatePicker.css') }}"/>
+    <script src="{{ url_for('static', filename='libs/datepicker/WdatePicker.js') }}"></script>
+
+ <script>
+
+    $(function() {
+
+    });
+
+    function searchLesson(){
+        $('#frmLesson').submit();
+    }
+
+
+ </script>
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+        <div class="well search-well">
+            <form  role="form" class="form-inline" action="lesson_manage.html" id="frmLesson" method="post">
+
+                <div class="form-group" >
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="chapter_id"
+                                placeholder="输入章节ＩＤ" value={{ chapter_id }}>
+                        <div class="input-group-addon">
+                            <a href="javascript:void(0)" onclick="searchLesson()" >
+                                <i class="icon icon-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="well">
+
+            <table class="table table-hover">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>课时名称</th>
+                    <th>创建时间</th>
+                    <th>章节</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in lesson_list %}
+                    <tr>
+                        <td>
+                            <p> <span>{{ item.id }}</span></p>
+                        </td>
+                        <td>
+                            <p> <span>{{ item.name }}</span></p>
+                        </td>
+                        <td>
+                            <p><span>{{ item.created_time }}
+                            </span></p>
+                        </td>
+                        <td>
+                            <p><span>{{ item.chapter_id }}</span></p>
+                        </td>
+                        <td>
+                            <p><span>{{ item.state }}</span></p>
+                        </td>
+                        <td>
+                                <a href="javascript:void(0)" onclick="changeStatus({{ item.id }})" >
+                                <i class="icon icon-pencil size20"></i>
+                                修改</a>｜
+                                 <a href="javascript:void(0)" onclick="changeStatus({{ item.id }})" >
+                                <i class="icon icon-pencil size20"></i>
+                                课时配置</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                <tr>
+                <td colspan="8">
+                <div class="pagination">
+                    {{ macros.pagination_widget(pagination, '.lesson_manage') }}
+                </div>
+                </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+{% endblock %}

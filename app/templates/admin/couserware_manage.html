@@ -1,0 +1,197 @@
+{% extends "admin/base_admin.html" %}
+
+{% block script_css %}
+
+     <script type="text/javascript">
+
+     var class_id={{ class_id}}
+        $(function() {
+
+
+                initUploader()
+
+
+                $("#btUpload").click(function(){
+
+                    uploader.start();
+
+                });
+
+                $("#btnStop").click(function(){
+                    uploader.stop();
+
+                });
+
+
+
+        })
+
+
+        var uploader= {};
+
+        function initUploader(){
+
+             uploader = Qiniu.uploader({
+                    runtimes: 'html5,flash,html4',
+                    browse_button: 'pickfiles',
+                    uptoken_url: "{{ url_for('admin.bucket_token', bucket_name='cniao5-courseware') }}",
+                    domain: 'http://7xiqu6.com2.z0.glb.qiniucdn.com',
+                    container: 'container',
+                    max_file_size: '500mb',
+                    flash_swf_url: '/static/libs/plupload/Moxie.swf',
+                    max_retries: 3,
+                    dragdrop: true,
+                    drop_element: 'container',
+                    chunk_size: '4mb',
+                    auto_start: false,
+                    init: {
+                        'FilesAdded': function(up, files) {
+                             plupload.each(files, function(file, i) {
+                                // 文件添加进队列后,处理相关的事情
+                                var progress = new FileProgress(file,i, 'fsUploadProgress');
+                                progress.setStatus("等待...");
+                            });
+                        },
+                        'BeforeUpload': function(up, file) {
+                               // 每个文件上传前,处理相关的事情
+                                var progress = new FileProgress(file, 'fsUploadProgress');
+                                var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                                if (up.runtime === 'html5' && chunk_size) {
+                                    progress.setChunkProgess(chunk_size);
+                                }
+                        },
+                        'UploadProgress': function(up, file) {
+                               // 每个文件上传时,处理相关的事情
+                                var progress = new FileProgress(file, 'fsUploadProgress');
+                                var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                                progress.setProgress(file.percent + "%", up.total.bytesPerSec, chunk_size);
+                        },
+                        'FileUploaded': function(up, file, info) {
+
+                               var progress = new FileProgress(file, 'fsUploadProgress');
+                               progress.setComplete(up, info);
+
+                               var filename=file.name;
+
+                               var res = $.parseJSON(info);
+
+                               var hash =res.hash;
+                               var key = res.key;
+                               var domain = up.getOption('domain');
+
+
+                               var courseware ={};
+                               courseware.bucketname="cniao5-courseware";
+                               courseware.filename=filename;
+                               courseware.hash = hash;
+                               courseware.key = key;
+                               courseware.domain = domain;
+
+
+                               saveFile(courseware);
+                        },
+                        'Error': function(up, err, errTip) {
+                               //上传出错时,处理相关的事情
+                               var progress = new FileProgress(err.file, 'fsUploadProgress');
+                               progress.setError();
+                               progress.setStatus(errTip);
+                        },
+                        'UploadComplete': function() {
+                               //队列文件处理完毕后,处理相关的事情
+                        },
+                        'Key': function(up, file) {
+                            // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                            // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                            var key = "";
+                            $.ajax({
+                                url: "{{ url_for('admin.key') }}",
+                                type: 'GET',
+                                async: false,//这里应设置为同步的方式
+                                success: function(data) {
+                                    var ext = Qiniu.getFileExtension(file.name);
+                                    key = data + '.' + ext;
+                                },
+                                cache: false
+                            });
+                            return key;
+                        }
+                    }
+                });
+
+        }
+
+
+
+     function saveFile(courseware)  {
+
+
+        courseware.class_id = class_id;
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/courseware/save",
+            contentType: "application/json; charset=utf-8",
+			type:"POST",
+            data: JSON.stringify(courseware),
+            success: function (data) {
+                if(data.code == 1) {
+                    console.log("文件保存成功")
+                }
+                else {
+                    console.log("文件保存失败")
+                }
+
+            },
+            error: function (request) {
+                alert("Connection error="+request);
+            }
+        });
+    }
+
+
+    </script>
+
+{% endblock %}
+
+{% block main_block %}
+    <div class="col-md-10">
+
+                    <div class="well">
+
+                         <div class="well dashed" id="container">
+
+                                    <a class="button button_default button_big" href="javascript:void(0)" id="pickfiles">
+                                        <i class="icon icon-plus"></i>选择或者拖拽文件到这里
+                                    </a>
+
+                     </div>
+
+                    <hr />
+
+                    <div class="btn-toolbar">
+
+                        <a class="button button_green" href="javascript:void(0)" id="btUpload">
+                            开始上传
+                        </a>
+                        <a class="button button_red" href="javascript:void(0)" id="btnStop">
+                            停止上传
+                        </a>
+                    </div>
+
+                    <table class="table table-hover">
+
+                        <thead>
+                        <tr>
+                            <th>文件</th>
+                            <th>大小</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody id="fsUploadProgress">
+                        </tbody>
+                    </table>
+                    </div>
+
+
+    </div>
+{% endblock %}

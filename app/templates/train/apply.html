@@ -1,0 +1,159 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+   填写报名申请信息
+{% endblock %}
+
+
+
+
+{% block main_block %}
+
+
+
+        <section class="section-white" id="subinfo">
+
+            <div class="container">
+
+                   <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                        如提交的资料有误或不真实将无法审核通过
+                 </div>
+
+
+                <div class="text-center" style="font-size: 18px;margin-bottom: 10px">
+
+                    申请加入<a href="{{ url_for('train.detail',id=training_class.id) }}"> 《{{ training_class.title }}》</a></div>
+                <div class="login-section">
+                        <form  id="user-profile-form"
+                               class="form-horizontal"
+                               novalidate="novalidate"
+                               data-post-url="{{ url_for('train.apply_save') }}"
+                               data-back-url="{{ url_for('train.detail',id=training_class.id) }}"
+                               data-class-id="{{ training_class.id }}"
+                        >
+
+
+                            <div class="form-group mbm">
+                                <label class=" col-md-3 control-label" for="realname">姓名</label>
+                                <div class="col-md-8 controls">
+                                    <input class="form-control input-lg"
+                                           id="realname" type="text"
+                                           name="realname" value="{{ user.real_name }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbm">
+                                <label class="col-md-3 control-label" for="mobi">手机</label>
+                                <div class="col-md-8 controls">
+                                    <input class="form-control input-lg  "
+                                           type="text" id="mobi"
+                                           {{ 'disabled' if user.mobi != None}}
+                                           name="mobi" value="{{ user.mobi }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbm">
+                                <label class="col-md-3 control-label" for="email">邮箱</label>
+                                <div class="col-md-8 controls">
+                                    <input class="form-control input-lg"
+                                           type="email" id="email"
+                                            {{ 'disabled' if user.email != None}}
+                                           name="email" value="{{ user.email }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbm">
+                                <label class="col-md-3 control-label" for="qq">QQ</label>
+                                <div class="col-md-8 controls">
+                                    <input class="form-control input-lg"
+                                           type="text" id="qq"
+                                           name="qq" value="{{ user.qq }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mbm">
+                                <label for="company" class="col-md-3 control-label">公司/学校</label>
+                                <div class="col-md-8 controls">
+                                    <input type="text" id="company" name="company" class="form-control"
+                                           data-explain="" value="{{ user.company if user.company != None }}">
+
+                                </div>
+                            </div>
+
+                                <div class="form-group mbm">
+                                <label for="workyear" class="col-md-3 control-label">工作年限</label>
+                                <div class="col-md-8 controls">
+
+
+                                    <select id="workyear" class="form-control" name="workyear" >
+
+
+
+                                          {% set ops = [
+
+                                                ('student', '学生'),
+                                                ('1', '1年'),
+                                                ('2', '2年'),
+                                                ('3', '3年'),
+                                                ('4', '4年'),
+                                                ('5>', '5年以上'),
+
+
+                                            ] -%}
+
+
+                                         {% for v, name in ops %}
+                                             <option value="{{ v }}"  {% if v==user.work_years %}selected {% endif %} >{{ name }}</option>
+
+                                        {% endfor %}
+
+
+
+                                    </select>
+
+                                    <div class="help-block" style="display:none"> </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group ">
+                                <div class="controls col-md-8 col-md-offset-3">
+                                <button  id="profile-save-btn" data-submiting-text="正在保存" type="submit" class="btn btn-rectangle btn-success btn-lg btn-block" >提交</button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                        </div>
+
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}
+
+  {% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.mainScript = 'path-js/app';
+
+          app.controller='app/apply';
+        seajs.use(app.mainScript);
+
+
+
+
+        </script>
+    {% endblock %}

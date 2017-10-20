@@ -1,0 +1,68 @@
+{% extends "base_new.html" %}
+
+{% block title %}
+
+    感谢分享
+    菜鸟窝-国内领先专业的移动开发IT技能在线教育平台
+
+{% endblock %}
+{% block description %}{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+
+                <div class="submit-section cniao-section">
+
+
+                      <div class="text-center">
+
+
+                          <p>
+                              <i class="icon icon-smell2" style="font-size: 200px; color:#f1f1f1 "></i>
+                          </p>
+
+                          <p style="font-size: 16px;font-weight:500;">
+                              感谢您的分享,有的投稿我们会做得更好
+                          </p>
+                          <p style="font-size: 16px">
+                              <a href="{{ url_for(".detail",id=forum_id) }}">返回栏目</a>
+                          </p>
+
+
+
+                      </div>
+
+
+                </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+    <script type="text/javascript">
+     var CKEDITOR_BASEPATH ="/static/libs/ckeditor/4.4.8/";
+        var app={};
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+{#        app.controller='app/forum';#}
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

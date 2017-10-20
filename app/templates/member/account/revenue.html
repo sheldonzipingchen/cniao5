@@ -1,0 +1,224 @@
+{% extends "member/base.html" %}
+{% set active_page = 'revenue' %}
+
+
+
+
+{% block block_content %}
+
+
+
+   <div class="cniao-section h400">
+
+       <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="{{ url_for('member.revenue') }}">我的收入</a>
+        </li>
+
+        <li class="">
+            <a href="{{ url_for('member.withdrawals') }}">
+                提现记录
+            </a>
+        </li>
+
+       </ul>
+
+        <div class="alert alert-success alert-dismissible" role="alert"
+                             style="">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            账户满100元才能提现。
+        </div>
+
+            <div class="balance-block clearfix">
+
+
+                <div class="balance-text">
+                    账户：
+                    <strong>{{ user.balance }}</strong>
+                </div>
+
+                <div class="balance-btn">
+
+                {% if current_user.user_type!=2 %}
+                    <a href="javascript:void(0)"
+                       data-check-url="{{ url_for('member.alipay_check') }}"
+
+                       class="js-withdraw mll btn btn-primary  {% if  user.balance < 100 %} disabled{% endif %}"> &nbsp;&nbsp;提&nbsp;现&nbsp;&nbsp; </a>
+
+                {% endif %}
+                </div>
+             </div>
+
+             <div class="table-responsive">
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>金额</th>
+                                        <th>时间</th>
+                                        <th>来源</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                   {% if incomes|length > 0  %}
+
+                                        {% for c in incomes %}
+
+                                         <tr>
+                                           <td>
+                                               <strong>{{ c.money }}</strong>
+                                           </td>
+                                           <td>{{ c.created_time }}</td>
+                                           <td>{{ c.title }}</td>
+                                           <td></td>
+                                       </tr>
+
+                                        {% endfor %}
+
+                                   {% else %}
+                                    <tr class="text-center">
+                                        <td colspan="3"> <span class="text-muted ">无数据</span> </td>
+
+                                    </tr>
+
+                                   {% endif %}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+    </div>
+
+
+
+    <div class="modal" id="alipay-dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content clearfix">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h4 class="modal-title">绑定支付宝账户</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form id="form-bind-alipay" action="" class="pvl phl "
+                              data-post-url="{{ url_for('member.profile_alipay_bind') }}">
+
+
+                            <div class="form-group mbs">
+                               <label class="control-label " for="mobile">支付宝</label>
+                               <div class="controls">
+                                   <input type="text"
+                                          id="alipay"
+                                          name="alipay"
+                                          required="required"
+                                          class="form-control input-lg"
+
+                                          placeholder="输入支付宝账户，绑定后将无法修改"
+                                           data-explain="">
+                                   <p class="help-block"></p>
+                               </div>
+                           </div>
+
+                         <div class="form-group mbs">
+                           <div class="controls">
+                               <button type="submit" id="bind-btn" data-submiting-text="正在提交" class="btn btn-primary btn-lg btn-block">绑定</button>
+                           </div>
+                       </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    <div class="modal" id="withdrawal-dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content clearfix">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h4 class="modal-title">申请提现</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form id="form-withdrawal" action="" class="pvl phl "
+                              data-post-url="{{ url_for('member.withdrawal') }}">
+
+
+                            <div class="form-group mbs">
+                               <label class="control-label " for="mobile">申请金额</label>
+                               <div class="controls">
+                                   <input type="text"
+                                          id="money"
+                                          name="money"
+                                          required="required"
+                                          class="form-control input-lg"
+                                          placeholder=""
+                                           data-explain="">
+                                   <p class="help-block"></p>
+                               </div>
+                           </div>
+
+                         <div class="form-group mbs">
+                           <div class="controls">
+                               <button type="submit" id="withdrawal-btn" data-submiting-text="正在提交"
+                                       class="btn btn-primary btn-lg btn-block">提交申请</button>
+                           </div>
+                       </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+{%endblock  %}
+
+
+
+
+
+{% block custom_js_block %}
+
+
+        <script type="text/javascript">
+
+            var app={};
+            app.debug = true;
+            app.jsPaths={};
+            app.global_script='path-js/global-config';
+            app.controller='app/revenue';
+            app.mainScript = 'path-js/app';
+
+            seajs.use(app.mainScript);
+
+        </script>
+
+
+{% endblock %}
+

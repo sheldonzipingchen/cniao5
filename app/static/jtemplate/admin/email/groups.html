@@ -1,0 +1,11 @@
+
+
+<select  class="form-control" id="select_group">
+    <option value="0">请选择分组</option>
+    {#foreach $T as ep}
+    <option value="{{ $T.ep.address}}">{{ $T.ep.address }}</option>
+    {#/for}
+
+</select>
+
+

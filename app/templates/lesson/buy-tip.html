@@ -1,0 +1,35 @@
+{% extends "base_new.html" %}
+
+
+
+{% block main_block %}
+
+
+    <div class="container"  id="content-container">
+
+        <div class="panel">
+
+             <div  class="panel-body" >
+
+                 <div style="margin: 50px auto;width: 500px">
+
+                     <h4>您没有权限学习</h4>
+
+                     <span class="gray-darker" style="font-size: 16px">要想快人一步,就得懂得投资自己。为学习投资你不会后悔的</span>
+
+                    <div class="" style="margin-top: 40px">
+                        <a href="{{ url_for('order.show',product_id=course.id,product_type=3) }}" class="btn btn-danger btn-lg " style="width: 200px">立即购买</a>
+
+                    </div>
+                 </div>
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+{% endblock %}

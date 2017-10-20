@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'withdrawals' %}
+
+{% block main_page %}
+
+    <div class="js-page-cfg" data-controller-js="withdrawals"></div>
+
+    <div class="row ">
+
+
+        <div class="col-md-12 ">
+
+            <div class="search-section cniao-section text-center">
+
+                <form class="form-inline" role="form">
+                  <div class="form-group ">
+                    <label class="sr-only" for="email_or_mobi">用户</label>
+                    <input type="text" class="form-control " id="email_or_mobi"  style="width: 200px" placeholder="Enter user email or mobi">
+                  </div>
+
+                 <div class="radio mlm ml10 " style="border: 1px dashed #f1f1f1;padding: 5px 10px">
+                  <label>
+                    <input type="radio" name="state"  value="-1"> 全部
+                  </label>
+
+                   <label class="ml10">
+                    <input type="radio" name="state"  value="0" checked> 未处理
+                  </label>
+                   <label class="ml10">
+                    <input type="radio" name="state"  value="1"> 已处理
+                  </label>
+                     <label class="ml10">
+                    <input type="radio" name="state"  value="2"> 驳回
+                  </label>
+                </div>
+                  <a id="btn-search" class="btn btn-default ml25">搜索</a>
+                </form>
+            </div>
+
+
+            <div class="mts cniao-section">
+
+                <table class="table table-condensed  table-hover table-responsive">
+
+
+                    <thead>
+                    <tr>
+                        <th>申请人</th>
+                        <th>申请金额</th>
+
+                        <th>应结金额</th>
+                         <th>时间</th>
+                        <th>收款账户</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="data-list">
+
+
+                    </tbody>
+
+
+
+                </table>
+
+              <nav class="text-center">
+                    <ul class="pagination" id="pagination">
+
+                    </ul>
+              </nav>
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

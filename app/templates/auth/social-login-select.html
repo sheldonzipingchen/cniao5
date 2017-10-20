@@ -1,0 +1,75 @@
+{% extends "base_new.html" %}
+
+{% block title %}绑定或创建新账号 菜鸟窝-国内领先专业的移动开发IT技能在线教育平台{% endblock %}
+
+
+{% block main_block %}
+
+<div id="content-container" class="container">
+
+      <div class="row row-6">
+
+                <div class="col-md-6 col-md-offset-3 ptl">
+
+
+                    <div class="panel panel-default panel-page">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">关联菜鸟窝账号</h3>
+                        </div>
+
+                        <div class="panel-body text-center bind-account">
+
+
+                           <div class="user">
+
+                               <div class="avatar">
+                                 <img src="{{ social_user.head_url }}" >
+                               </div>
+                               <div class="name">
+                                    {{ social_user.nickname }}
+                               </div>
+                               <div class="desc">
+                                   您还未关联菜鸟窝账号
+                               </div>
+                               <div class="actions">
+
+
+                                   <a href="{{ url_for('auth.social_account_create') }}" class="btn btn-xlg  btn-primary  btn-block">创建新账号</a>
+
+                                   <a href="{{ url_for('auth.social_account_bind') }}" class="btn btn-xlg  btn-rectangle btn-warning btn-block">关联已有账号</a>
+
+                               </div>
+
+                           </div>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block custom_js_block %}
+
+        <script type="text/javascript">
+        var app={};
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.mainScript = 'path-js/app';
+        seajs.use(app.mainScript);
+
+    </script>
+{% endblock %}

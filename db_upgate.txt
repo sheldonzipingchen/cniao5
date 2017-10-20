@@ -1,0 +1,8 @@
+class PageMenu(db.Model):
+    __tablename__ = 'page_menu'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))  # 名字
+    created_time = db.Column(db.DateTime, default=datetime.now())  # 创建时间
+    type = db.Column(db.Integer) #菜单类型
+    sort =db.Column(db.Integer) #排序
+    redirect_url =  db.Column(db.String(200)) #跳转地址

@@ -1,0 +1,98 @@
+{% extends "course/base_course_detail.html" %}
+
+{% block course_bottom_left %}
+
+
+
+    <div class="nav-btn-tab">
+
+        <ul class="nav nav-tabs" role="tablist">
+
+            <li  class="">
+                <a href="{{ url_for('course.course_detail', id=class_item.id) }}"
+
+
+                       title="{{ class_item.name }}课程简介"
+                       >简介</a>
+
+            </li>
+
+            <li  class="">
+                <a href="{{ url_for('course.course_lessons', id=class_item.id) }}"
+                   title="{{ class_item.name }}的目录"
+                        >目录</a>
+            </li>
+
+              <li  class="active">
+                <a href="{{ url_for('course.course_thread', id=class_item.id) }}"
+                   title="{{ class_item.name }}的讨论"
+                        >讨论区</a>
+            </li>
+
+            <li class="">
+                <a href="{{ url_for('course.course_comment', id=class_item.id) }}"
+                   title="{{ class_item.name }}的评价"
+
+                        >评价
+
+                    <small class="text-muted">( {{ class_item.comment_count }} )</small>
+
+                </a>
+            </li>
+
+            <li  class="hidden-xs">
+                <a href="{{ url_for('course.course_courseware', id=class_item.id) }}"
+                   title="{{ class_item.name }}的源码"
+                   >源码
+
+                    </small>
+
+                </a>
+            </li>
+         </ul>
+    </div>
+
+        <div class="nav-filter clearfix">
+
+            <div class="btn-group">
+            <a href="{{ url_for('course.course_thread_create',id=class_item.id) }}"  class="btn btn-primary btn-sm " >提问题 </a>
+
+      </div>
+
+        <ul class="nav nav-pills nav-pills-sm">
+
+
+         <li>排序：</li>
+         <li class="active js-thread-sort" data-order-by="0"><a class="js-nav" href="javascript:void(0)" >最新发帖</a></li>
+         <li class="js-thread-sort" data-order-by="1"><a href="javascript:void(0)"  > 最后回复</a></li>
+
+        </ul>
+
+</div>
+
+     <div class="course-detail-content">
+
+        <div
+                class="js-thread-query-params"
+        data-target-id="{{ class_item.id }}"
+        data-target-type="course"
+        > </div>
+
+        <div class="topic-list " id="thread-list">
+
+
+        </div>
+
+        <nav class=" text-center">
+            <ul class="pagination" id="pagination-thread-post">
+
+            </ul>
+        </nav>
+
+
+     </div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,82 @@
+
+{% extends "admin/abstrct_base_admin.html" %}
+
+{% block script_css %}
+
+{% endblock %}
+
+
+
+{% block head_navbar_block %}
+
+    <div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <ul class="nav pull-right">
+
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" role="button" class="dropdown-toggle"
+                       id="dropdownMenu" data-toggle="dropdown" aria-expanded="true">
+                        <i class="icon icon-user"></i> {{ current_user.email }}
+                        <i class="icon icon-circle-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+
+                        <li><a tabindex="-1" href="{{ url_for('admin.logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+
+            <a class="navbar-brand " href="{{ url_for('admin.index') }}">管理后台</a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+ {% block left_block %}
+
+      <!--left panel -->
+        <div class="col-md-2">
+
+
+
+            <div class="sidebar-nav">
+                <div class="nav-header" data-toggle="collapse" data-target="#course-menu">
+                    <i class="icon-dashboard"></i>课程
+                </div>
+                <ul id="course-menu" class="nav nav-list collapse in">
+                    <li><a href="{{ url_for('admin.courses') }}">课程管理</a></li>
+
+
+                    <li><a href="{{ url_for('admin.qqgroup_manager') }}">Q群管理</a></li>
+                </ul>
+            </div>
+
+
+
+
+            <div class="sidebar-nav">
+                <div class="nav-header" data-toggle="collapse" data-target="#operating-menu">
+                    <i class="icon icon-display"></i>运营</div>
+                <ul id="operating-menu" class="nav nav-list collapse in">
+
+                    <li><a href="{{ url_for('admin.banners') }}">Banner</a></li>
+                    <li><a href="{{ url_for('admin.friendlink_manager') }}">友链管理</a></li>
+                    <li><a href="{{ url_for('admin.usermsg_manager') }}">消息发送</a></li>
+                    <li><a href="{{ url_for('admin.coupon_manager') }}">优惠券</a></li>
+                    <li><a href="{{ url_for('admin.email_template') }}">邮件营销</a></li>
+
+                </ul>
+            </div>
+
+        </div>
+        <!--end left panel-->
+ {% endblock %}
+
+

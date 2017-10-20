@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <meta name="is-login" content="{% if current_user.is_authenticated() %}1{%else  %}0{% endif %}">
+
+    <title>视频播放</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_new.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico" />
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
+
+    <![endif]-->
+
+
+
+</head>
+<body>
+
+
+    <div class="cniao-wrap">
+
+
+            <div class="lesson-dashboard" id="lesson-dashboard"
+                 data-course-id="{{ course.id }}"
+                 data-lesson-id="{{ lesson.id }}"
+                 data-lesson-can-play="{% if lesson_can_play %}1{% else %}0{% endif %}"
+                 data-course-can-play=" {% if course_can_play %}1{% else %}0{% endif %}"
+                 data-lesson-info-url="{{ url_for('lesson.lesson_info',id = lesson.id) }}"
+                    >
+
+                <div class="dashboard-content">
+
+                    <a class="btn btn-primary  nav-btn back-course-btn" href="{{ url_for('course.course_detail',id=course.id) }}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        返回课程</a>
+
+                    <a class="btn btn-primary  nav-btn prev-lesson-btn"
+                       href="javascript:"
+                       data-role="prev-lesson"
+                       data-placement="right" title="" data-original-title="上一课时">
+
+                        <span class="glyphicon glyphicon-chevron-up" title="上一课时"></span>
+                    </a>
+
+                    <a class="btn btn-primary nav-btn next-lesson-btn" href="javascript:"
+                       data-role="next-lesson" data-placement="right" title=""
+                       data-original-title="下一课时" style="display: none;">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+
+                    <div class="dashboard-header">
+                        <div class="pull-left title-group">
+{#                          <span class="chapter-label">#}
+{##}
+{#                            第<span data-role="chapter-number">0</span>章#}
+{#                          </span>#}
+{##}
+{#                             <span class="divider">»</span>#}
+
+
+                            <span class="item-label">课时<span data-role="lesson-number">{{ lesson.bsort }}</span></span>
+                            <span class="item-title" data-role="lesson-title">正在加载....</span>
+                        </div>
+                    </div>
+
+
+                    <div class="dashboard-body">
+
+                        <div class="lesson-content" id="lesson-video-content" data-role="lesson-content"></div>
+
+                        <div class="lesson-content lesson-content-text" id="lesson-unpublished-content" data-role="lesson-content" style="display:none;">
+                            <div class="lesson-content-text-body">当前课时正在编辑中，暂时无法观看。</div>
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-footer clearfix">
+                        <div class="pull-right">
+                            <button class="btn btn-primary finish-btn" data-role="finish-lesson" >
+                                <span class="glyphicon glyphicon-unchecked"></span> 学过了
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="toolbar" id="lesson-dashboard-toolbar" >
+
+                    <div class="toolbar-nav">
+
+                        <ul class="toolbar-nav-stacked" id="lesson-toolbar-primary">
+                        </ul>
+
+                        <ul class="toolbar-nav-stacked" id="lesson-toolbar-secondary">
+                            <li class="hide-pane" style="display: none;">
+                                <a href="javascript:"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="toolbar-pane-container" style="display: none;">
+                    <div data-pane="lesson" class="lesson-pane"  >
+
+                    </div>
+
+                 </div>
+
+
+                </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="" style="display: none" id="dialog-buy">
+
+
+            <div class="panel-body text-center ">
+
+                <span class="gray-darker" style="font-size: 16px">要想快人一步,就得懂得投资自己。为学习投资你不会后悔的</span>
+
+                <div class="" style="margin-top: 40px">
+                    <a href="{{ url_for('order.show',product_id=course.id,product_type=3) }}" class="btn btn-danger btn-lg " style="width: 200px">立即购买</a>
+
+                </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+<div style="display:none;">
+
+    <script type="text/javascript">
+        /**
+         * 统计代码
+         * @type {_hmt|*|Array}
+         * @private
+         * */
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256106650'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256106650%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    <script src="{{ url_for('static', filename='libs/sea/2.1.1/sea.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/seajs-global-config.js') }}"></script>
+    <script type="text/javascript">
+
+        var app={};
+
+        app.basePath = '';
+        app.debug = true;
+        app.jsPaths={};
+        app.global_script='path-js/global-config';
+        app.arguments = {};
+        app.arguments = {"customChapter":"1","plugins":["lesson","note"]};
+        app.controller='app/learn';
+        app.mainScript = 'path-js/app';
+
+
+        seajs.use(app.mainScript);
+
+
+    </script>
+
+
+
+</body>
+</html>

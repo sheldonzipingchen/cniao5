@@ -1,0 +1,42 @@
+
+<h3>{{$P.class_name}}</h3>
+
+
+
+
+
+
+
+{#foreach $T as c}
+             <div class="chapter_title">
+
+            <i class="icon icon-menu3"></i>
+            <span>章节{{ $T.c$index+1 }}：</span>
+            <strong>{{ $T.c.title }}</strong>
+
+            </div>
+
+            <ul class="video_list">
+             {#foreach $T.c.lessons as lesson}
+
+                 <li class="video lesson" lesson="{{ $T.lesson.id }}" lessonName="{{ $T.lesson.name}}">
+                    <a href="/lesson/play/{{ $T.lesson.id }}.html">
+                        <div class="video_name"><small>课时{{ $T.lesson.bsort }}：</small><span >{{ $T.lesson.name}}</span></div>
+                        <div class="video_play">
+
+
+                             {#if $P.lesson_id== $T.lesson.id }
+                                <!--正在播放的课时显示播放图标即可，不显示时间，没有在播放的课时只显示时间，不显示播放图标-->
+                                <i class="icon icon-play3"></i>
+                            {#else}
+
+                            <span class="lesson_duration" data="{{ $T.lesson.video.duration }}"></span>
+                            {#/if}
+                        </div>
+                    </a>
+                </li>
+             {#/for}
+            </ul>
+
+
+{#/for}

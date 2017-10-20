@@ -1,0 +1,29 @@
+
+
+<ul class="media-list">
+    {#foreach $T as c}
+
+
+            <li class="media">
+                    <div class="media-body">
+                        <div class="mbs">
+
+                            <a href="javascript:void(0)"
+                               class="js-dl"
+                               data-can-download="{{ $P.can_play }}"
+                               data-course-id="{{ $T.c.id }}"
+                               target="_blank">{{ $T.c.filename }}</a>
+                        </div>
+
+
+                        <div class="text-sm">
+
+                            <span class="text-muted">上传于{{ $T.c.created_time }}</span>
+                        </div>
+
+                    </div>
+            </li>
+
+
+    {#/for}
+  </ul>

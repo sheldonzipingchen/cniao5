@@ -1,0 +1,19 @@
+{#foreach $T as record}
+
+
+
+
+
+
+<div class="media media-number-o color-gray text-overflow">
+                                            <a class="link-dark js-user-card" href="/user/{{ $T.record.user.id }}"  data-card-url="/user/{{ $T.record.user.id }}/public/info" data-user-id="{{ $T.record.user.id }}">{{ $T.record.user.username }}</a>
+
+
+                                            开始学习 <a class="link-dark" href="/lesson/play/{{ $T.record.lesson_id }}.html" title="来自{{ $T.record.lesson.name }}">{{ $T.record.lesson.name }}</a>
+
+
+ </div>
+
+
+
+{#/for}

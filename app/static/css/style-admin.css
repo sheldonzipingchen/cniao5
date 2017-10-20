@@ -1,0 +1,34 @@
+
+
+
+.pagination > ul >li{
+    float: left;
+}
+
+.pagination > ul> li > a,
+.pagination >ul> li > span {
+    position: relative;
+    float: left;
+    padding: 5px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: #919191;
+    background-color: #f5f5f5;
+    border: 1px solid #dcdcdc;
+    margin: 5px;
+    border-radius: 2px;
+}
+
+
+.pagination > ul> li.active > a,
+.pagination  > ul> li.active > span,
+.pagination > ul> li.active > a:hover,
+.pagination > ul> li.active > span:hover,
+.pagination > ul> li.active > a:focus,
+.pagination > ul> li.active > span:focus {
+    z-index: 2;
+    cursor: default;
+    color: #fff;
+    background-color: #46c37b;
+    border-color: #34a263;
+}

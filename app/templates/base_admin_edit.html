@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>菜鸟窝-管理员后台</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/bootstrap/3.3.0/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/button.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icon_style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='libs/jquery/jcrop/jquery.Jcrop.min.css') }}"/>
+
+    <script src="{{ url_for('static', filename='libs/jquery/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/jquery/jcrop/jquery.Jcrop.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/bootstrap/3.3.0/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/jquery/jquery.pin.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/imageCropperUpload.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <link rel="shortcut icon" href="http://7mno4h.com1.z0.glb.clouddn.com/cniao.com.ico"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block script_css %}
+    {% endblock %}
+</head>
+<body>
+
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <ul class="nav pull-right">
+
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i> Jack Smith
+                        <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+
+                <a class="navbar-brand " href="/">管理后台</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <!--left panel -->
+        <div class="col-md-2">
+
+            <div class="sidebar-nav">
+                <div class="nav-header" data-toggle="collapse" data-target="#course-menu">
+                    <i class="icon icon-pencil"></i>课程编辑</div>
+                <ul id="course-menu" class="nav nav-list collapse in">
+
+                    <li class="active"><a href="course_edit_baseinfo.html">基本信息</a></li>
+                    <li ><a href="course_edit_pic.html">课程图片</a></li>
+                    <li ><a href="{{ url_for('admin.chapter_manage',class_id=class_item.id) }}">章节内容</a></li>
+                    <li ><a href="{{ url_for('admin.chapter_add',class_id=class_item.id) }}">添加章节(临时功能)</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <!--end left panel-->
+
+        {% block main_block %}
+        {% endblock %}
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
